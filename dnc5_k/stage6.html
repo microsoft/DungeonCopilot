@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 6</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>🌟 Stage 6: 나의 식당을 소개합니다.</h1>
+    <div class="content">
+        <p>이번 퀘스트에서는 식당의 기획 의도부터 메뉴까지 모든 것을 브랜드 기획서에 담아봅니다.</p>
+        <div class="note" role="note" style="text-align: center;">
+            <img src="img/quest6.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            <!-- <hr />
+            <strong>Tip</strong> 생성된 그림안의 한글이 깨지는 것은 엔진의 성능이슈로 인한 것입니다. 한글이 아닌 영어일 때에는 정말 잘 표현됩니다. 하루빨리 한글 품질도 개선되기를 기원합니다. -->
+        </div>
+
+        <hr />
+        <ol>
+            <li>아래의 샘플 프롬프트를 입력합니다. [대괄호]로 싸여 있는 부분을 취향에 따라 수정하십시오.</li>
+            <li>[대괄호] 내용을 창의적으로 변경해보면서 마음에 들 때까지 다시 생성해 봅니다.</li>
+        </ol>
+
+        <div class="code">
+            <div class="code-title">🚩 브랜드 기획서 작성</div>
+            <p>내용을 종합하여 보고서 초안을 작성합니다. 아젠다를 제시하여 보고서의 템플릿에 맞게 작성합니다.</p>
+            <div class="code-title">[샘플 프롬프트]</div>
+            <div class="code-box">
+                <p>식당의 기획서를 작성하려고 해. 포함할 아젠다를 제안해줘.</p>
+                <p>다음 아젠다로 기획서 초안을 작성해줘. [1. 브랜드 개요, 2. 타겟 고객 분석, 3. 메뉴 및 서비스 구성, 4. 브랜드 아이덴티티, 5. 데이터 기반 마케팅 전략, 6. 목표 및 실행계획]</p>
+                <p>데이터 기반 마케팅 전략을 더 디테일하게 작성해줘. 아래 항목으로 구체화해줘. [1. 생존 예측, 2. 입지 선정 이유, 3. 경쟁 분석 및 차별화 전략]</p>
+                <p>작성된 내용을 .docx 파일로 생성해줘</p>
+            </div>
+        </div>
+
+        <hr />
+        <div class="note" role="note">
+            <strong>중요!</strong> 
+            다음의 링크로 이동하여 <button type="button" onclick="window.open('https://aka.ms/dnc3result','_blank','noopener')">결과물 (클릭)</button> 해당 폴더에
+                완료 산출물 워드파일을 제출합니다. 
+                <br>파일명은 "부서_이름.docx" 로 저장하여 제출합니다.
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

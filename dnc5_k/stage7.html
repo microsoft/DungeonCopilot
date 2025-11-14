@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 7</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>👑 Stage 7: 축하합니다</h1>
+    <div class="content">
+        <p><strong>축하합니다! 당신은 진정한 영웅입니다! 🎉</strong></p>
+        <p>축하합니다, 모든 퀘스트를 완료하였습니다.</p>
+        <p>Copilot과 함께한 여정이 즐거웠기를 바랍니다.</p>
+        <img src="img/end.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

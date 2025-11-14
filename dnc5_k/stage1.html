@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 1</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>⚔️ Stage 1: 트렌드를 알아보자!</h1>
+    <div class="content">
+        <p>요즘 뭐가 인기있지? 이번 퀘스트에서는 외식업 트렌드를 알아보겠습니다. </p>
+        <div class="note" role="note" style="text-align: center;">
+            <img src="img/quest1.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </div>
+        
+        <hr />
+        <ol>
+            <li><a href>https://m365.cloud.microsoft/chat/</a>를 클릭하여 Copilot Chat으로 이동하십시오.</li>
+            <li>프롬프트를 입력하기 전에 다음의 링크로 이동하여 <button type="button" onclick="window.open('https://livesend.microsoft.com/i/04kuziNUSL3K___sz2uKC7bPau9K0e1jGlhVrMkN2LcwItQd7___9LCXASbXWJQEbWwP9pWIaRJqMkZc4a2Le___ZVbgyDEMMmbvQKcDRVwu1nz___D1LUV97ojT9SnDb1r7lClj','_blank','noopener')">실습파일 (클릭)</button>에서 
+                <span style="color:#7d83cc; font-style:italic;">"2024 식품외식산업 7대 이슈.pdf", "2025 식품외식산업 7대 이슈.pdf" </span>파일을 다운로드 합니다.
+            </li>
+            <li>
+                문서를 기반으로 답변을 요청할 때는 Copilot Chat 프롬프트 입력창에서 파일 업로드를 선택하여 파일을 지정할 수 있습니다. 2에서 다운받은 실습파일을 선택합니다.<br />
+                <img src="img/upload.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            </li>
+            <li>아래의 샘플 프롬프트를 입력합니다. [대괄호]로 싸여 있는 부분을 취향에 따라 수정하십시오. (대괄호는 지우시고요)</li>
+            <li>[대괄호] 내용을 창의적으로 변경해보면서 마음에 들 때까지 다시 생성해 봅니다.</li>
+        </ol>
+
+        <div class="code">
+            <div class="code-title">🚩 자료 이해하기</div>
+            <p>외식 산업의 리포트 문서를 찾았습니다. 이 리포트의 내용을 이해하고 인사이트를 도출합니다.</p>
+            <div class="code-title">[샘플 프롬프트]</div>
+            <div class="code-box">
+                <p><span style="color:#7d83cc; font-style:italic;">"2024 식품외식산업 7대 이슈.pdf", "2025 식품외식산업 7대 이슈.pdf" </span> 이 파일에서 주요 이슈별 내용과 언급된 예시들을 요약해서 작성해줘.</p>
+                <p>각 연도의 7대 이슈를 한 문장씩 요약하고 이슈별 공통점과 차이점을 표로 정리해줘.</p>
+                <p>2024년과 2025년 이슈 중 [키워드1]과 [키워드2]의 각 키워드별 성장률, 시장 규모, 주요 성장 동인 변화를 비교해줘.</p>
+            </div>
+        </div>
+    </div>    
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 3</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>🛡️ Stage 3: 데이터를 분석하자!</h1>
+    <div class="content">
+        <p>이번 퀘스트에서는 통계 데이터를 활용하여 시장과 상권을 분석하고 연령대별 특성을 이해합니다.</p>
+        <div class="note" role="note" style="text-align: center;">
+            <img src="img/quest3.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </div>
+        
+        <hr />
+        <ol>
+            <li>
+                우측 상단의 <img src="img/newicon.png" style="height: 17px ;" />"새채팅"을 선택합니다. <br/>
+                <img src="img/newchat.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            </li>
+            <li>아래의 샘플 프롬프트를 입력합니다. [대괄호]로 싸여 있는 부분을 취향에 따라 수정하십시오. (대괄호는 지우시고요)</li>
+            <li>[대괄호] 내용을 창의적으로 변경해보면서 마음에 들 때까지 다시 생성해 봅니다.</li>
+            <li>다음의 링크로 이동하여 <button type="button" onclick="window.open('https://livesend.microsoft.com/i/04kuziNUSL3K___sz2uKC7bPau9K0e1jGlhVrMkN2LcwItQd7___9LCXASbXWJQEbWwP9pWIaRJqMkZc4a2Le___ZVbgyDEMMmbvQKcDRVwu1nz___D1LUV97ojT9SnDb1r7lClj','_blank','noopener')">실습파일 (클릭)</button>에서 
+                <span style="color:#7d83cc; font-style:italic;">"서울지역상권데이터.xlsx" </span>파일을 다운로드 합니다.
+            </li>
+            <li>
+                문서를 기반으로 답변을 요청할 때는 Copilot Chat 프롬프트 입력창에서 파일 업로드를 선택하여 파일을 지정할 수 있습니다. 3에서 다운받은 실습파일을 선택합니다.<br />
+                <img src="img/upload.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            </li>
+        </ol>
+
+        <div class="code">
+            <div class="code-title">🚩 데이터 분석하기</div>
+            <p>통계 정보를 활용하여 데이터를 분석하여 인사이트를 확인합니다. </p>
+            <div class="code-title">[샘플 프롬프트]</div>
+            <div class="code-box">
+                <p><span style="color:#7d83cc; font-style:italic;">서울지역상권데이터.xlsx</span> 인사이트를 알려줘</p>
+                <p>상권 분석을 위해 확인 해야할 지표를 제안해줘</p>
+                <p>상권점수화 모델을 알려줘</p>
+                <p>서울 지역 점수표 만들어줘</p>
+                <p>폐업률이 높은 지역 5개를 알려줘</p>
+                <p>[강남구]와 [중구]의 생존율/개업/폐업를 보여줘</p>
+                <p>연령대별 소비스타일 시트에서 [20대]와 [40대]의 차이를 각 소비스타일별로 답변 값과 어떤 차이를 보이는지와 그 이유를 테이블 형태로 정리해서 보여줘.</p>
+                <p>연령대별 소비스타일 차이를 보이는 사회적인 배경과 트랜드를 웹데이터를 참고해서 알려줘.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>던전앤코파일럿5</title>
+    <link rel="stylesheet" href="common.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body class="root">
+    <div class="container">
+        <div class="logo">
+            <img src="img/titlelogo.png" alt="던전앤코파일럿5">
+        </div>
+        
+        <div class="tabs">
+            <button class="tab" data-stage="0">Stage 0</button>
+            <button class="tab locked" data-stage="1">Stage 1 🔒</button>
+            <button class="tab locked" data-stage="2">Stage 2 🔒</button>
+            <button class="tab locked" data-stage="3">Stage 3 🔒</button>
+            <button class="tab locked" data-stage="4">Stage 4 🔒</button>
+            <button class="tab locked" data-stage="5">Stage 5 🔒</button>
+            <button class="tab locked" data-stage="6">Stage 6 🔒</button>
+            <button class="tab locked" data-stage="7">Stage 7 🔒</button>
+        </div>
+        
+        <div class="content">
+            <div id="messageArea"></div>
+            <iframe id="stageContent" src="" onload="resizeIframe(this)"></iframe>
+        </div>
+    </div>
+
+    <script>
+        // 전역 변수 startDate 선언
+        var startDate = '20251005';
+
+        // iframe 높이 자동 조정 함수 (전역 함수로 선언)
+        function resizeIframe(iframe) {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (iframeDoc && iframeDoc.body) {
+                    const height = iframeDoc.body.scrollHeight;
+                    iframe.style.height = (height + 30) + 'px';
+                }
+            } catch(e) {
+                // 로컬 파일은 문제없지만 혹시 모를 에러 처리
+                iframe.style.height = '500px';
+            }
+        }
+
+        // postMessage를 통한 iframe 높이 조정
+        window.addEventListener('message', function(e) {
+            if (e.data.type === 'resize') {
+                const iframe = document.getElementById('stageContent');
+                iframe.style.height = (e.data.height + 40) + 'px';
+            }
+        });
+
+        $(document).ready(function() {
+            // URL 매개변수에서 startDate 가져오기
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlStartDate = urlParams.get('startDate');
+            
+            if (urlStartDate) {
+                startDate = urlStartDate;
+            }
+
+            // 날짜 차이 계산 함수
+            function getDaysDifference(startDateStr) {
+                const year = parseInt(startDateStr.substring(0, 4));
+                const month = parseInt(startDateStr.substring(4, 6)) - 1;
+                const day = parseInt(startDateStr.substring(6, 8));
+                
+                const start = new Date(year, month, day);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                const diffTime = today - start;
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                
+                return diffDays;
+            }
+
+            // 날짜 포맷 함수 (YYYYmmDD -> YYYY년 M월 D일)
+            function formatDate(dateStr) {
+                const year = parseInt(dateStr.substring(0, 4));
+                const month = parseInt(dateStr.substring(4, 6));
+                const day = parseInt(dateStr.substring(6, 8));
+                return year + '년 ' + month + '월 ' + day + '일';
+            }
+
+            // 날짜 계산 함수 (startDate + days)
+            function addDays(startDateStr, days) {
+                const year = parseInt(startDateStr.substring(0, 4));
+                const month = parseInt(startDateStr.substring(4, 6)) - 1;
+                const day = parseInt(startDateStr.substring(6, 8));
+                
+                const date = new Date(year, month, day);
+                date.setDate(date.getDate() + days);
+                
+                const resultYear = date.getFullYear();
+                const resultMonth = String(date.getMonth() + 1).padStart(2, '0');
+                const resultDay = String(date.getDate()).padStart(2, '0');
+                
+                return resultYear + resultMonth + resultDay;
+            }
+
+            // 클릭 가능한 탭 수 계산
+            const daysPassed = getDaysDifference(startDate);
+            const unlockableTabs = Math.min(Math.max(1, daysPassed + 1), 8); // 최소 1개(Stage 0), 최대 8개
+
+            // 탭 상태 업데이트
+            $('.tab').each(function(index) {
+                const stage = $(this).data('stage');
+                if (stage < unlockableTabs) {
+                    $(this).removeClass('locked');
+                    $(this).text('Stage ' + stage);
+                }
+            });
+
+            // 탭 클릭 이벤트
+            $('.tab').on('click', function() {
+                const stage = $(this).data('stage');
+                
+                if ($(this).hasClass('locked')) {
+                    // 잠긴 탭 클릭 시
+                    const unlockDate = addDays(startDate, stage);
+                    const unlockDateFormatted = formatDate(unlockDate);
+                    showMessage('🔒 Stage ' + stage + '은(는) ' + unlockDateFormatted + '에 개방됩니다.');
+                    return;
+                }
+                
+                $('.tab').removeClass('active');
+                $(this).addClass('active');
+                
+                loadStageContent(stage);
+            });
+
+            // 스테이지 컨텐츠 로드 함수
+            function loadStageContent(stage) {
+                $('#messageArea').hide();
+                $('#stageContent').show();
+                const stageFile = 'stage' + stage + '.html';
+                $('#stageContent').attr('src', stageFile);
+            }
+
+            // 메시지 표시 함수
+            function showMessage(message) {
+                $('#stageContent').hide();
+                $('#messageArea').html('<div class="message">' + message + '</div>');
+                $('#messageArea').show();
+            }
+
+            // 초기 Stage 0 로드
+            $('.tab[data-stage="0"]').addClass('active');
+            loadStageContent(0);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+/* 공통 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.root {
+    background-color: #f5f5f5;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    padding: 20px;
+    line-height: 1.6;
+    color: #333;
+}
+
+/* 인덱스 페이지 전용 스타일 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #5f5f5f;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.logo {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.logo img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.tabs {
+    display: flex;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    overflow-x: auto;
+}
+
+.tab {
+    flex: 1;
+    padding: 15px 20px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #e9ecef;
+    border: none;
+    border-right: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    color: #495057;
+    min-width: 120px;
+}
+
+.tab:last-child {
+    border-right: none;
+}
+
+.tab:hover {
+    background-color: #dee2e6;
+}
+
+.tab.active {
+    background-color: #667eea;
+    color: white;
+}
+
+.tab.locked {
+    background-color: #f1f3f5;
+    color: #adb5bd;
+    cursor: not-allowed;
+}
+
+.tab.locked:hover {
+    background-color: #f1f3f5;
+}
+
+.message {
+    padding: 40px;
+    text-align: center;
+    font-size: 18px;
+    color: #495057;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin: 20px;
+}
+
+#stageContent {
+    width: 100%;
+    border: none;
+    overflow: hidden;
+}
+
+/* 스테이지 페이지 스타일 */
+
+h1 {
+    color: #667eea;
+    border-bottom: 3px solid #667eea;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #333;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 30px 0;
+}
+
+ol, ul {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/*
+.content {
+    margin-top: 20px;
+}*/
+
+/* note 박스 스타일 */
+.note {
+    background-color: #e7f3ff;
+    border-left: 4px solid #2196F3;
+    padding: 15px 20px;
+    margin: 15px 0;
+    border-radius: 4px;
+}
+
+/* code 박스 스타일 */
+.code {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px 25px;
+    margin: 15px 0;
+    line-height: 1.8;
+}
+
+.code-title {
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+.code-box {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+
+.code-box p {
+    margin: 8px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.code-box p::before {
+    content: '◆';
+    color: #2196F3;
+    position: absolute;
+    left: 0;
+    font-size: 0.8em;
+}
+
+/* 다크모드 지원 */
+@media (prefers-color-scheme: dark) {
+    .root {
+    background-color: #333333;
+    }
+    
+    body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+    }
+
+    /* 인덱스 페이지 다크모드 */
+    .container {
+        background-color: #2d2d2d;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .tabs {
+        background-color: #1f1f1f;
+        border-bottom: 2px solid #404040;
+    }
+
+    .tab {
+        background-color: #333333;
+        border-right: 1px solid #404040;
+        color: #b0b0b0;
+    }
+
+    .tab:hover {
+        background-color: #404040;
+    }
+
+    .tab.active {
+        background-color: #667eea;
+        color: white;
+    }
+
+    .tab.locked {
+        background-color: #252525;
+        color: #666666;
+    }
+
+    .tab.locked:hover {
+        background-color: #252525;
+    }
+
+    .message {
+        color: #e0e0e0;
+        background-color: #333333;
+    }
+
+    /* 스테이지 페이지 다크모드 */
+    h1 {
+        color: #8b9cff;
+        border-bottom-color: #8b9cff;
+    }
+
+    h2, h3 {
+        color: #e0e0e0;
+    }
+
+    .note {
+        background-color: #1a3a52;
+        border-left-color: #64b5f6;
+        color: #e0e0e0;
+    }
+
+    .code {
+        background-color: #2d2d2d;
+        border-color: #404040;
+        color: #e0e0e0;
+    }
+
+    .code-title {
+        color: #e0e0e0;
+    }
+
+    .code-box {
+        background-color: #1a1a1a;
+        border-color: #404040;
+    }
+
+    a:visited {
+        color: #8b9cff;
+    }
+
+    
+    a:hover
+    {
+        color: #b0c4ff;
+    }
+
+    a:link {
+        color: #9abaff;
+    }
+}
