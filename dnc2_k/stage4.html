@@ -1,0 +1,113 @@
+<style>
+	html, body { margin: 0; padding: 0; }
+	.stage-content { box-sizing: border-box; padding: 16px; line-height: 1.6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+	.stage-content h1 { margin: 0 0 .75rem; font-size: 2rem; }
+	.stage-content h2 { margin: 0 0 .75rem; font-size: 1.25rem; }
+	.stage-content h3 { margin: 1.25rem 0 .5rem; font-size: 1.1rem; }
+	.stage-content ol { padding-left: 1.25rem; }
+	details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+  .note { background: #f3f4f6; border: 1px solid #e5e7eb; color: #111827; padding: .75rem .9rem; border-radius: 8px; margin: 1rem 0; }
+	.prompt pre { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; margin: .5rem 0 0; }
+</style>
+<script>
+	(function(){
+		function getDocHeight(){
+			var d = document;
+			var body = d.body, html = d.documentElement;
+			return Math.max(
+				body.scrollHeight, body.offsetHeight,
+				html.clientHeight, html.scrollHeight, html.offsetHeight
+			);
+		}
+		function postSize(){
+			var h = getDocHeight();
+			parent && parent.postMessage && parent.postMessage({ type: 'stage-iframe-size', height: h }, '*');
+		}
+		window.addEventListener('load', postSize);
+		window.addEventListener('resize', function(){ setTimeout(postSize, 50); });
+		// Respond to ping from parent
+		window.addEventListener('message', function(e){ var d=e&&e.data; if (d && d.type==='stage-iframe-ping') postSize(); });
+		// Observe DOM changes
+		var mo = new MutationObserver(function(){ setTimeout(postSize, 30); });
+		mo.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+	})();
+</script>
+
+<section class="stage-content" aria-labelledby="st4-title">
+  <h1 id="st4-title">4장. 코파일럿 신의 계시</h1>
+
+  <p>이번 장에서도 이전장과 동일하게 네컷 만화를 그리는 작업으로 시작합니다. 아래의 단계를 따라 진행해 주세요. 앞에서 수행해본 작업이니 자세한 설명은 생략합니다.</p>
+  <p><button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/EvIcsIFoZqFMlllvYybqgroB-yp3UMmtl4DduAnd54_DFA?e=VOeXxv','_blank','noopener')">채널 (클릭)</button>에 업로드할 파일명은 "내이름_4장.jpeg"</p>
+
+  <div class="prompt" aria-label="이미지 생성 프롬프트">
+    <h3>이미지 생성 프롬프트</h3>
+    <pre>
+[20대 한국인 여성, 파란색 드레스를 입은] 주인공의 모습, 모세가 십계를 받는 모습처럼 [석판]을 들고 하늘을 보고 있다. 
+높은 하늘에 구름이 있고, 구름사이로 빛과 함께 천사가 내려오는 광경. 
+천사가 말하는 말풍선. "본사의 계시를 받으세요". 
+[3D 실사] 스타일
+    </pre>
+  </div>
+  <p>다른 동료들이 만든 작품들도 감상해 보세요: <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/teams/-test1/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2F%2Dtest1%2FShared%20Documents%2FStage4&viewid=aeb30331%2D35ad%2D4039%2Db718%2D63a2f3a40a5f&startedResponseCatch=true','_blank','noopener')">Stage4 이미지갤러리</button></p>
+  <hr />
+
+  <h3>본사의 코파일럿 계시를 받아 봅시다.</h3>
+  <ol>
+    <li>다음의 <button type="button" onclick="window.open('https://microsoft.seismic.com/Link/Content/DC6fP499cVP9PGMDcfMc3HM96X93','_blank','noopener')">링크 (클릭)</button>에서 문서를 다운로드 합니다</li>
+    <li>다운로드 한 문서를 더블클릭하면 브라우저로 열어볼 수 있습니다.</li>
+    <li>4페이지로 이동하면 "Microsoft 365 Copilot" 을 위한 15개의 추천 프롬프트를 확인할 수 있습니다.</li>
+    <li>4페이지의 표부분을 컴퓨터의 캡쳐도구를 이용해 이미지로 캡쳐합니다.</li>
+    <li>코파일럿을 실행합니다.</li>
+    <li>웹 탭에서 "GPT-5 사용해 보기" 를 켭니다.</li>
+    <li>캡쳐한 이미지를 프롬프트 창에 넣습니다. (붙여넣기 또는 드래드앤 드롭)</li>
+    <li>아래의 프롬프트를 수행합니다</li>
+  </ol>
+
+  <div class="prompt" aria-label="이미지 분석 프롬프트">
+    <h3>이미지 분석 프롬프트</h3>
+    <pre>
+이 이미지에 있는 표의 내용을 테이블로 보여줘요
+그리고 표에 한글프롬프트 컬럼을 추가해줘요.
+단순직역이 아닌 의역을 해야 합니다.
+가능하면 GPT-5의 추론기능이 활용될 수 있도록 작성되어야 합니다.
+    </pre>
+  </div>
+  <ol>
+    <li>답변 아래에 있는 "Pages에서 편집" 을 클릭하여 답변 내용을 별도로 저장해 둡니다.</li>
+    <li>15개의 한글 프롬프트 중 가장 흥미를 끄는 프롬프트 하나를 선택하십시오.</li>
+  </ol>
+
+  <h3>내 마음에 선택된 계시(프롬프트)를 GPT-5로 실행</h3>
+  <ol>
+    <li>코파일럿을 실행합니다.</li>
+    <li>업무 탭에서 "GPT-5 사용해 보기" 를 켭니다.</li>
+    <li>마음속에 선택해 두었던 한글 프롬프트를 넣고 수행합니다.</li>
+    <li>"추론 중..." 이 수행되는 것을 봅니다</li>
+    <li>답변 결과를 확인합니다.</li>
+  </ol>
+
+  <h3>내 마음에 선택된 계시(프롬프트)를 리서쳐로 실행</h3>
+  <ol>
+    <li>코파일럿을 실행합니다.</li>
+    <li>리서쳐 에이전트를 선택합니다.</li>
+    <li>리서쳐 에이전트는 원래 시작하기 전에 상세한 컨텍스트를 물어봅니다. 자세히 지시해주시면 좋습니다. (물론 니 맘대로 해! 라고 하셔도 되긴 합니다.)</li>
+    <li>리서쳐 에이전트는 10분가까이 오래 수행되니 아래의 영상 클립을 보면서 지루한 시간을 달래 보세요.</li>
+    <li>답변 결과를 확인합니다.</li>
+  </ol>
+
+  <div class="note" role="note">
+		<strong>영상클립</strong> <button type="button" onclick="window.open('https://www.youtube.com/watch?v=KfLH1ra2wMU','_blank','noopener')">파워포인트 코파일럿 크리에이티브모드 (클릭)</button><br />
+ 		<strong>영상클립</strong> <button type="button" onclick="window.open('https://www.youtube.com/watch?v=0wj00lhwxQg','_blank','noopener')">엑셀 크리에이티브모드 함수 (클릭)</button><br />
+    <strong>영상클립</strong> <button type="button" onclick="window.open('https://www.youtube.com/watch?v=l8enGXHHIOg','_blank','noopener')">CUA Manufacturing Demo Korean (클릭)</button>
+	</div>
+
+  <hr />
+
+  <h3>비교 및 제출</h3>
+  <ol>
+    <li>GPT-5 기능을 끈 채로 동일한 프롬프트를 수행하여 나오는 답변과도 비교해 봅니다.</li>
+    <li>세 가지의 답변에 대한 나의 평가와 그 이유를 정리하여 <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/EvIcsIFoZqFMlllvYybqgroB-yp3UMmtl4DduAnd54_DFA?e=VOeXxv','_blank','noopener')">채널 (클릭)</button>에 업로드 합니다.</li>
+    <li>업로드할 파일명은 "내이름_4장.docx"</li>
+  </ol>
+</section>

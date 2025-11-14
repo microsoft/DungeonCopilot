@@ -1,0 +1,133 @@
+<style>
+  html, body { margin: 0; padding: 0; }
+  .stage-content { box-sizing: border-box; padding: 16px; line-height: 1.6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+  .stage-content h1 { margin: 0 0 .75rem; font-size: 2rem; }
+	.stage-content h2 { margin: 0 0 .75rem; font-size: 1.25rem; }
+  .stage-content h3 { margin: 1.25rem 0 .5rem; font-size: 1.1rem; }
+  .stage-content ol { padding-left: 1.25rem; }
+	details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+  .note { background: #fff8e1; border: 1px solid #facc15; color: #6b5900; padding: .75rem .9rem; border-radius: 8px; margin: 1rem 0; }
+  .prompt pre { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; margin: .5rem 0 0; }
+</style>
+<script>
+  (function(){
+    function getDocHeight(){
+      var d = document;
+      var body = d.body, html = d.documentElement;
+      return Math.max(
+        body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight
+      );
+    }
+    function postSize(){
+      var h = getDocHeight();
+      parent && parent.postMessage && parent.postMessage({ type: 'stage-iframe-size', height: h }, '*');
+    }
+    window.addEventListener('load', postSize);
+    window.addEventListener('resize', function(){ setTimeout(postSize, 50); });
+    window.addEventListener('message', function(e){ var d=e&&e.data; if (d && d.type==='stage-iframe-ping') postSize(); });
+    var mo = new MutationObserver(function(){ setTimeout(postSize, 30); });
+    mo.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+  })();
+</script>
+
+<section class="stage-content" aria-labelledby="st2-title">
+  <h1 id="st2-title">2장. 첫 끼니 해결</h1>
+  <p>이번 장에서도 이전장과 동일하게 네컷 만화를 그리는 작업으로 시작합니다. 아래의 단계를 따라 진행해 주세요. 앞에서 수행해본 작업이니 자세한 설명은 생략합니다.</p>
+  <p><button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/Eket2paacfFAmPmHr59XiJUB5s4b3U74AOlFC_B2L-ZVJQ?e=ldpWaB','_blank','noopener')">채널 (클릭)</button>에 업로드할 파일명은 "내이름_2장.jpeg"</p>
+
+  <div class="prompt" aria-label="생성 프롬프트">
+    <h3>샘플 프롬프트</h3>
+    <pre>
+가로세로 정방형으로 동일하게 분할된 네컷 만화. [팝아트] 스타일.
+**컷 1.** 길을 걷고 있는 [50대 한국인 남성, 대머리, 안경 쓴] 주인공의 모습, 손에는 Copilot이라는 이름의 마법지팡이를 들고 있는 장면 "배고파"
+**컷 2.** 문서 두루마리를 많이 들고 있는 교수님이 멀리서 걸어오는 장면, "바쁘다, 바빠"
+**컷 3.** 주인공과 마주친 교수님이 말한다. "자네 잠깐 나대신 기고해 보지 않겠나"
+**컷 4.** Copilot이라는 이름의 마법지팡이를 들고 있는 주인공의 모습 장면, "코파일럿과 함께라면 무슨일이든 두렵지 않아"
+    </pre>
+  </div>
+  <p>다른 동료들이 만든 작품들도 감상해 보세요: <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/teams/-test1/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2F%2Dtest1%2FShared%20Documents%2FStage2&viewid=aeb30331%2D35ad%2D4039%2Db718%2D63a2f3a40a5f&startedResponseCatch=true','_blank','noopener')">Stage2 이미지갤러리</button></p>
+  <hr />
+
+  <h3>교수님의 일을 도와 기고문을 작성해 봅시다.</h3>
+  <div class="note" role="note">
+		<strong>Tip</strong> ▶ 기호가 있는 설명을 클릭하면 숨겨진 이미지를 열어보실 수 있습니다.
+	</div>
+  <ol>
+    <li>아래 버튼을 클릭하면 엣지 브라우저가 열리고 블로그 페이지가 열립니다.</li>
+    <li><button type="button" onclick="window.open('https://news.microsoft.com/source/features/innovation/microsofts-majorana-1-chip-carves-new-path-for-quantum-computing/','_blank','noopener')">Microsoft's Majorana 1 chip carves new path for quantum computing (클릭)</button></li>
+    <li>
+      <details class="fold">
+				<summary>엣지 브라우저의 우측상단에서 코파일럿 아이콘을 클릭합니다.</summary>
+				<div class="fold-body">
+					<img src="img/image copy 2.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+		</li>
+    <li>엣지 브라우저의 코파일럿이 열리면 "웹" 탭을 선택합니다.</li>
+    <li>아래의 프롬프트를 입력합니다. [대괄호]의 내용은 창의적으로 바꾸세요.</li>
+    <li>코파일럿의 답변 아래에 있는 "Pages에서 편집" 버튼을 클릭해 보시면 프롬프트와 답변을 한번에 별도 저장할 수 있습니다.</li>
+    <li>작성한 프롬프트와 기고문을 <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/Eket2paacfFAmPmHr59XiJUB5s4b3U74AOlFC_B2L-ZVJQ?e=ldpWaB','_blank','noopener')">채널 (클릭)</button>에 업로드 합니다.</li>
+    <li>업로드할 파일명은 "내이름_2장.docx"</li>
+  </ol>
+
+  <div class="prompt" aria-label="기고문 작성 프롬프트">
+    <h3>기고문 작성 프롬프트</h3>
+    <pre>
+현재 열려 있는 기사의 내용으로 [월간낚시]에 기고할 기고문을 작성하려고 합니다. 
+기고문 내용은 청중의 관심을 잡아 끌 수 있는 [위트있는] 것이 필요합니다.
+발표문의 길이는 약 [1200] 단어 정도로 작성해 주세요.
+[월간낚시]는 [낚시와 레저]에 관심이 많은 독자들이 주로 읽는 매체입니다.
+    </pre>
+  </div>
+
+  <hr />
+
+  <h3>한발짝 더 나아가서 교수님의 일을 돕는 에이전트를 만듭시다.</h3>
+  <ol>
+    <li>코파일럿을 실행하여 "웹" 탭을 선택합니다.</li>
+    <li>"GPT-5 사용해 보기" 버튼을 클릭합니다.</li>
+    <li>아래의 프롬프트를 입력합니다. </li>
+    <li>이 프로세스를 통해 얻은 에이전트 지침을 복사하여 확보해 놓습니다.</li>
+  </ol>
+  <div class="prompt" aria-label="에이전트 지침 작성 프롬프트">
+    <h3>에이전트 지침 작성 프롬프트</h3>
+    <pre>
+지금부터 나를 도와 에이전트를 만들 때 바로 사용할 수 있는 지침을 작성해 줘요.
+---
+먼저 나에게 기고문의 소재로 사용할 기사의 URL이나 문서를 달라고 합니다.
+그런 다음 어디에 기고할 것인지 묻습니다. 예: 월간낚시, 티타임즈, 우먼센스, 썬데이서울
+그 다음 기고문의 스타일을 묻습니다. 예: 사무적으로, 친근하게, 위트있게, 
+그 다음 발표문의 길이를 묻습니다. 예: 800단어, 1200단어, 1500단어
+이제 위 내용들을 종합하여 기고처의 분야와 스타일에 맞는 기고문의 초안을 작성합니다.
+    </pre>
+  </div>
+  <div class="note" role="note">
+		<strong>Tip</strong> ▶ 기호가 있는 설명을 클릭하면 숨겨진 이미지를 열어보실 수 있습니다.
+	</div>
+  <ol>
+    <li>코파일럿을 실행하여 "에이전트 만들기" 탭을 선택합니다.</li>
+    <li>
+      <details class="fold">
+				<summary>설명의 메시지에 앞서 코파일럿이 작성해준 지침을 넣고 보내기를 클릭합니다.</summary>
+				<div class="fold-body">
+					<img src="img/image copy 3.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+    </li>
+    <li>시작프롬프트도 "기고문을 만들고 싶어" 라고 하나 추가하시면 좋습니다.</li>
+    <li>에이전트 빌더가 알아서 에이전트를 만들고 적절한 이름과 시작 프롬프트 들을 생성합니다.</li>
+    <li>
+      <details class="fold">
+				<summary>에이전트를 테스트 해보고, [만들기] 버튼을 클릭하여 코파일럿에서도 사용해 볼 수 있습니다.</summary>
+				<div class="fold-body">
+					<img src="img/image copy 4.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+    </li>
+    <li>이렇게 만들어진 에이전트를 이용해 앞으로는 간편하고 손쉽게 기고문을 작성할 수 있습니다.</li>
+    <li>에이전트를 이용해 새로 만든 참신한 기고문을 <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/Eket2paacfFAmPmHr59XiJUB5s4b3U74AOlFC_B2L-ZVJQ?e=ldpWaB','_blank','noopener')">채널 (클릭)</button>에 업로드 합니다.</li>
+    <li>업로드할 파일명은 "내이름_2장_1.docx". 앞서의 파일과는 다른 이름으로 저장해 주세요.</li>
+  </ol>
+</section>

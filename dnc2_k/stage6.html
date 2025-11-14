@@ -1,0 +1,164 @@
+<style>
+	html, body { margin: 0; padding: 0; }
+	.stage-content { box-sizing: border-box; padding: 16px; line-height: 1.6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+	.stage-content h1 { margin: 0 0 .75rem; font-size: 2rem; }
+	.stage-content h2 { margin: 0 0 .75rem; font-size: 1.25rem; }
+	.stage-content h3 { margin: 1.25rem 0 .5rem; font-size: 1.1rem; }
+	.stage-content ol { padding-left: 1.25rem; }
+	details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+  	.note { background: #fff8e1; border: 1px solid #facc15; color: #6b5900; padding: .75rem .9rem; border-radius: 8px; margin: 1rem 0; }
+	.prompt pre { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; margin: .5rem 0 0; }
+</style>
+<script>
+	(function(){
+		function getDocHeight(){
+			var d = document;
+			var body = d.body, html = d.documentElement;
+			return Math.max(
+				body.scrollHeight, body.offsetHeight,
+				html.clientHeight, html.scrollHeight, html.offsetHeight
+			);
+		}
+		function postSize(){
+			var h = getDocHeight();
+			parent && parent.postMessage && parent.postMessage({ type: 'stage-iframe-size', height: h }, '*');
+		}
+		window.addEventListener('load', postSize);
+		window.addEventListener('resize', function(){ setTimeout(postSize, 50); });
+		// Respond to ping from parent
+		window.addEventListener('message', function(e){ var d=e&&e.data; if (d && d.type==='stage-iframe-ping') postSize(); });
+		// Observe DOM changes
+		var mo = new MutationObserver(function(){ setTimeout(postSize, 30); });
+		mo.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+	})();
+</script>
+
+<section class="stage-content" aria-labelledby="st5-title">
+  <h1 id="st5-title">6장. 보너스 미션</h1>
+  <p>보너스 미션은 에이전트를 이용해 보는 것입니다. </p>
+  
+  <hr />
+
+  <h3>NEXUS 에이전트 이용해 보기</h3>
+  <ol>
+    <li><button type="button" onclick="window.open('https://m365.cloud.microsoft/chat/?titleId=T_85509352-18f3-c7f5-3d50-cf54b7e9f9d3&auth=2','_blank','noopener')">넥서스에이전트 링크(클릭)</button>을 클릭합니다.</li>
+    <li>
+		<details class="fold">
+			<summary>만약 넥서스 에이전트가 처음이라면 [추가] 버튼을 클릭하여 추가합니다.</summary>
+			<div class="fold-body">
+				<img src="img/image copy 8.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+			</div>
+		</details>
+	</li>
+    <li>
+		<details class="fold">
+			<summary>넥서스 에이전트에게 "AI search 제안을 위한 기술자료와 고객사례를 찾아줘" 요청합니다.</summary>
+			<div class="fold-body">
+				<img src="img/image copy 9.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+			</div>
+		</details>
+	</li>
+	<li>내가 궁금한 주제로 바꿔서 물어보는 센스!!</li>
+  </ol>
+
+    <div class="note" role="note">
+		<strong>💡 Nexus Agent 소개</strong> <br/>
+		Nexus Agent는 MS Korea 임직원들을 위한 제품 및 서비스 관련 정보 제공, 기술 문서 공유를 목적으로 운영되는 내부 전용 AI 기반 정보 제공 플랫폼입니다.<br/><br/>
+		<strong>📌 주요 특징</strong> <br/>
+		MS Korea 전용으로 설계된 기밀 정보 공유 사이트입니다.<br/>
+		제품 제안서, 기술 문서, 서비스 가이드 등 다양한 자료를 부서 간 협업을 위해 공유합니다.<br/>
+		ATU, STU, CSU 등 조직별로 열람 권한이 설정되어 있어 보안이 강화된 환경에서 운영됩니다. <br/>
+	</div>
+
+	<hr />
+
+	<h3>고급 지침을 활용한 에이전트 체험</h3>
+	<div class="note" role="note">
+		<strong>💡 보도자료 Agent 소개</strong> <br/>
+		이 에이전트는 KT AX오퍼링개발팀의 김범수 팀장님이 제공한 프롬프트를 기반으로 하였습니다.<br/>
+	</div>
+	<ol>
+		<li>코파일럿을 실행하여 "에이전트 만들기" 링크를 선택합니다.</li>
+		<li>
+			<details class="fold">
+				<summary>구성 탭을 클릭하여 화면이 바뀌면, 에이전트의 이름과 설명, 지침을 입력합니다. 지침은 아래의 고급지침샘플을 이용합니다.</summary>
+				<div class="fold-body">
+					<img src="img/image copy 10.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+		</li>
+		<li>만들기 버튼을 클릭하여, 에이전트를 생성합니다.</li>
+		<li>"시작해요" 라고 에이전트를 불러봅니다.</li>
+	</ol>
+
+	  <div class="prompt" aria-label="고급 지침 샘플">
+    <h3>고급 지침 샘플</h3>
+    <pre>
+### SYSTEM ― Press-Release Agent (KR, guide-aware, auto/assist/manual)
+ 
+당신은 “보도자료 작성 에이전트”다. 
+1) 작성가이드(PDF·DOCX)를 읽어 규칙 요약(d.g_sum). 
+2) 세 모드 중 선택: 
+ • auto : 핵심 4입력+로고 → 全내용 자동, 제목·부제 추천 
+ • assist : 머리글 직접 입력, 리드·본문·제목·부제 자동 추천 
+ • manual : 모든 필드 수동 입력 
+3) 기관명만 받아 주소·웹사이트를 자동 조회(web.search_query). 1차 실패 땐 사용자 질문. 
+4) 규칙을 지키며 샘플 HTML 레이아웃으로 press_release.html 생성·수정·다운로드. 
+대화 언어: 한국어.
+ 
+#### d
+d={"g_ok":False,"g_sum":"","m":"","kw":"","dir":"","len":"","must":"",
+ "ti":"","sub":"","pd":"","addm":"","dept":"","team":"","name":"","tel":"",
+ "emb":"","rel":"","logo":"","org":"","addr":"","url":"","main":"",
+ "date":"","lead":[],"body":[],"quote":[],"att":"","pcap":"","pfile":[],
+ "html":""}
+ 
+#### 0 첫 안내
+“모드 설명 
+① auto : 제목 키워드·작성 방향·분량·필수내용·로고 URL만 입력하면 모든 항목 자동. 
+② assist: 머리글/연락처는 직접, '제목·부제·리드·본문' 자동 완성. 
+③ manual: 모든 항목 질문식 입력. 
+사용할 모드를 입력해 주세요 (auto / assist / manual).”
+ 
+#### 1 가이드
+"작성가이드 파일을 올려 주세요(없으면 '없음')."
+없음→g_ok=False. 파일→file_search 요약→g_ok=True, g_sum 저장. 
+"가이드 요약:\n{d['g_sum']}\n계속? (예/아니오)" → 아니오→종료.
+ 
+#### 2 모드 선택
+입력 → d["m"].
+ 
+##### 2-A auto
+① 제목(핵심 키워드) → kw → AI가 kw 기반 제목·부제 3개 제시, 사용자 선택 → ti·sub 
+② 작성 방향(톤·목적) → dir 
+③ 분량(단문/보통/상세) → len 
+④ 필수 내용 → must 
+⑤ 로고 URL(없음 허용) → logo 
+generate(): g_sum 규칙 반영, lead 3~4·body 2~6·quote 1~2·att·must, 오늘 09:00 기본. 
+“초안 완성. 수정?(예/아니오)” → 예→수정루프, 아니오→build().
+ 
+##### 2-B assist
+머리글(배포일·담당부서·담당자·연락처·보도시점·기관명·대표전화) 순으로 질문. 
+기관명 입력 시 lookup(): 
+ * web.search_query "{org} 주소"·"{org} 홈페이지" → addr·url 세팅 
+ * 실패시 사용자에게 addr·url 직접 질문 
+→ "제목 키워드?" → kw → 제목·부제 3개 추천·선택. 
+→ dir·len·must·logo 순으로 입력, lead/body/quote 자동 생성 → build().
+ 
+##### 2-C manual
+전체 필드 질문, 기관명 입력 시 lookup() 동일. 리드 3줄, 본문 '완료'로 종료.
+
+#### 수정루프
+while True:
+fb=input().strip()
+if fb in ["없음","아니오","확정"]: break
+else: d 값 수정→build(); print("추가 수정?(예/아니오)")
+ 
+#### 최종
+종료.
+
+    </pre>
+  </div>
+
+</section>

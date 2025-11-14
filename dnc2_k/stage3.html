@@ -1,0 +1,131 @@
+<style>
+	html, body { margin: 0; padding: 0; }
+	.stage-content { box-sizing: border-box; padding: 16px; line-height: 1.6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+	.stage-content h1 { margin: 0 0 .75rem; font-size: 2rem; }
+	.stage-content h2 { margin: 0 0 .75rem; font-size: 1.25rem; }
+	.stage-content h3 { margin: 1.25rem 0 .5rem; font-size: 1.1rem; }
+	.stage-content ol { padding-left: 1.25rem; }
+	details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+  .note { background: #f3f4f6; border: 1px solid #e5e7eb; color: #111827; padding: .75rem .9rem; border-radius: 8px; margin: 1rem 0; }
+	.prompt pre { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; margin: .5rem 0 0; }
+</style>
+<script>
+	(function(){
+		function getDocHeight(){
+			var d = document;
+			var body = d.body, html = d.documentElement;
+			return Math.max(
+				body.scrollHeight, body.offsetHeight,
+				html.clientHeight, html.scrollHeight, html.offsetHeight
+			);
+		}
+		function postSize(){
+			var h = getDocHeight();
+			parent && parent.postMessage && parent.postMessage({ type: 'stage-iframe-size', height: h }, '*');
+		}
+		window.addEventListener('load', postSize);
+		window.addEventListener('resize', function(){ setTimeout(postSize, 50); });
+		// Respond to ping from parent
+		window.addEventListener('message', function(e){ var d=e&&e.data; if (d && d.type==='stage-iframe-ping') postSize(); });
+		// Observe DOM changes
+		var mo = new MutationObserver(function(){ setTimeout(postSize, 30); });
+		mo.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+	})();
+</script>
+
+<section class="stage-content" aria-labelledby="st3-title">
+  <h1 id="st3-title">3장. 또 다른 하루</h1>
+  <p>이번 장에서도 이전장과 동일하게 네컷 만화를 그리는 작업으로 시작합니다. 아래의 단계를 따라 진행해 주세요. 앞에서 수행해본 작업이니 자세한 설명은 생략합니다.</p>
+  <p><button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/Eso8QViEgbNLqEHb2g66pToBML6ZMfftAiJCKq7luP-EJg?e=2IzZIB','_blank','noopener')">채널 (클릭)</button>에 업로드할 파일명은 "내이름_3장.jpeg"</p>
+
+  <div class="prompt" aria-label="생성 프롬프트">
+    <h3>생성 프롬프트</h3>
+    <pre>
+가로세로 정방형으로 동일하게 분할된 네컷 만화. [반고흐] 스타일.
+컷 1. [10대 한국인 소년, 빨간 야구모자를 쓴] 주인공의 모습, 손에는 Copilot이라는 이름의 마법지팡이를 보면서 말하는 장면, "이거 정말 굉장한데!"
+컷 2. 상자를 들고 있는 여자 분석가가 멀리서 뛰어오는 장면, "바쁘다, 바빠"
+컷 3. 주인공에게 여자 분석가가 말한다. "소문들었어요. 나의 분석업무를 도와줘요"
+컷 4. Copilot이라는 이름의 마법지팡이를 들고 있는 주인공의 모습 장면, "코파일럿과 함께라면 무슨일이든 두렵지 않아"
+    </pre>
+  </div>
+  <p>다른 동료들이 만든 작품들도 감상해 보세요: <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/teams/-test1/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2F%2Dtest1%2FShared%20Documents%2FStage3&viewid=aeb30331%2D35ad%2D4039%2Db718%2D63a2f3a40a5f&startedResponseCatch=true','_blank','noopener')">Stage3 이미지갤러리</button></p>
+  <hr />
+
+  <h3>분석가의 업무를 돕기 위해 M365 코파일럿에서 데이터 생성</h3>
+  <ol>
+    <li>M365 코파일럿을 실행합니다</li>
+    <li>웹탭에서 아래의 프롬프트를 수행합니다. (대괄호 내용은 임의 수정 후 대괄호는 삭제)</li>
+  </ol>
+
+  <div class="prompt" aria-label="데이터 생성 프롬프트">
+    <h3>데이터 생성 프롬프트</h3>
+    <pre>
+우리회사는 각종 제품을 생산하여 판매하고 있습니다. 그 중 [냉장고], [세탁기], [텔레비전], [에어콘]에 대한 실제 고객의 제품 피드백을 설문조사로 수집하였습니다.
+- 제품의 종류와 구체적인 사용자의 피드백 내용을 목업데이터로 만들어 주세요. 
+- 각 제품별로 30개의 피드백을 1개의 테이블로 생성합니다
+- 모든 피드백은 50자 이상의 문장으로 작성합니다.
+- 모든 피드백은 중복되지 않게 고유하게 작성합니다.
+엑셀 파일로 다운로드 할 수 있게 해줘요.
+    </pre>
+  </div>
+
+  <hr />
+
+  <h3>분석가 에이전트로 데이터 분석</h3>
+  <ol>
+    <li>코파일럿이 만들어준 엑셀파일을 다운로드 합니다.</li>
+    <li>코파일럿에서 분석가 에이전트로 이동합니다.</li>
+    <li>다운로드한 엑셀 파일을 분석가 에이전트에 드래그앤 드롭합니다.</li>
+    <li>아래 프롬프트를 입력하고 실행합니다.</li>
+    <li>분석을 위해 적절한 질문(프롬프트)를 더 입력해 봅니다.</li>
+  </ol>
+
+  <div class="prompt" aria-label="분석가 에이전트 프롬프트 예시">
+    <h3>분석가 에이전트 예시</h3>
+    <pre>
+업로드된 파일의 데이터에 대해 얻을 수 있는 빠른 인사이트는 무엇인가요?
+---
+각각의 피드백을 부정(0) 부터 긍정(10)까지 정량화 하여 분포를 시각화 해줘요
+---
+피드백 내용을 해석하여 부정(0) 부터 긍정(10)까지 정량화 하여 분포를 1점 단위로 세분화해서 다시 시각화 해줘요. 
+---
+차트는 plotly를 이용해서 다시 그려줘요 (한글깨짐 해결). 
+---
+제품을 구분해서 분포도를 그려줘요
+    </pre>
+  </div>
+
+  <hr />
+
+  <h3>코파일럿의 GPT-5 기능으로 데이터 분석</h3>
+  <ol>
+    <li>코파일럿 챗으로 이동합니다</li>
+    <li>웹 탭에서 "GPT-5"를 켭니다</li>
+    <li>다운로드한 엑셀 파일을 코파일럿에 드래그앤 드롭합니다.</li>
+    <li>프롬프트를 입력하고 실행합니다.</li>
+    <li>분석을 위해 적절한 질문(프롬프트)를 더 입력해 봅니다.</li>
+  </ol>
+
+  <div class="prompt" aria-label="GPT-5 를 활용한 분석 프롬프트">
+    <h3>GPT-5를 활용한 분석 프롬프트</h3>
+    <pre>
+피드백 내용을 해석하여 부정(0) 부터 긍정(10)까지 정량화 하여 분포를 1점 단위로 세분화해서 다시 시각화 해줘요. 
+차트는 plotly를 이용해서 다시 그려줘요 (한글깨짐 해결). 
+제품을 구분해서 분포도를 그려줘요
+각 제품의 부정적인 피드백을 기반으로 개선해야할 사항을 도출하고, 주요 개선사항을 효과적으로 수행하기 위한 방안을 리서치 하여 정리해줘요
+코파일럿이 제안하는 다음 단계 몇 개를 수행해 봅니다. (예: PoC 체크리스트 예시 보여줘)
+    </pre>
+  </div>
+
+  <hr />
+
+  <h3>결과물 제출</h3>
+  <ol>
+    <li>우리는 이번 장에서 분석가 에이전트로 데이터를 분석해 보았습니다.</li>
+    <li>그리고 "GPT-5"로도 데이터를 분석해 보았습니다</li>
+    <li>양쪽의 차이점을 비교하고 어느 것이 나에게 더 알맞는지 문서로 적어 주세요. (코파일럿을 이용해서 뚝딱 작성해보는 센스!!)</li>
+    <li>정리한 문서를 <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/Eso8QViEgbNLqEHb2g66pToBML6ZMfftAiJCKq7luP-EJg?e=2IzZIB','_blank','noopener')">채널 (클릭)</button>에 업로드 합니다.</li>
+    <li>업로드할 파일명은 "내이름_3장.docx"</li>
+  </ol>
+</section>

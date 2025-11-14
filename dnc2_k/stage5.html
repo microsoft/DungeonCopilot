@@ -1,0 +1,101 @@
+<style>
+	html, body { margin: 0; padding: 0; }
+	.stage-content { box-sizing: border-box; padding: 16px; line-height: 1.6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+	.stage-content h1 { margin: 0 0 .75rem; font-size: 2rem; }
+	.stage-content h2 { margin: 0 0 .75rem; font-size: 1.25rem; }
+	.stage-content h3 { margin: 1.25rem 0 .5rem; font-size: 1.1rem; }
+	.stage-content ol { padding-left: 1.25rem; }
+	details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+  	.note { background: #fff8e1; border: 1px solid #facc15; color: #6b5900; padding: .75rem .9rem; border-radius: 8px; margin: 1rem 0; }
+	.prompt pre { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; margin: .5rem 0 0; }
+</style>
+<script>
+	(function(){
+		function getDocHeight(){
+			var d = document;
+			var body = d.body, html = d.documentElement;
+			return Math.max(
+				body.scrollHeight, body.offsetHeight,
+				html.clientHeight, html.scrollHeight, html.offsetHeight
+			);
+		}
+		function postSize(){
+			var h = getDocHeight();
+			parent && parent.postMessage && parent.postMessage({ type: 'stage-iframe-size', height: h }, '*');
+		}
+		window.addEventListener('load', postSize);
+		window.addEventListener('resize', function(){ setTimeout(postSize, 50); });
+		// Respond to ping from parent
+		window.addEventListener('message', function(e){ var d=e&&e.data; if (d && d.type==='stage-iframe-ping') postSize(); });
+		// Observe DOM changes
+		var mo = new MutationObserver(function(){ setTimeout(postSize, 30); });
+		mo.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+	})();
+</script>
+
+<section class="stage-content" aria-labelledby="st5-title">
+  <h1 id="st5-title">5장. 마지막 미션</h1>
+  <p>아래의 프롬프트를 이용해 이미지를 만드세요. </p>
+  <p>이제부터는 창의적으로 마음껏 수정하시는 것을 추천합니다.</p>
+  <p><button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/EngEOU6EbkNEm6DxJCKgTuMB9CarT5Jc6EFr498HwLwVaA?e=v8I3tH','_blank','noopener')">채널 (클릭)</button>에 업로드할 파일명은 "내이름_5장.jpeg"</p>
+
+  <div class="prompt" aria-label="이미지 생성 프롬프트">
+    <h3>이미지 생성 프롬프트</h3>
+    <pre>
+[10대 영국인 소녀, 금발에 파란눈, 은색갑옷을 입고] Copilot 이라는 마법지팡이를 든 주인공의 모습, 
+마지막 미션을 앞두고 결의에 찬 표정을 짓고 있다. 저 멀리 목적지인 [마왕성]이 보인다. 
+[디즈니] 스타일
+    </pre>
+  </div>
+	<p>다른 동료들이 만든 작품들도 감상해 보세요: <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/teams/-test1/Shared%20Documents/Forms/AllItems.aspx?id=%2Fteams%2F%2Dtest1%2FShared%20Documents%2FStage5&viewid=aeb30331%2D35ad%2D4039%2Db718%2D63a2f3a40a5f&startedResponseCatch=true','_blank','noopener')">Stage5 이미지갤러리</button></p>
+  <hr />
+
+  <h3>업무 회고/준비 프롬프트 만들기</h3>
+  <ol>
+    <li>코파일럿를 실행합니다</li>
+    <li>업무 탭에서 GPT-5 를 켭니다.</li>
+    <li>다음의 목적을 달성하기 위한 프롬프트를 만드세요.</li>
+  </ol>
+
+  	<div class="note" role="note">
+		<strong>[프롬프트의 목표]</strong><br/>
+		나는 지금 금요일 오후 퇴근을 앞두고 있다.<br/>
+		이번주 월요일부터 금요일 까지의 업무 내용을 회고하고, 다음주 주요 업무 일정을 준비해야 한다.<br/>
+		(주간보고 인건가....😗)<br/><br/>
+		<strong>Tip</strong> GPT-5를 활성화하는 것도 잊지 마세요!<br/>
+		<strong>Tip</strong> 특정 고객사나 프로젝트를 언급하여 차별화한 목표를 설정하는 것도 좋습니다.<br/>
+		<strong>Tip</strong> 원하는 것을 최대한 자세하게 설명합니다.<br/>
+		<strong>Tip</strong> 4장에서 얻은 본사의 추천 프롬프트를 참고합니다.<br/>
+		<strong>Tip</strong> 코파일럿에게 하고 싶은 것을 설명하고 프롬프트를 만들어 달라고 하는 것도 좋습니다.<br/>
+	</div>
+
+  <ol>
+	<li>코파일럿으로 프롬프트를 수행해봅니다. 한번에 만족하지 못하는 것이 인지상정!! 포기하지 말고 <strong>계속 시도해보세요!</strong></li>
+    <li>최종적으로 완성된 프롬프트에 마우스를 올리면 나오는 메뉴에 "이 프롬프트 예약", "프롬프트 저장" 이 있는데, 두 가지를 사용해 봅니다.</li>
+	<li>
+		<details class="fold">
+			<summary>프롬프트 예약은 여기 있어요</summary>
+			<div class="fold-body">
+				<img src="img/image copy 5.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+			</div>
+		</details>
+	</li>
+	<li>
+		<details class="fold">
+			<summary>프롬프트 저장은 여기 있어요.</summary>
+			<div class="fold-body">
+				<img src="img/image copy 6.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+			</div>
+		</details>
+	</li>
+  </ol>
+  
+  <hr />
+
+  <h3>제출</h3>
+  <ol>
+    <li>프롬프트와 그 수행결과를 저장하여 <button type="button" onclick="window.open('https://microsoftapc.sharepoint.com/:f:/t/-test1/EngEOU6EbkNEm6DxJCKgTuMB9CarT5Jc6EFr498HwLwVaA?e=v8I3tH','_blank','noopener')">채널 (클릭)</button>에 업로드 합니다</li>
+    <li>업로드할 파일명은 "내이름_5장.docx"</li>
+  </ol>
+</section>
