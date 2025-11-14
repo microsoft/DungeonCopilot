@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 1</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>⚔️ Stage 1: 우리 팀을 소개하는 포스터를 제작해 보자!</h1>
+    <div class="content">
+        <p>이번 퀘스트에서는 코파일럿의 이미지 템플릿을 이용하여 포스터를 제작해 보겠습니다. </p>
+        <hr />
+        <h2>1️⃣ 첫번째 단계, 나의 팀을 소개하는 포스터 이미지 생성하기</h2>
+        <p> - M365 Copilot 앱에서 Create를 클릭합니다.</p>
+        <p> - 포스터 디자인 템플릿을 선택합니다</p>
+        <p> - 아래에 있는 포스터 샘플을 활용해도 좋고, 직접 원하는 내용을 입력해도 됩니다.</p>
+        <img src="img/poster.png" alt="" style="max-width:60%; height:auto; border:1px solid #e0e0e0; border-radius:8px;" />
+        <hr />
+        <p> - 내가 지금 일하고 있는 우리 팀을 소개하는 포스터를 만들어 보세요.</p>
+        <div class="code">
+            <div class="code-title">🚩 [샘플 프롬프트]</div>
+            <div class="code-box">
+                우리 팀은 [팀 이름]이고, 우리는 [팀의 주요 업무]를 담당하고 있습니다. 우리 팀의 핵심 가치는 [핵심 가치]입니다.
+            </div>
+        </div>
+        <p> - 생성된 포스터 이미지가 마음에 들 때까지 여러번 시도해 봅니다.</p>
+        <p> - 생성된 이미지를 다운로드하여 저장해 둡니다.</p>
+        <hr />
+        <div class="note" role="note" style="text-align: left; ">
+            <h3>☑️ 알고 계신가요? 이미지에 포함된 텍스트를 수정할 수 있습니다~!</h3>
+            <p> - 생성된 이미지에서 "텍스트를 편집할 수 있도록 설정" 버튼을 클릭해 보세요.</p>
+            <img src="img/poster1.png" alt="" style="max-width:60%; height:auto; border:1px solid #e0e0e0; border-radius:8px;" />
+            <p> - 이미지에서 텍스트가 분리되어 편집할 수 있습니다.</p>
+            <img src="img/poster2.png" alt="" style="max-width:60%; height:auto; border:1px solid #e0e0e0; border-radius:8px;" />
+        </div>
+        <hr />
+        <h2>2️⃣ 두번째 단계, 제작한 포스터 제출하기</h2>
+        
+    </div>    
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>
