@@ -1,0 +1,196 @@
+<style>
+	root { color-scheme: light dark; }
+	html, body { margin: 0; padding: 0; }
+  	.stage-content { box-sizing: border-box; padding: 16px; line-height: 1.6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+	.stage-content h1 { margin: 0 0 .75rem; font-size: 2rem; }
+	.stage-content h2 { margin: 0 0 .75rem; font-size: 1.25rem; }
+	.stage-content h3 { margin: 1.25rem 0 .5rem; font-size: 1.1rem; }
+	.stage-content ol { padding-left: 1.25rem; }
+	details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+	.note { background: #fff8e1; border: 1px solid #facc15; color: #6b5900; padding: .75rem .9rem; border-radius: 8px; margin: 1rem 0; }
+	.prompt {
+    background: #f3f4f6;
+    border: 0px solid #797a99;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.2);
+    padding: 6px 16px 16px 16px; /* 상단만 8px로 줄임 */
+    border-radius: 10px;
+    margin: 1rem 0;
+	text-indent: 0;
+    font-size: 1.125rem;
+    /* text-indent: 1rem; */
+    font-weight: bold;
+}
+.prompt pre {
+    /* background: #f3f4f6; */
+    border: 2px solid #797a99;
+    padding: 12px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: .5rem 0 0;
+	line-height: 2.0; /* 줄 간격을 넓힘 */
+}
+/* 다크모드 스타일 추가 */
+@media (prefers-color-scheme: dark) {
+   body { background: #181818; color: #f2f2f2; }
+  .prompt {
+    background: #23272e;         /* 어두운 배경 */
+    color: #f2f2f2;              /* 밝은 글자색 */
+    border-color: #444a;         /* 테두리도 어둡게 */
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.12); /* 그림자도 살짝 어둡게 */
+  }
+}
+	/* .prompt pre { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; margin: .5rem 0 0; } */
+</style>
+<script>
+	(function(){
+		function getDocHeight(){
+			var d = document;
+			var body = d.body, html = d.documentElement;
+			return Math.max(
+				body.scrollHeight, body.offsetHeight,
+				html.clientHeight, html.scrollHeight, html.offsetHeight
+			);
+		}
+		function postSize(){
+			var h = getDocHeight();
+			parent && parent.postMessage && parent.postMessage({ type: 'stage-iframe-size', height: h }, '*');
+		}
+		window.addEventListener('load', postSize);
+		window.addEventListener('resize', function(){ setTimeout(postSize, 50); });
+		// Respond to ping from parent
+		window.addEventListener('message', function(e){ var d=e&&e.data; if (d && d.type==='stage-iframe-ping') postSize(); });
+		// Observe DOM changes
+		var mo = new MutationObserver(function(){ setTimeout(postSize, 30); });
+		mo.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+	})();
+</script>
+
+<section class="stage-content" aria-labelledby="st1-title">
+	<h1 id="st1-title">Stage4. 오피스와 코파일럿, 환상의 콜라보레이션 </h1>
+	<p>이제 Word, Excel, PowerPoint에서 Copilot Chat을 자유롭게 활용하고, 대화 히스토리를 확인하며 업무 효율을 극대화하는 방법을 체험하세요.
+        <br>단순한 문서 작성을 넘어, 오피스 전반에서 Copilot과 함께하는 스마트 워크플로우를 경험할 시간입니다. <br>Copilot Chat을 오피스 전반에서 연결해 쓰면 얼마나 강력한지 대화 맥락을 이어가는 스마트 워크플로우를 직접 경험하세요.</p>
+	<div class="note" role="note">
+		<strong>Tip</strong> ▶ 기호가 있는 설명을 클릭하면 숨겨진 이미지를 열어보실 수 있습니다.
+	</div>
+
+	<hr />
+	<ol>
+        <li>다음의 링크로 이동하여 <button type="button" onclick="window.open('https://livesend.microsoft.com/i/04kuziNUSL3K___sz2uKC7bPau9K0e1jGlhVrMkN2LcwItQd7___9LCXASbXWJQEbWwPVmuX8n7K0xNSrGvqSZze5GytfoXSTq___OL7X3CXeYJqU1LEqOwetvK9Pd6Z0uDMEG','_blank','noopener')">실습파일 (클릭)</button>에서 
+			<span style="color:#7d83cc; font-style:italic;">PowerPoint</span> 템플릿 파일을 다운로드 합니다.
+		</li>
+		<li>아래의 가이드를 확인하고 순서대로 진행합니다.</li>
+		
+	</ol>
+<hr>
+<h2>1️⃣ 첫번째 단계, 샘플 데이터 만들기</h2>
+<ol>
+		<li>이번 스테이지의 첫 번째 퀘스트는 샘플 데이터를 만드는 것입니다.
+    이후 진행할 분석과 시각화를 위해 설문조사 결과 데이터가 필요합니다. Copilot을 활용해 100개의 결과를 가진 샘플 데이터를 자동으로 생성해보세요!
+		</li>
+         <li>Copilot Chat을 실행합니다.</li>
+		<li>아래 프롬프트를 참고하여, 나만의 프롬프트로 샘플 파일을 생성합니다.</li>
+        <li>출력된 엑셀파일을 다운로드 합니다.</li>
+	</ol>
+	<div class="prompt" aria-label="생성 프롬프트">
+		
+		<!-- <p style="font-weight: normal;font-size: 15px;">두 개의 문서를 비교하고, 변경된 조항을 표 형식 또는 보고서 형식으로 깔끔하게 정리합니다. </p>
+		<h3>[샘플 프롬프트]</h3> -->
+		<pre>💠 [주제입력]에 대한 100개의 설문조사 결과를 가진 샘플 데이터를 만들어 주세요.
+컬럼은 다음을 포함합니다:
+ (예시)
+- 응답자ID (숫자)
+- 연령대 (20대, 30대, 40대, 50대)
+- 만족도 (1~5점)
+- 추천 의향 (예/아니오)
+- 사용 경험 (좋음, 보통, 나쁨)
+- 의견 (간단한 텍스트)
+결과는 표 형식으로 작성하고, .xlsx로 저장할 수 있도록 출력해 주세요.
+</pre>
+
+	</div>
+	<hr>
+<h2>2️⃣ 두번째 단계, 엑셀 데이터 시각화</h2>
+<ol>
+		<li>엑셀에서 생성한 샘플 파일을 엽니다.</li>
+        <li>
+        <details class="fold" open="open">
+				<summary>코파일럿 아이콘을 선택하여 코파일럿 패널을 엽니다</summary>
+				<div class="fold-body">
+					<img src="img/excel.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+        </li>
+		<li>설문조사 결과에서 인사이트를 확인하고 시각화를 실행합니다.</li>
+	</ol>
+	<div class="prompt" aria-label="생성 프롬프트">
+		<pre>💠 이 엑셀 파일의 데이터를 분석해 주세요.
+- 주요 통계(평균, 최대, 최소, 분포)를 요약하고,
+- 연령대별 만족도와 추천 의향의 상관관계를 설명해 주세요.
+결과는 간단한 bullet 포인트로 정리해 주세요.
+💠 이 데이터에서 의미 있는 패턴을 찾아 주세요.
+- 어떤 연령대가 만족도가 가장 높나요?
+- 추천 의향과 사용 경험 간의 관계를 분석해 주세요.
+💠 이 데이터를 기반으로 시각화를 만들어 주세요.
+- 연령대별 만족도 평균을 막대그래프로 표현
+- 추천 의향(예/아니오) 비율을 파이차트로 표현
+- 만족도와 사용 경험의 관계를 산점도로 표현
+</pre>
+	</div>
+	<hr>
+<h2>3️⃣ 세번째 단계, 파워포인트 슬라이드 컨텐츠 넣기</h2>
+<ol>
+		<li>다운받은 템플릿 파일을 파워포인트에서 엽니다.</li>
+        <li>
+        <details class="fold" open="open">
+				<summary>코파일럿 아이콘을 선택하여 코파일럿 패널을 열고 왼쪽 상단의 메뉴를 선택하여 Chat 히스토리 목록을 확인합니다.</summary>
+				<div class="fold-body">
+					<img src="img/ppt.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+        </li>
+		<li>히스토리 목록에서 샘플데이터 생성했던 프롬프트를 선택하여 추가 질의를 진행합니다. </li>
+        <li>답변을 복사하여 슬라이드에 붙여넣어 슬라이드를 완성합니다.</li>
+	<div class="prompt" aria-label="생성 프롬프트">
+		<pre>💠이 데이터의 인사이트를 3개의 글머리기호로 요약합니다. 발표 슬라이드에 포함할 수 있도록 간결하게 작성합니다.
+💠이 요약을 포함하는 슬라이드의 제목을 제안해 주세요.
+</pre>
+	</div>
+    <!-- <ol> -->
+		<li>히스토리 목록에서 엑셀에서 수행했던 프롬프트를 선택합니다. </li>
+        <li>
+        <details class="fold" open="open">
+				<summary>시각화 했던 그래프를 찾아 복사하여 슬라이드에 붙여넣어 슬라이드를 완성합니다.</summary>
+				<div class="fold-body">
+					<img src="img/graph.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+        <li>이 슬라이드에 어울리는 이미지를 생성합니다. new chat을 선택하여 새로운 대화를 시작합니다. </li>
+        <li>
+        <details class="fold" open="open">
+				<summary>이미지 생성을 요청하고, 생성된 이미지를 슬라이드에 추가합니다.</summary>
+				<div class="fold-body">
+					<img src="img/create.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+            </li>
+	<div class="prompt" aria-label="생성 프롬프트">
+		<pre>💠다음 이미지를 생성해 줘. [이미지 요청 내용] 
+</pre>
+	</div>
+        </li>
+	</ol>
+
+	<hr />
+	<h2>4️⃣ 네번째 단계, 파워포인트 파일 제출하기</h2>
+	<p>
+		이렇게 만들어진 파워포인트 파일을 아래의 링크를 통해 제출해 주세요.<br/>
+		파일명은 "alias_stage4.pptx"로 저장하여 업로드 해주세요.<br/><br/>
+		<button type="button" onclick="window.open('https://forms.office.com/r/YizW9F2Q7W')">[클릭하세요] Stage 4 - 파워포인트 파일 제출</button>
+	</p>
+
+	<hr />
+	<p>🗝️ 수고하셨습니다. 던전관리자가 다음 스테이지로 가는 암호를 정해진 시간에 공지할 것입니다.</p>
+	
+</section>

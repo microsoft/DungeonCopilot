@@ -1,0 +1,150 @@
+<style>
+	root { color-scheme: light dark; }
+	html, body { margin: 0; padding: 0; }
+  	.stage-content { box-sizing: border-box; padding: 16px; line-height: 1.6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+	.stage-content h1 { margin: 0 0 .75rem; font-size: 2rem; }
+	.stage-content h2 { margin: 0 0 .75rem; font-size: 1.25rem; }
+	.stage-content h3 { margin: 1.25rem 0 .5rem; font-size: 1.1rem; }
+	.stage-content ol { padding-left: 1.25rem; }
+	details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+	.note { background: #fff8e1; border: 1px solid #facc15; color: #6b5900; padding: .75rem .9rem; border-radius: 8px; margin: 1rem 0; }
+	.prompt {
+    background: #f3f4f6;
+    border: 0px solid #797a99;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.2);
+    padding: 6px 16px 16px 16px; /* 상단만 8px로 줄임 */
+    border-radius: 10px;
+    margin: 1rem 0;
+	text-indent: 0;
+    font-size: 1.125rem;
+    /* text-indent: 1rem; */
+    font-weight: bold;
+}
+.prompt pre {
+    /* background: #f3f4f6; */
+    border: 2px solid #797a99;
+    padding: 12px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: .5rem 0 0;
+	line-height: 2.0; /* 줄 간격을 넓힘 */
+}
+/* 다크모드 스타일 추가 */
+@media (prefers-color-scheme: dark) {
+   body { background: #181818; color: #f2f2f2; }
+  .prompt {
+    background: #23272e;         /* 어두운 배경 */
+    color: #f2f2f2;              /* 밝은 글자색 */
+    border-color: #444a;         /* 테두리도 어둡게 */
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.12); /* 그림자도 살짝 어둡게 */
+  }
+}
+	/* .prompt pre { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; margin: .5rem 0 0; } */
+</style>
+<script>
+	(function(){
+		function getDocHeight(){
+			var d = document;
+			var body = d.body, html = d.documentElement;
+			return Math.max(
+				body.scrollHeight, body.offsetHeight,
+				html.clientHeight, html.scrollHeight, html.offsetHeight
+			);
+		}
+		function postSize(){
+			var h = getDocHeight();
+			parent && parent.postMessage && parent.postMessage({ type: 'stage-iframe-size', height: h }, '*');
+		}
+		window.addEventListener('load', postSize);
+		window.addEventListener('resize', function(){ setTimeout(postSize, 50); });
+		// Respond to ping from parent
+		window.addEventListener('message', function(e){ var d=e&&e.data; if (d && d.type==='stage-iframe-ping') postSize(); });
+		// Observe DOM changes
+		var mo = new MutationObserver(function(){ setTimeout(postSize, 30); });
+		mo.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+	})();
+</script>
+
+<section class="stage-content" aria-labelledby="st1-title">
+	<h1 id="st1-title">Stage3. Copilot의 숨겨진 능력을 열어보세요! </h1>
+	<p>지금까지 Word를 사용할 때, 대부분 단순 요약이나 초안 작성만 사용하셨다구요? 하지만 Copilot은 그 이상을 할 수 있습니다!<br>
+		이번 미션에서 문서 비교, 변경사항 정리, 보고서 자동 생성까지! Copilot의 숨겨진 능력을 직접 경험해보세요.</p>
+	<div class="note" role="note">
+		<strong>Tip</strong> ▶ 기호가 있는 설명을 클릭하면 숨겨진 이미지를 열어보실 수 있습니다.
+	</div>
+
+	<hr />
+	<ol>
+		<li>
+			<details class="fold" open="open">
+				<summary>Word를 실행하고 빈문서를 엽니다.</summary>
+				<div class="fold-body">
+					<img src="img/word.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+				</div>
+			</details>
+		</li>
+		<li>다음의 링크로 이동하여 <button type="button" onclick="window.open('https://livesend.microsoft.com/i/04kuziNUSL3K___sz2uKC7bPau9K0e1jGlhVrMkN2LcwItQd7___9LCXASbXWJQEbWwPVmuX8n7K0xNSrGvqSZze5GytfoXSTq___OL7X3CXeYJqU1LEqOwetvK9Pd6Z0uDMEG','_blank','noopener')">실습파일 (클릭)</button>에서 
+			<span style="color:#7d83cc; font-style:italic;">"정보보호 공시에 관한 고시" </span>2개의 파일을 다운로드 합니다.
+		</li>
+		<li>아래의 샘플 프롬프트를 입력합니다.</li>
+		
+	</ol>
+	<hr>
+	<h2>1️⃣ 첫번째 단계, 문서 비교(표 중심)</h2>
+	<ol>
+		<li>코파일럿의 Work Chat에 접속합니다. https://m365.cloud.microsoft/chat/</li>
+		<li>두 개의 문서를 업로드합니다.</li>
+		<li>두 개의 문서를 비교하고, 변경된 조항을 표 형식으로 깔끔하게 정리하기 위해 아래의 프롬프트 실행합니다.</li>
+		<li>코파일럿이 제공하는 답변을 확인하고, 나의 업무에 어떻게 도움이 되는지 생각해 봅니다.</li>
+	</ol>
+	<div class="prompt" aria-label="생성 프롬프트">
+		
+		<!-- <p style="font-weight: normal;font-size: 15px;">두 개의 문서를 비교하고, 변경된 조항을 표 형식 또는 보고서 형식으로 깔끔하게 정리합니다. </p>
+		<h3>[샘플 프롬프트]</h3> -->
+		<pre>💠 (첨부파일1), (첨부파일2) 변경된 공시에 대해 직원들에게 안내 예정입니다.  
+각 조항을 모두 나열하고, 변경된 내용이 있는 경우 명확하게 이해할 수 있도록 자세히 설명하고,  
+변경내용이 없는 경우 "변경없음"으로 표기합니다.  
+표 형태로 작성하고, 조항, 변경전, 변경후, 변경항목, 변경에 대한 설명 컬럼을 포함합니다. 
+</pre>
+
+	</div>
+	<hr>
+	<h2>2️⃣ 두번째 단계, 문서 비교 (보고서 스타일) </h2>
+	<ol>
+		<li>코파일럿의 Work Chat에 접속합니다. https://m365.cloud.microsoft/chat/</li>
+		<li>두 개의 문서를 업로드합니다.</li>
+		<li>두 개의 문서를 비교하고, 변경된 조항을 비교하여 결과는 즉시 활용 가능한 안내문 형태로 생성합니다.</li>
+		<li>아래의 프롬프트 실행 후, 코파일럿이 제공하는 답변을 확인하고, 나의 업무에 어떻게 도움이 되는지 생각해 봅니다.</li>
+	</ol>
+	<div class="prompt" aria-label="생성 프롬프트">
+		<pre>💠 (첨부파일1), (첨부파일2) 변경된 고시에 대해 사용자들에게 안내 예정이야. 
+각 조항을 모두 나열하고, 변경된 내용이 있는 경우 명확하게 이해할 수 있도록 자세히 설명해줘. 
+다음 형식으로 출력해줘.
+---
+1. 개요
+2. 변경 요약
+3. 조항별 세부 내용
+|조항|변경 전 내용|변경 후 내용|변경내용|변경에 대한 설명|
+4. 시사점
+</pre>
+	</div>
+
+	<hr />
+	<h2>3️⃣ 세번째 단계, 보고서 제출하기</h2>
+	<p>
+		이렇게 만들어진 문서(보고서)를 워드파일로 저장하여, 아래의 링크를 통해 제출해 주세요. <br/>
+		워드파일명은 "alias_stage3.docx"로 저장하여 업로드 해주세요.<br/><br/>
+		<button type="button" onclick="window.open('https://forms.office.com/r/j0kRCMc88S')">[클릭하세요] Stage 3 - 워드 보고서 제출</button>
+	</p>
+
+	<div class="note" role="note">
+		<strong>Tip</strong> ▶ 아시나요? 코파일럿의 답변을 페이지로 옮기면 바로 워드 파일로 만들 수 있다는 것을..<br/>
+		<img src="img/s0301.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+	</div>
+
+	<hr />
+	<p>🗝️ 수고하셨습니다. 던전관리자가 다음 스테이지로 가는 암호를 정해진 시간에 공지할 것입니다.</p>
+
+</section>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>던전앤코파일럿4</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin: 0; padding: 2rem; }
+  .container { max-width: 960px; margin: 0 auto; }
+    h1 { margin: 0 0 1rem; font-size: 1.6rem; }
+    .panel { border: 1px solid #9993; border-radius: 12px; padding: 1.25rem; margin-top: 1rem; }
+    label { display: block; margin: .5rem 0 .25rem; font-weight: 600; }
+    input[type="text"], input[type="password"] {
+      width: 100%; padding: .75rem .9rem; border: 1px solid #9996; border-radius: 10px; font-size: 1rem;
+    }
+  /* callsign & keycode fields width override */
+  #callsign, #keycode { width: 400px; max-width: 100%; }
+    button {
+      margin-top: .75rem; padding: .3rem .7rem; font-size: 1rem; border-radius: 10px; border: 1px solid #0000;
+      background: #2563eb; color: white; cursor: pointer;
+    }
+    button.secondary { background: #e5e7eb; color: #111827; }
+    .row { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+    .hint { color: #6b7280; font-size: .95rem; margin-top: .25rem; }
+    .status { font-weight: 600; margin: .25rem 0 .75rem; }
+    .error { color: #dc2626; margin-top: .5rem; }
+    .success { color: #16a34a; margin-top: .5rem; }
+    .badge { display: inline-block; padding: .2rem .55rem; border-radius: 999px; font-size: .85rem; background: #e5e7eb; color: #111827; }
+    .spacer { height: .5rem; }
+
+    /* Stage image header */
+  .stage-hero { background: #fff; padding: 12px 16px; }
+    @media (prefers-color-scheme: dark) { .stage-hero { background: #111827; } }
+  .stage-hero img { display: block; width: 100%; max-width: 960px; height: auto; margin: 0 auto; }
+  /* Stage iframe (local file fallback) */
+  .stage-iframe { width: 100%; border: 0; min-height: 320px; background: transparent; }
+  /* Center the "vibe" message */
+  .vibe { text-align: center; margin-top: 30px; }
+  details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+  </style>
+</head>
+<body>
+  <header class="stage-hero" role="banner">
+    <img id="stageImg" src="img/그림0.png" alt="스테이지 이미지" />
+  </header>
+  <div class="container">
+    <div id="app" class="panel"></div>
+  </div>
+
+  <script>
+    // jQuery fallback loader for file:// or blocked CDN
+    function ensureJQuery(then, fail) {
+      if (window.jQuery) { then(); return; }
+      var alt = document.createElement('script');
+      alt.src = 'https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js';
+      alt.onload = function(){ then(); };
+      alt.onerror = function(){ if (fail) fail(); };
+      document.head.appendChild(alt);
+    }
+
+    // --- Cookie helpers ---
+    function setCookie(name, value, days) {
+      var expires = "";
+      if (days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires=" + date.toUTCString();
+      }
+      document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+    }
+    function getCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for (var i = 0; i < ca.length; i++) {
+        var c = ca[i].trim();
+        if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
+      }
+      return null;
+    }
+    function eraseCookie(name) {
+      document.cookie = name + "=; Max-Age=-1; path=/";
+    }
+
+    // --- App state ---
+    // KEYCODES는 key.js에서 실시간으로 가져옵니다
+
+    // --- Key code loader for both file:// and server environments ---
+    function loadKeyCodes(callback) {
+      // 이미 로드된 KEYCODES가 있으면 삭제
+      if (window.KEYCODES) {
+        delete window.KEYCODES;
+      }
+      
+      // 기존 스크립트 태그가 있으면 제거
+      var oldScript = document.getElementById('keycode-script');
+      if (oldScript && oldScript.parentNode) {
+        oldScript.parentNode.removeChild(oldScript);
+      }
+      
+      // 새로운 스크립트 태그를 동적으로 생성하여 key.js 로드
+      var script = document.createElement('script');
+      script.id = 'keycode-script';
+      script.src = './key.js?_t=' + Date.now(); // 캐시 방지
+      
+      script.onload = function() {
+        if (window.KEYCODES) {
+          callback(null, window.KEYCODES);
+        } else {
+          callback('key.js 파일에 KEYCODES 변수가 정의되어 있지 않습니다.');
+        }
+      };
+      
+      script.onerror = function() {
+        callback('key.js 파일을 불러올 수 없습니다. 파일이 같은 폴더에 있는지 확인해주세요.');
+      };
+      
+      document.head.appendChild(script);
+    }
+
+    // --- Stage image header helpers ---
+    // NOTE: 이미지 파일은 모두 `img/` 폴더에 있으므로 리스트와 반환값에 `img/` 접두사를 추가합니다.
+    var STAGE_IMG_LIST = [
+      "img/그림0.png",
+      "img/그림1.png",
+      "img/그림2.png",
+      "img/그림3.png",
+      "img/그림4.png",
+      "img/그림5.png",
+      "img/그림6.png",
+      "img/그림7.png"
+    ];
+    // Preload images to minimize flicker
+    (function preloadStageImages(){
+      for (var i = 0; i < STAGE_IMG_LIST.length; i++) {
+        var im = new Image(); im.src = STAGE_IMG_LIST[i];
+      }
+    })();
+    function getStageImage(stage) {
+      if (stage === "complete") return "img/그림7.png";
+      var n = parseInt(stage, 10);
+      if (isNaN(n) || n <= 0) return "img/그림0.png"; // Stage0 default
+      if (n >= 1 && n <= 7) return "img/그림" + n + ".png";
+      return "img/그림0.png";
+    }
+    function updateStageHero(stage) {
+      var imgEl = document.getElementById('stageImg');
+      if (!imgEl) return;
+      var src = getStageImage(stage);
+      if (imgEl.getAttribute('src') !== src) {
+        imgEl.src = src;
+      }
+      // Optional: alt text for accessibility
+      if (stage === 'complete') {
+        imgEl.alt = '완료 스테이지 이미지';
+      } else {
+        var n2 = parseInt(stage, 10) || 0;
+        imgEl.alt = (n2 === 0 ? '시작 스테이지 이미지' : ('스테이지 ' + n2 + ' 이미지'));
+      }
+    }
+
+    // --- External HTML loader for stage fragments ---
+    function loadStageFragment(targetSelector, url) {
+      var el = document.querySelector(targetSelector);
+      if (!el) return;
+      // file:// 환경에서는 fetch가 차단되므로 iframe으로 로드
+      if (location.protocol === 'file:') {
+        el.innerHTML = '<iframe class="stage-iframe" id="stage-iframe" loading="lazy" title="스테이지 콘텐츠" src="' + url + '"></iframe>';
+        // Parent-side: listen once for size messages
+        if (!window.__stageIframeResizeHandler) {
+          window.__stageIframeResizeHandler = function(e){
+            var d = e && e.data;
+            if (!d || d.type !== 'stage-iframe-size' || typeof d.height !== 'number') return;
+            var iframe = document.getElementById('stage-iframe') || document.querySelector('#stageContent iframe.stage-iframe');
+            if (!iframe) return;
+            var newH = Math.max(50, Math.min(100000, Math.floor(d.height)));
+            iframe.style.height = newH + 'px';
+          };
+          window.addEventListener('message', window.__stageIframeResizeHandler);
+        }
+        // After iframe loads, ping child to send its size
+        var ifr = el.querySelector('iframe');
+        if (ifr) {
+          ifr.addEventListener('load', function(){
+            try { ifr.contentWindow && ifr.contentWindow.postMessage({ type: 'stage-iframe-ping' }, '*'); } catch (_) { /* ignore */ }
+          });
+        }
+        return;
+      }
+      try {
+        fetch(url, { cache: 'no-store' })
+          .then(function(resp){ if (!resp.ok) throw new Error('HTTP ' + resp.status); return resp.text(); })
+          .then(function(html){ el.innerHTML = html; })
+          .catch(function(){
+            el.innerHTML = '<div class="hint">외부 파일(' + url + ')을 불러오지 못했습니다. 파일이 같은 폴더에 있는지 확인하거나, 로컬 서버로 열어주세요.</div>';
+          });
+      } catch (e) {
+        el.innerHTML = '<div class="hint">브라우저 보안 정책으로 로컬 파일을 불러올 수 없습니다. ' + url + '을(를) 서버에서 제공하거나 수동으로 붙여넣어 주세요.</div>';
+      }
+    }
+
+    // Per-callsign stage helpers
+  var SESSION = { callsign: null };
+  // localStorage helpers (fallback when cookies are blocked)
+  function lsGet(key) { try { return window.localStorage.getItem(key); } catch (e) { return null; } }
+  function lsSet(key, val) { try { window.localStorage.setItem(key, val); } catch (e) { /* ignore */ } }
+  function lsRemove(key) { try { window.localStorage.removeItem(key); } catch (e) { /* ignore */ } }
+    function stageCookieKey(callsign) {
+      if (!callsign) return null;
+      return 'stage_' + encodeURIComponent(String(callsign).toLowerCase());
+    }
+    function getCurrentCallsign() {
+      return SESSION.callsign || getCookie('current_callsign') || lsGet('current_callsign') || getCookie('callsign') || lsGet('callsign');
+    }
+    function getStageForCallsign(callsign) {
+      var key = stageCookieKey(callsign);
+      if (!key) return null;
+      var val = getCookie(key);
+      if (val == null) {
+        val = lsGet(key);
+      }
+      var stage = safeStageValue(val);
+      if (stage) return stage;
+      // Legacy migration: old cookie keys 'callsign' and 'stage'
+      var legacyCall = getCookie('callsign') || lsGet('callsign');
+      var legacyStage = safeStageValue(getCookie('stage') || lsGet('stage'));
+      if (legacyCall && legacyStage && String(legacyCall).toLowerCase() === String(callsign).toLowerCase()) {
+        // migrate
+        setStageForCallsign(callsign, legacyStage);
+        return legacyStage;
+      }
+      return null;
+    }
+    function setStageForCallsign(callsign, stage) {
+      var key = stageCookieKey(callsign);
+      if (!key) return;
+      setCookie(key, String(stage), 30);
+      lsSet(key, String(stage));
+    }
+    function eraseAllProgress() {
+      var parts = document.cookie.split(';');
+      for (var i = 0; i < parts.length; i++) {
+        var kv = parts[i].trim();
+        var eq = kv.indexOf('=');
+        var name = eq >= 0 ? kv.substring(0, eq) : kv;
+        if (name === 'current_callsign' || name.indexOf('stage_') === 0 || name === 'callsign' || name === 'stage') {
+          eraseCookie(name);
+        }
+      }
+      try {
+        for (var i2 = window.localStorage.length - 1; i2 >= 0; i2--) {
+          var k = window.localStorage.key(i2);
+          if (!k) continue;
+          if (k === 'current_callsign' || k === 'callsign' || k === 'stage' || k.indexOf('stage_') === 0) {
+            window.localStorage.removeItem(k);
+          }
+        }
+      } catch (e) { /* ignore */ }
+    }
+
+    function safeStageValue(val) {
+      if (val === "complete") return "complete";
+      var n = parseInt(val, 10);
+      if (!isNaN(n) && n >= 1 && n <= 7) return n;
+      return null;
+    }
+
+    function goStage(stage) {
+      if (stage === "complete") return showComplete();
+      if (stage >= 1 && stage <= 7) return showStage(stage);
+      return showStage0(); // fallback
+    }
+
+    // --- Views ---
+    function showStage0() {
+      // Always start here; user provides callsign to resolve stage
+  var savedCall = getCurrentCallsign() || "";
+
+  // Update header image for Stage0
+  updateStageHero(0);
+
+      var $view = $('<div/>');
+      $view.append('<h1>⚔️ 던전앤코파일럿4에 오신 것을 환영합니다.</h1>');
+      $view.append('<p>이 프로그램은 Microsoft Korea 임직원을 위한 코파일럿 게임으로, 코파일럿의 기능과 잠재력을 재미있고 유쾌한 방식으로 체험하도록 고안되었습니다.</p>');
+      $view.append('<p>지금부터 약 세 시간 동안 GPT-5로 더욱 막강해진 코파일럿을 이용해 다양한 미션을 수행하셔야 합니다. 본 게임은 개인 플레이게임이지만 주변동료와 다양한 경험과 의견을 나누며 즐겁게 플레이 해주세요.</p>');
+      $view.append('<hr />');
+      $view.append('<h2>🕹️ 게임의 기본 규칙은 다음과 같습니다:</h2>');
+      $view.append('<ul><li>각 단계마다 주어진 미션을 해결하기 위한 암호가 있습니다. 올바른 암호를 입력해야 다음 단계로 진행할 수 있습니다.</li><li>암호는 던전관리자가 정해진 시각마다 공지해 드립니다.</li><li>콜사인(별명)을 입력하여 게임을 시작합니다. 콜사인은 본인을 식별할 수 있는 별명이면 무엇이든 좋습니다.</li><li>게임 진행 상황은 콜사인별로 저장되므로, 언제든지 중단했다가 다시 시작할 수 있습니다.</li></ul>');
+      $view.append('<hr />');
+      $view.append('<h2>🎠 오늘의 던전은 7개의 스테이지로 구성되어 있습니다.</h2>');
+      $view.append('<table border="1"><tr><th width=100>스테이지</th><th width=400>미션</th><th width=150>예상 소요 시간</th></tr><tr><td>Stage 1</td><td>컬러링북 만들기(기부활동)</td><td>20분</td></tr><tr><td>Stage 2</td><td>GPT-5로 더욱 강력해진 코파일럿 [Work]</td><td>20분</td></tr><tr><td>Stage 3</td><td>워드 코파일럿 제대로 활용하기</td><td>15분</td></tr><tr><td>Stage 4</td><td>오피스와 코파일럿의 환상적인 콜라보레이션</td><td>40분</td></tr><tr><td>Stage 5</td><td>리서치 도구 에이전트 활용해 보기</td><td>30분</td></tr><tr><td>Stage 6</td><td>Employee Self Service 에이전트 활용해보기</td><td>20분</td></tr><tr><td>Stage 7</td><td>슈퍼 간단 에이전트 만들어보기</td><td>20분</td></tr></table>');
+      $view.append('<p><b>자!! 준비되셨나요? 출발~~! </b></p>');
+      $view.append('<hr />');
+      $view.append('<div class="status">🎟️ Stage0 • 콜사인(별명)을 입력해 시작하세요.</div>');
+      $view.append('<label for="callsign">콜사인</label>');
+      var $input = $('<input type="text" id="callsign" placeholder="본인을 식별할 수 있는 별명이면 무엇이든 좋습니다." />').val(savedCall);
+      $view.append($input);
+      $view.append('<div class="hint">입력 후 시작 버튼을 누르면 진행됩니다.</div>');
+
+      var $row = $('<div class="row"></div>');
+      var $btn = $('<button>시작</button>');
+      $row.append($btn);
+
+      var $reset = $('<button class="secondary" type="button">전체 초기화</button>').on('click', function() {
+        eraseAllProgress();
+        $('#app').empty(); showStage0();
+      });
+      $row.append($reset);
+
+      $view.append($row);
+      $view.append('<div class="error" id="err"></div>');
+      $('#app').html($view);
+
+      function start() {
+        var cs = $input.val().trim();
+        if (!cs) { $('#err').text('콜사인을 입력해 주세요.'); $input.focus(); return; }
+        SESSION.callsign = cs; // keep in-memory for file:// where cookies may be blocked
+        setCookie('current_callsign', cs, 30);
+        lsSet('current_callsign', cs);
+        var s = getStageForCallsign(cs);
+        if (s) { goStage(s); return; }
+        setStageForCallsign(cs, 1);
+        showStage(1, cs);
+      }
+      $btn.on('click', start);
+      $input.on('keydown', function(e) { if (e.key === 'Enter') start(); });
+      $input.trigger('focus');
+    }
+
+    function showStage(n, callsign) {
+      callsign = callsign || getCurrentCallsign();
+      if (!callsign) { showStage0(); return; }
+      setStageForCallsign(callsign, n); // ensure cookie reflects current stage for this callsign
+
+  // Update header image for current stage
+  updateStageHero(n);
+
+      var $view = $('<div/>');
+      $view.append(
+        $('<div class="status"></div>').html(
+          '현재 단계: <strong>Stage' + n + '</strong> · 콜사인: <span class="badge">' + $('<div>').text(callsign).html() + '</span>'
+        )
+      );
+      $view.append('<hr/>');
+      if (n !== 0) {
+        // Placeholder for external content of this stage
+        $view.append('<div id="stageContent" class="panel"></div>');
+      }
+      $view.append('<hr/>');
+      $view.append('<div class="spacer"></div>');
+      $view.append('<div>🚩 아래에 이 단계의 암호를 입력하세요. 정답이면 다음 단계로 이동합니다.</div>');
+      $view.append('<div class="spacer"></div>');
+      $view.append('<label for="keycode">암호</label>');
+      var $input = $('<input type="text" id="keycode" inputmode="numeric" autocomplete="off" placeholder="" />');
+      $view.append($input);
+
+      var $row = $('<div class="row"></div>');
+      var $submit = $('<button>확인</button>');
+      var $reset = $('<button class="secondary" type="button">콜사인 변경</button>').on('click', function() {
+        // Just forget current_callsign; keep stored per-callsign progress
+        SESSION.callsign = null;
+        eraseCookie('current_callsign');
+        lsRemove('current_callsign');
+        $('#app').empty(); showStage0();
+      });
+      $row.append($submit).append($reset);
+      $view.append($row);
+
+      $view.append('<div class="error" id="err"></div>');
+      $('#app').html($view);
+
+      // After mounting, load external HTML for current stage
+      if (n !== 0) {
+        loadStageFragment('#stageContent', 'stage' + n + '.html');
+      }
+
+      function verify() {
+        var v = ($input.val() || '').trim();
+        if (!v) { $('#err').text('다음 단계로 넘어가려면 암호 입력'); $input.focus(); return; }
+        
+        // 실시간으로 key.html에서 키코드 가져오기
+        loadKeyCodes(function(error, keycodes) {
+          if (error) {
+            $('#err').text('키코드를 불러오는 중 오류가 발생했습니다: ' + error);
+            return;
+          }
+          
+          if (v === keycodes[n]) {
+            if (n < 7) {
+              var next = n + 1;
+              setStageForCallsign(callsign, next);
+              showStage(next, callsign);
+            } else {
+              setStageForCallsign(callsign, 'complete');
+              showComplete(callsign);
+            }
+          } else {
+            $('#err').text('암호가 올바르지 않습니다.');
+            $input.select().focus();
+          }
+        });
+      }
+      $submit.on('click', verify);
+      $input.on('keydown', function(e) { if (e.key === 'Enter') verify(); });
+      $input.trigger('focus');
+    }
+
+    function showComplete(callsign) {
+      callsign = callsign || getCurrentCallsign() || '(미지정)';
+      // Update header image for completion
+      updateStageHero('complete');
+      var $view = $('<div/>');
+      $view.append('<div class="status">완결되었습니다.</div>');
+      $view.append('<hr />');
+      $view.append(
+        $('<div></div>').html(
+          '<h2>축하합니다, ' + $('<div>').text(callsign).html() + ' 님! 모든 단계를 마쳤습니다. <br /><br />오늘의 던전앤코파일럿 체험 소감을 미팅 챗룸에 남겨 주세요 ~ 💖<br /><br /></h2>'
+        )
+      );
+      $view.append('<hr />');
+      var $row = $('<div class="row"></div>');
+      var $restart = $('<button class="secondary" type="button">처음으로</button>').on('click', function() {
+        if (callsign && callsign !== '(미지정)') {
+          setStageForCallsign(callsign, 1);
+        }
+        SESSION.callsign = null;
+        eraseCookie('current_callsign');
+        lsRemove('current_callsign');
+        showStage0();
+      });
+      var $reset = $('<button type="button">완전 초기화</button>').on('click', function() {
+        eraseAllProgress();
+        showStage0();
+      });
+      $row.append($restart).append($reset);
+      $view.append($row);
+      $('#app').html($view);
+    }
+
+    // --- Bootstrap (no $ dependency until ensured) ---
+    document.addEventListener('DOMContentLoaded', function(){
+      ensureJQuery(function(){
+        // 성공적으로 jQuery가 준비됨
+        showStage0();
+      }, function(){
+        var el = document.getElementById('app');
+        if (el) {
+          el.innerHTML = '<div class="error">jQuery를 불러오지 못했습니다. 네트워크 연결을 확인하거나 인터넷이 가능한 환경에서 다시 열어주세요.</div>';
+        }
+      });
+    });
+  </script>
+  <div class="vibe">
+  	<details class="fold">
+			<summary> 이 앱은 깃헙코파일럿을 이용해 바이브코딩으로 만들어졌습니다.</summary>
+			<div class="fold-body">
+				<img src="img/image copy 7.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+			</div>
+		</details>
+  </div>
+</body>
+</html>

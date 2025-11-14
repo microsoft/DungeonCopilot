@@ -1,0 +1,129 @@
+<style>
+	root { color-scheme: light dark; }
+	html, body { margin: 0; padding: 0; }
+  	.stage-content { box-sizing: border-box; padding: 16px; line-height: 1.6; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+	.stage-content h1 { margin: 0 0 .75rem; font-size: 2rem; }
+	.stage-content h2 { margin: 0 0 .75rem; font-size: 1.25rem; }
+	.stage-content h3 { margin: 1.25rem 0 .5rem; font-size: 1.1rem; }
+	.stage-content ol { padding-left: 1.25rem; }
+	details.fold summary { cursor: pointer; }
+	details.fold .fold-body { margin-top: .5rem; }
+	.note { background: #fff8e1; border: 1px solid #facc15; color: #6b5900; padding: .75rem .9rem; border-radius: 8px; margin: 1rem 0; }
+	.prompt {
+    background: #f3f4f6;
+    border: 0px solid #797a99;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.2);
+    padding: 6px 16px 16px 16px; /* 상단만 8px로 줄임 */
+    border-radius: 10px;
+    margin: 1rem 0;
+	text-indent: 0;
+    font-size: 1.125rem;
+    /* text-indent: 1rem; */
+    font-weight: bold;
+}
+.prompt pre {
+    /* background: #f3f4f6; */
+    border: 2px solid #797a99;
+    padding: 12px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin: .5rem 0 0;
+	line-height: 2.0; /* 줄 간격을 넓힘 */
+}
+/* 다크모드 스타일 추가 */
+@media (prefers-color-scheme: dark) {
+   body { background: #181818; color: #f2f2f2; }
+  .prompt {
+    background: #23272e;         /* 어두운 배경 */
+    color: #f2f2f2;              /* 밝은 글자색 */
+    border-color: #444a;         /* 테두리도 어둡게 */
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.12); /* 그림자도 살짝 어둡게 */
+  }
+}
+	/* .prompt pre { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; margin: .5rem 0 0; } */
+</style>
+<script>
+	(function(){
+		function getDocHeight(){
+			var d = document;
+			var body = d.body, html = d.documentElement;
+			return Math.max(
+				body.scrollHeight, body.offsetHeight,
+				html.clientHeight, html.scrollHeight, html.offsetHeight
+			);
+		}
+		function postSize(){
+			var h = getDocHeight();
+			parent && parent.postMessage && parent.postMessage({ type: 'stage-iframe-size', height: h }, '*');
+		}
+		window.addEventListener('load', postSize);
+		window.addEventListener('resize', function(){ setTimeout(postSize, 50); });
+		// Respond to ping from parent
+		window.addEventListener('message', function(e){ var d=e&&e.data; if (d && d.type==='stage-iframe-ping') postSize(); });
+		// Observe DOM changes
+		var mo = new MutationObserver(function(){ setTimeout(postSize, 30); });
+		mo.observe(document.documentElement || document.body, { childList: true, subtree: true, attributes: true, characterData: true });
+	})();
+</script>
+
+<section class="stage-content" aria-labelledby="st1-title">
+	<h1 id="st1-title">Stage5. 리서치 도구 체험해 보기</h1>
+	<p>이번 단계에서는 리서치 도구 에이전트를 체험해 보겠습니다.</p>
+
+	<div class="note" role="note">
+		<strong>Tip</strong> ▶ 아시나요? 본사에서 공지했던 추천 프롬프트가 있었다는 것을...<br/>
+		<img src="img/s0201.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+	</div>
+
+	<hr/>
+	<h2>1️⃣ 첫번째 단계, 리서치 도구 에이전트 사용해보기</h2>
+	<ol>
+		<li>코파일럿의 Work Chat에 접속합니다. <a href="https://m365.cloud.microsoft/chat/" target="_blank">https://m365.cloud.microsoft/chat/</a></li>
+		<li>좌측의 에이전트 목록에서 <b>리서치 도구 에이전트</b>를 선택합니다</li>
+		<li>아래 예시 질문을 복사하여 리서치 도구 에이전트에 입력해 봅니다.</li>
+		<div class="prompt">
+			<pre>
+① 연구 보고서 작성 프롬프트
+내부 회의에서 논의된 [주제]를 기반으로, 제안된 아이디어를 심층 분석하고 평가하는 종합 연구 보고서를 작성해 주세요. 
+보고서에는 다음을 포함해 주세요:
+- 각 아이디어의 강점과 약점
+- 실행 가능성 및 예상 영향
+- 외부 시장 조사, 고객 미팅, 내부 데이터에서 얻은 최신 인사이트
+- 전략적 권장 사항과 향후 단계
+보고서는 명확한 구조(요약, 분석, 권장 사항)로 작성해 주세요.
+<hr/>
+② 액션 아이템 추적기 프롬프트 
+지난 7일간의 이메일, Teams 채팅, 회의록 등 모든 커뮤니케이션을 기반으로 액션 아이템 추적기를 작성해 주세요. 
+다음 기준으로 정리해 주세요:
+1) 내가 처리해야 하는 작업: 긴급도와 중요도 순으로 정렬, 마감일 포함
+2) 내가 다른 사람에게 요청한 작업: 후속 조치 여부, 요청 후 경과 시간, 상태(진행 중/대기 중)
+마지막으로, 후속 연락이 필요한 사람과 리마인더를 보내야 할 우선순위 목록을 추천해 주세요.
+			</pre>
+		</div>
+	</ol>
+
+	<hr/>
+	<h2>2️⃣ 두번째 단계, 리서치 도구 에이전트에서 나만의 프롬프트 사용해보기</h2>
+	<p>리서치 도구 에이전트에서 나의 업무와 관련한 질문을 자유롭게 던져 보세요.</p>
+	<div class="prompt">
+		<pre>
+예시 1. 내 고객사는 Microsoft 365 라이선스를 보유하고 있지만, 실제로는 이를 활용하지 않고 있습니다. 고객사가 M365를 효과적으로 활용할 수 있도록, 도입 후 기대할 수 있는 주요 이점과 성공 사례를 중심으로 제안서의 초안을 작성해 주세요.
+<hr/>
+예시 2. 최근의 생성형 AI 기술 발전이 금융 서비스 산업에 미치는 영향을 분석하는 보고서를 작성해 주세요. 특히, 리스크 관리, 고객 경험 개선, 운영 효율성 향상 측면에서의 활용 사례를 중심으로 다뤄 주세요.
+<hr/>
+예시 3. 한국의 중소기업(SMB) 시장에서 Microsoft Azure의 성장 기회를 평가하는 보고서를 작성해 주세요. 경쟁사 분석, 시장 동향, 고객 요구 사항을 포함하여, Azure가 SMB 시장에서 차별화될 수 있는 전략적 접근 방안을 제안해 주세요.
+<hr/>
+예시 4. 한국 고객에게 효과적인 마케팅 켐페인을 기획하기 위해, 국내외의 성공적인 디지털 마케팅 사례를 조사하고, 이를 바탕으로 우리 회사의 제품과 서비스에 적용할 수 있는 전략을 제안해 주세요.
+	</pre>
+	</div>
+
+	<hr />
+	<h2>3️⃣ 세번째 단계, 나의 리서치 도구 프롬프트 공유하기</h2>
+	<p>오늘 이 시간 리서치 도구에서 실제로 사용해 보았던 프롬프트를 공유해 주세요.</p>
+	<button type="button" onclick="window.open('https://forms.office.com/r/Vn6jxNwCyh')">[클릭하세요] Stage 5 - 리서치 도구 프롬프트 제출</button>
+
+	<hr />
+	<p>🗝️ 수고하셨습니다. 던전관리자가 다음 스테이지로 가는 암호를 정해진 시간에 공지할 것입니다.</p>
+	
+</section>
