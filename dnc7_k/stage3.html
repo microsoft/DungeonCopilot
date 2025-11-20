@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 3</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>🛡️ Stage 3: 데이터를 분석하자!</h1>
+    <div class="content">
+        <p>이번 퀘스트에서는 통계 데이터를 활용하여 시장과 상권을 분석하고 인사이트를 확인합니다.</p>
+        <div class="note" role="note" style="text-align: center;">
+            <img src="img/quest3.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </div>
+        
+        <hr />
+        <ol>
+             <li>다음의 링크로 이동하여 <button type="button" onclick="window.open('https://livesend.microsoft.com/i/04kuziNUSL3K___sz2uKC7bPau9K0e1jGlhVrMkN2LcwLhu9gikS03PIhFZ9EfETtKTKXzjPJXLJJON8NNkqCFXeAlPofEG___gjNgCul6HypUj8nLxkyA65mJx___PLUSSIGN4mRDhNY','_blank','noopener')">실습파일 (클릭)</button>에서 
+                <span style="color:#7d83cc; font-style:italic;">"서울지역상권데이터.xlsx" </span>파일을 다운로드 합니다.
+            </li>
+            <li>Excel을 실행하고, 다운로드한 파일을 열어 파일을 확인합니다. 본격적으로 Copilot을 사용하기 위해 "복사본 저장(다른 이름으로 저장)"을 선택하여 OneDrive에 업로드합니다. </li>
+            <li>
+                Excel 홈 메뉴에서 오른쪽 부분의 "Copilot" 아이콘 아래 화살표를 선택하여 "앱기술" 메뉴를 선택합니다. <br/>
+                <img src="img/excel_copilot.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            </li>
+            <li>아래의 샘플 프롬프트를 입력합니다. [대괄호]로 싸여 있는 부분을 취향에 따라 수정하십시오. (대괄호는 지우시고요)</li>
+            <li>내용을 창의적으로 변경해보면서 데이터의 인사이트를 확인합니다.</li>
+            
+
+
+        <div class="code">
+            <div class="code-title">🚩 데이터 분석하기</div>
+            <p>통계 정보를 활용하여 데이터를 분석하여 인사이트를 확인합니다. </p>
+            <div class="code-title">[샘플 프롬프트]</div>
+            <div class="code-box">
+                <p>지역별 유동인구 컬럼을 추가해줘</p>
+                <p>가게당 유동인구수를 구해서 “유동인구비율＂ 컬럼을 추가해줘</p>
+                <p>유동인구비율이 높은 지역 5개를 보여줘</p>
+                <p>지역별 가게 생존율 컬럼을 추가해줘. 전체가게 3년 생존율을 알고싶어</p>
+                <p>3년 생존율의 평균이 얼마야?</p>
+                <p>지역별 2024년 개업가게수와 폐업가게수를 추가해줘</p>
+                <p>폐업율 컬럼을 추가해줘</p>
+                <p>개업가게수보다 폐업가게수가 높은 지역을 하이라이트해줘</p>
+
+                <!-- <p>상권 분석을 위해 확인 해야할 지표를 제안해줘</p>
+                <p>상권점수화 모델을 알려줘</p>
+                <p>서울 지역 점수표 만들어줘</p>
+                <p>폐업률이 높은 지역 5개를 알려줘</p>
+                <p>[강남구]와 [중구]의 생존율/개업/폐업를 보여줘</p>
+                <p>연령대별 소비스타일 시트에서 [20대]와 [40대]의 차이를 각 소비스타일별로 답변 값과 어떤 차이를 보이는지와 그 이유를 테이블 형태로 정리해서 보여줘.</p>
+                <p>연령대별 소비스타일 차이를 보이는 사회적인 배경과 트랜드를 웹데이터를 참고해서 알려줘.</p> -->
+            </div>
+        </div>
+        <li>조금 더 심층적인 데이터 분석이 필요하다면 고급 분석을 할 수 있습니다.</li>
+        <li>프롬프트 창에 "고급 분석 모드를 사용하여 더 심층적인 결과 얻기"를 입력합니다.</li>
+        <li>고급 분석 모드 "시작" 버튼을 선택합니다.
+              <img src="img/advanced.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </li>  
+        <div class="code">
+            <div class="code-title">🚩 데이터 고급 분석하기</div>
+            <p>고급분석 모드를 수행하여 심층적인 분석을 진행합니다. </p>
+            <div class="code-title">[샘플 프롬프트]</div>
+            <div class="code-box">
+                <p>유동인구와 3년 생존율 간의 상관관계 시각화</p>
+                <p>프렌차이즈 가게의 비율과 3년 생존율의 상관관계는?</p>
+                <p>프랜차이즈 비율이 높은 상위/하위 지역별 3년 생존율 비교</p>
+                <p>지역별 개업가게수 트렌드 시각화해줘</p>
+                <p>상권을 점수화하고 싶어. 점수화 모델을 제안해줘</p>
+                <p>상권 점수화에 사용할 변수별 가중치 추천 요청</p>
+                <p>천된 가중치로 상권 점수 산출</p>
+
+
+                <!-- <p>상권 분석을 위해 확인 해야할 지표를 제안해줘</p>
+                <p>상권점수화 모델을 알려줘</p>
+                <p>서울 지역 점수표 만들어줘</p>
+                <p>폐업률이 높은 지역 5개를 알려줘</p>
+                <p>[강남구]와 [중구]의 생존율/개업/폐업를 보여줘</p>
+                <p>연령대별 소비스타일 시트에서 [20대]와 [40대]의 차이를 각 소비스타일별로 답변 값과 어떤 차이를 보이는지와 그 이유를 테이블 형태로 정리해서 보여줘.</p>
+                <p>연령대별 소비스타일 차이를 보이는 사회적인 배경과 트랜드를 웹데이터를 참고해서 알려줘.</p> -->
+            </div>
+            </ol>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

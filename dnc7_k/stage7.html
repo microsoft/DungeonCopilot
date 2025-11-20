@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 7</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>👑 축하합니다. Congrats! You Did It 🎉</h1>
+    <div class="content">
+        <p><strong>축하합니다! 당신은 진정한 영웅입니다! 🎉</strong></p>
+        <p>축하합니다, 모든 퀘스트를 완료하였습니다.</p>
+        <p>Copilot과 함께한 여정이 즐거웠기를 바랍니다.</p>
+        <img src="img/end.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+    </div>
+    <div class="note" role="note">
+            Copilot에 대해 더 알고 싶다면, 다음 링크들을 방문해 보세요.     
+            <ul style="list-style: none; padding: 0; color: #333;">
+            <li style="margin-bottom: 12px;">
+                🔍 <a href="https://aka.ms/CopilotLab" target="_blank" style="color: #333; text-decoration: none; font-weight: bold;">
+                Copilot Prompt Gallery
+                </a> – Copilot에서 활용할 수 있는 다양한 프롬프트
+            </li>
+             <li style="margin-bottom: 12px;">
+                📖 <a href="https://adoption.microsoft.com/ko-kr/scenario-library/" target="_blank" style="color: #333; text-decoration: none; font-weight: bold;">
+                Copilot Scenario Library
+                </a> – 산업별·업무별 Copilot 활용 시나리오
+            </li>
+            <li style="margin-bottom: 12px;">
+                📰 <a href="https://techcommunity.microsoft.com/category/microsoft365copilot/blog/microsoft365copilotblog" target="_blank" style="color: #333; text-decoration: none; font-weight: bold;">
+                Microsoft 365 Copilot Blog
+                </a> – 최신 Copilot 소식과 활용 팁을 확인할 수 있는 공식 블로그
+            </li>
+            <li style="margin-bottom: 12px;">
+                ▶️ <a href="https://www.youtube.com/@MicrosoftKorea" target="_blank" style="color: #333; text-decoration: none; font-weight: bold;">
+                Microsoft Korea YouTube 채널
+                </a> – 웨비나와 튜토리얼 등 다양한 영상 콘텐츠 제공
+            </li>
+
+    </div>
+   
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

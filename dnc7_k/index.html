@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>던전앤코파일럿7</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* 다크모드 지원 */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #e0e0e0;
+            }
+
+            .container {
+                background-color: #2d2d2d;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+            }
+
+            .tabs {
+                background-color: #1f1f1f;
+                border-bottom: 2px solid #404040;
+            }
+
+            .tab {
+                background-color: #333333;
+                border-right: 1px solid #404040;
+                color: #b0b0b0;
+            }
+
+            .tab:hover {
+                background-color: #404040;
+            }
+
+            .tab.active {
+                background-color: #667eea;
+                color: white;
+            }
+
+            .tab.locked {
+                background-color: #252525;
+                color: #666666;
+            }
+
+            .tab.locked:hover {
+                background-color: #252525;
+            }
+
+            .message {
+                color: #e0e0e0;
+                background-color: #333333;
+            }
+            
+            .container {
+                background-color: #000000; /* 완전 검정 */
+                /* 또는 조금 부드러운 톤: #121212, #1a1a1a */
+                box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+             }
+
+          
+        }
+
+      
+
+        .logo {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .logo img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            overflow-x: auto;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #e9ecef;
+            border: none;
+            border-right: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            font-weight: bold;
+            color: #495057;
+            min-width: 120px;
+        }
+
+        .tab:last-child {
+            border-right: none;
+        }
+
+        .tab:hover {
+            background-color: #dee2e6;
+        }
+
+        .tab.active {
+            background-color: #667eea;
+            color: white;
+        }
+
+        .tab.locked {
+            background-color: #f1f3f5;
+            color: #adb5bd;
+            cursor: not-allowed;
+        }
+
+        .tab.locked:hover {
+            background-color: #f1f3f5;
+        }
+
+        .content {
+            padding: 20px;
+            min-height: 500px;
+        }
+
+        .message {
+            padding: 40px;
+            text-align: center;
+            font-size: 18px;
+            color: #495057;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin: 20px;
+        }
+
+        #stageContent {
+            width: 100%;
+            border: none;
+            overflow: hidden;
+        }
+        .nav-btn {
+            background-color: #8b9cff;   /* 버튼 컬러 */
+            color: #fff;                /* 텍스트 색상 */
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s ease;
+            
+        }
+
+        /* hover 효과 */
+        .nav-btn:hover {
+            background-color: #6f82e6;  /* 조금 더 진한 파란색 */
+        }
+
+        /* 이전 버튼과 다음 버튼 개별 스타일 (필요 시) */
+        .prev-btn {
+            float: left;
+            margin-left: 40px;  /* 왼쪽 여백 */
+        }
+
+        .next-btn {
+            float: right;
+            margin-right: 40px;  /* 왼쪽 여백 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="img/titlelogo.png" alt="던전앤코파일럿7">
+        </div>
+        
+        <div class="tabs">
+            <button class="tab" data-stage="0">Stage 0</button>
+            <button class="tab locked" data-stage="1">Stage 1 🔒</button>
+            <button class="tab locked" data-stage="2">Stage 2 🔒</button>
+            <button class="tab locked" data-stage="3">Stage 3 🔒</button>
+            <button class="tab locked" data-stage="4">Stage 4 🔒</button>
+            <button class="tab locked" data-stage="5">Stage 5 🔒</button>
+            <button class="tab locked" data-stage="6">Stage 6 🔒</button>
+            <button class="tab locked" data-stage="7">Stage 7 🔒</button>
+        </div>
+        
+        <div class="content">
+            <div id="messageArea"></div>
+            <iframe id="stageContent" src="" onload="resizeIframe(this)"></iframe>
+        </div>
+        
+
+        <div class="controls" style="margin-top:0px; margin-bottom:70px;" >
+            <button id="prevStageBtn" class="nav-btn prev-btn">&lt; 이전</button>
+            <button id="nextStageBtn" class="nav-btn next-btn">다음 &gt;</button>
+        </div>
+
+
+
+    <script>
+/* DailyMisson으로 진행할 때 */
+        // // 전역 변수 startDate 선언
+        // var startDate = '20251017';
+
+        // // iframe 높이 자동 조정 함수 (전역 함수로 선언)
+        // function resizeIframe(iframe) {
+        //     try {
+        //         const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        //         if (iframeDoc && iframeDoc.body) {
+        //             const height = iframeDoc.body.scrollHeight;
+        //             iframe.style.height = (height + 30) + 'px';
+        //         }
+        //     } catch(e) {
+        //         // 로컬 파일은 문제없지만 혹시 모를 에러 처리
+        //         iframe.style.height = '500px';
+        //     }
+        // }
+
+        // // postMessage를 통한 iframe 높이 조정
+        // window.addEventListener('message', function(e) {
+        //     if (e.data.type === 'resize') {
+        //         const iframe = document.getElementById('stageContent');
+        //         iframe.style.height = (e.data.height + 40) + 'px';
+        //     }
+        // });
+
+        // $(document).ready(function() {
+        //     // URL 매개변수에서 startDate 가져오기
+        //     const urlParams = new URLSearchParams(window.location.search);
+        //     const urlStartDate = urlParams.get('startDate');
+            
+        //     if (urlStartDate) {
+        //         startDate = urlStartDate;
+        //     }
+
+        //     // 날짜 차이 계산 함수
+        //     function getDaysDifference(startDateStr) {
+        //         const year = parseInt(startDateStr.substring(0, 4));
+        //         const month = parseInt(startDateStr.substring(4, 6)) - 1;
+        //         const day = parseInt(startDateStr.substring(6, 8));
+                
+        //         const start = new Date(year, month, day);
+        //         const today = new Date();
+        //         today.setHours(0, 0, 0, 0);
+                
+        //         const diffTime = today - start;
+        //         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                
+        //         return diffDays;
+        //     }
+
+        //     // 날짜 포맷 함수 (YYYYmmDD -> YYYY년 M월 D일)
+        //     function formatDate(dateStr) {
+        //         const year = parseInt(dateStr.substring(0, 4));
+        //         const month = parseInt(dateStr.substring(4, 6));
+        //         const day = parseInt(dateStr.substring(6, 8));
+        //         return year + '년 ' + month + '월 ' + day + '일';
+        //     }
+
+        //     // 날짜 계산 함수 (startDate + days)
+        //     function addDays(startDateStr, days) {
+        //         const year = parseInt(startDateStr.substring(0, 4));
+        //         const month = parseInt(startDateStr.substring(4, 6)) - 1;
+        //         const day = parseInt(startDateStr.substring(6, 8));
+                
+        //         const date = new Date(year, month, day);
+        //         date.setDate(date.getDate() + days);
+                
+        //         const resultYear = date.getFullYear();
+        //         const resultMonth = String(date.getMonth() + 1).padStart(2, '0');
+        //         const resultDay = String(date.getDate()).padStart(2, '0');
+                
+        //         return resultYear + resultMonth + resultDay;
+        //     }
+
+        //     // 클릭 가능한 탭 수 계산
+        //     const daysPassed = getDaysDifference(startDate);
+        //     const unlockableTabs = Math.min(Math.max(1, daysPassed + 1), 8); // 최소 1개(Stage 0), 최대 8개
+
+        //     // 탭 상태 업데이트
+        //     $('.tab').each(function(index) {
+        //         const stage = $(this).data('stage');
+        //         if (stage < unlockableTabs) {
+        //             $(this).removeClass('locked');
+        //             $(this).text('Stage ' + stage);
+        //         }
+        //     });
+
+        //     // 탭 클릭 이벤트
+        //     $('.tab').on('click', function() {
+        //         const stage = $(this).data('stage');
+                
+        //         if ($(this).hasClass('locked')) {
+        //             // 잠긴 탭 클릭 시
+        //             const unlockDate = addDays(startDate, stage);
+        //             const unlockDateFormatted = formatDate(unlockDate);
+        //             showMessage('🔒 Stage ' + stage + '은(는) ' + unlockDateFormatted + '에 개방됩니다.');
+        //             return;
+        //         }
+                
+        //         $('.tab').removeClass('active');
+        //         $(this).addClass('active');
+                
+        //         loadStageContent(stage);
+        //     });
+
+        //     // 스테이지 컨텐츠 로드 함수
+        //     function loadStageContent(stage) {
+        //         $('#messageArea').hide();
+        //         $('#stageContent').show();
+        //         const stageFile = 'stage' + stage + '.html';
+        //         $('#stageContent').attr('src', stageFile);
+        //     }
+
+        //     // 메시지 표시 함수
+        //     function showMessage(message) {
+        //         $('#stageContent').hide();
+        //         $('#messageArea').html('<div class="message">' + message + '</div>');
+        //         $('#messageArea').show();
+        //     }
+
+        //     // 초기 Stage 0 로드
+        //     $('.tab[data-stage="0"]').addClass('active');
+        //     loadStageContent(0);
+        // });
+
+        
+/* Hands-on 세션으로 진행할 때  */
+        // iframe 높이 조정: 기존 유지
+            function resizeIframe(iframe) {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    if (iframeDoc && iframeDoc.body) {
+                        const height = iframeDoc.body.scrollHeight;
+                        iframe.style.height = (height + 30) + 'px';
+                    }
+                } catch(e) {
+                    // 로컬 파일은 문제없지만 혹시 모를 에러 처리
+                    iframe.style.height = '500px';
+                }
+            }
+
+            // postMessage를 통한 iframe 높이 조정: 기존 유지
+            window.addEventListener('message', function(e) {
+                if (e.data.type === 'resize') {
+                    const iframe = document.getElementById('stageContent');
+                    iframe.style.height = (e.data.height + 40) + 'px';
+                }
+            });
+
+            $(document).ready(function() {
+                // ----[ 새 상태 관리: 날짜 제거, 버튼 기반 ]----
+                const STORAGE_KEY = 'dungeonStageProgress'; // 진행상태 저장용 key
+                const MAX_STAGE_KEY = 'dungeonMaxStage';    // 최대 도달 스테이지 저장용
+                const totalStages = $('.tab').length;        // .tab 개수(예: 8개면 0~7)
+                
+                // URL로 초기화 제어 (?reset=true)
+                const urlParams = new URLSearchParams(window.location.search);
+                const shouldReset = urlParams.get('reset') === 'true';
+
+                let currentStage = 0; // 현재 선택된 스테이지 번호
+                let maxStage = 0; // 활성화 가능한 최종 스테이지 번호
+
+                if (!shouldReset) {
+                    // localStorage에서 진행 상태 복구
+                    const saved = localStorage.getItem(STORAGE_KEY);
+                    const openStage = localStorage.getItem(MAX_STAGE_KEY);
+                    if (saved !== null) {
+                        const n = parseInt(saved, 10);
+                        if (!isNaN(n) && n >= 0 && n < totalStages) {
+                            currentStage = n;
+                        }
+                    }
+                    if (openStage !== null) {
+                        const m = parseInt(openStage, 10);
+                        if (!isNaN(m) && m >= 0 && m < totalStages) {
+                            maxStage = m;
+                        }
+                    }
+                } else {
+                    // 초기화 요청 시 0으로 리셋
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(MAX_STAGE_KEY);
+                }
+
+                // 초기 잠금/해제 적용
+                function applyLocks() {
+                    $('.tab').each(function() {
+                        const stage = parseInt($(this).data('stage'), 10);
+                        if (stage <= currentStage || stage <= maxStage ) {
+                            $(this).removeClass('locked').text('Stage ' + stage);
+                        } else {
+                            $(this).addClass('locked').text('🔒 Stage ' + stage);
+                        }
+                    });
+                }
+
+                // 메시지 표시 함수: 기존 유지
+                function showMessage(message) {
+                    $('#stageContent').hide();
+                    $('#messageArea').html('<div class="message">' + message + '</div>');
+                    $('#messageArea').show();
+                }
+
+                // 스테이지 컨텐츠 로드 함수: 기존 유지
+                function loadStageContent(stage) {
+                    $('#messageArea').hide();
+                    $('#stageContent').show();
+                    const stageFile = 'stage' + stage + '.html';
+                    $('#stageContent').attr('src', stageFile);
+                }
+
+                // 탭 클릭 이벤트: 잠금/해제 기준 변경
+                $('.tab').on('click', function() {
+                    const stage = parseInt($(this).data('stage'), 10);
+
+                    if ($(this).hasClass('locked')) {
+                        // 잠긴 탭 클릭 시: 날짜 안내 대신 버튼 안내로 변경
+                        showMessage('🔒 아직 잠긴 스테이지입니다. 아래 "다음 스테이지" 버튼을 눌러 진행해 주세요.');
+                        return;
+                    }
+
+                    $('.tab').removeClass('active');
+                    $(this).addClass('active');
+                    currentStage = stage;
+                    loadStageContent(stage);
+                });
+
+                // 다음 스테이지 버튼 핸들러
+                // HTML에 아래 버튼이 있다고 가정: <button id="nextStageBtn">다음 스테이지</button>
+                $('#nextStageBtn').on('click', function() {
+                    if (currentStage >= totalStages - 1) {
+                        // 마지막 스테이지인 경우
+                        showMessage('🎉 모든 스테이지를 완료했습니다!');
+                        return;
+                    }
+                    currentStage += 1;           // 다음 단계로 진행
+                    localStorage.setItem(STORAGE_KEY, String(currentStage));
+                    if(currentStage > maxStage){
+                        maxStage += 1;
+                        localStorage.setItem(MAX_STAGE_KEY, String(maxStage));
+                    }
+                    applyLocks();                // 잠금/해제 상태 갱신
+
+                    // 새로 열린 탭을 활성화하고 컨텐츠 로드
+                    const $nextTab = $('.tab[data-stage="' + currentStage + '"]');
+                    $('.tab').removeClass('active');
+                    $nextTab.removeClass('locked').addClass('active').text('Stage ' + currentStage);
+                    loadStageContent(currentStage);
+                });
+
+                // (선택) 이전 스테이지 버튼도 제공 가능
+                // HTML 예: <button id="prevStageBtn">이전 스테이지</button>
+                $('#prevStageBtn').on('click', function() {
+                    if (currentStage <= 0) {
+                        showMessage('현재 스테이지가 시작 단계입니다.');
+                        return;
+                    }
+                    currentStage -= 1;
+                    localStorage.setItem(STORAGE_KEY, String(currentStage));
+                    applyLocks();
+
+                    const $prevTab = $('.tab[data-stage="' + currentStage + '"]');
+                    $('.tab').removeClass('active');
+                    $prevTab.addClass('active');
+                    loadStageContent(currentStage);
+                });
+
+                // 초기 적용: Stage 0 활성화 및 잠금 상태 반영
+                applyLocks();
+                const $initialTab = $('.tab[data-stage="' + currentStage + '"]');
+                $initialTab.removeClass('locked').addClass('active').text('Stage ' + currentStage);
+                loadStageContent(currentStage);
+            });
+
+    </script>
+</body>
+</html>
