@@ -1,0 +1,87 @@
+- 던전앤코파일럿이라는 웹사이트를 만들것이다.
+- html 기반의 정적웹사이트이다.
+- Jquery 를 적극활용하는 것이 좋겠다.
+- 로컬파일경로일 때와 웹사이트경로일 때의 동작 결과가 같아야 한다.
+
+## 파일구성
+- img/ : 이미지들이 저장되는 폴더
+- index.html : 본 프로그램의 메인 파일
+- stage0.html ~ stage7.html : 8개의 스테이지 컨텐츠 파일
+- common.css : 모든 stage 파일에서 공통으로 사용하는 스타일시트
+
+## index.html 구조
+- 상단에 로고 이미지(img/titlelogo.png) 표시
+- 로고는 그라데이션 배경(보라색 계열)을 가진 영역에 배치
+- 로고 아래에 8개의 탭이 가로로 배치 ("Stage 0" ~ "Stage 7")
+- 탭 클릭 시 하단 컨텐츠 영역에 해당 stage.html 파일 내용을 iframe으로 표시
+- iframe의 높이는 postMessage를 통해 컨텐츠 길이에 맞춰 동적으로 조정됨
+
+## 날짜 기반 스테이지 잠금 시스템
+- index.html에 자바스크립트 전역 변수 startDate 선언 (YYYYmmDD 형식, 예: 20251105)
+- URL 매개변수로 startDate 전달 가능 (예: index.html?startDate=20251010)
+- URL 매개변수가 있으면 우선 적용, 없으면 파일 내 선언값 사용
+- startDate는 Stage 1이 개방되는 날짜 (Stage 0는 항상 개방)
+- 이후 하루에 하나씩 스테이지가 개방 (Stage 2는 startDate+1일, Stage 3은 startDate+2일...)
+- 예시: startDate가 20251101이고 오늘이 11월 3일이면 Stage 0, 1, 2만 클릭 가능
+
+## 탭 상태 표시
+- 모든 탭은 항상 화면에 표시됨 (숨기지 않음)
+- 잠긴 탭: 탭 이름 옆에 자물쇠 이모지(🔒) 표시, 회색 스타일
+- 잠긴 탭 클릭 시: 개방 날짜 안내 메시지 표시 (예: "Stage 3은 11월 8일에 개방됩니다.")
+- 활성 탭: 보라색 배경으로 강조 표시
+- 초기 로딩 시 Stage 0이 자동으로 선택되고 stage0.html 내용 표시
+
+## iframe 높이 자동 조정
+- 각 stage 파일은 로드 완료 시 자신의 scrollHeight를 부모 창에 postMessage로 전송
+- index.html은 message 이벤트를 리스닝하여 iframe 높이를 동적으로 조정
+- 이를 통해 컨텐츠 길이에 따라 iframe이 자동으로 늘어나거나 줄어듦
+
+## 스타일 시스템 (common.css)
+### 기본 스타일
+- body: 투명 배경, 라인 간격 1.6, 20px 패딩
+- h1: 보라색(#667eea), 하단 3px 테두리
+
+### note 박스 (.note)
+- 파란색 배경(#e7f3ff)
+- 왼쪽 4px 파란색 테두리(#2196F3)
+- 강조할 내용이나 팁 표시용
+
+### code 박스 (.code, .code-title, .code-box)
+- .code: 회색 배경(#f5f5f5)의 외부 컨테이너
+- .code-title: 굵은 글씨로 제목 표시
+- .code-box: 흰색 배경의 내부 상자
+- .code-box p: 각 문단 앞에 파란색 다이아몬드 불릿(◆) 자동 표시
+- 프롬프트나 코드 예제 표시용
+
+### 사용 예시
+```html
+<div class="note">
+    팁이나 중요 정보
+</div>
+
+<div class="code">
+    <div class="code-title">[샘플 프롬프트]</div>
+    <div class="code-box">
+        <p>첫 번째 내용</p>
+        <p>두 번째 내용</p>
+    </div>
+</div>
+```
+
+## 다크모드 지원
+- @media (prefers-color-scheme: dark) 사용
+- 브라우저/OS 다크모드 설정 감지하여 자동 적용
+- 다크모드 색상:
+  * body: 어두운 배경(#1a1a1a), 밝은 텍스트(#e0e0e0)
+  * container: #2d2d2d 배경
+  * 탭: #333333 배경, 호버 시 #404040
+  * note 박스: 어두운 파란 배경(#1a3a52)
+  * code 박스: #2d2d2d 배경, 내부 상자 #1a1a1a
+  * h1: 밝은 보라색(#8b9cff)
+  * 이미지: 투명도 0.9로 약간 어둡게
+
+## 코드 재사용
+- 모든 stage 파일(stage0.html ~ stage7.html)은 common.css를 참조
+- `<link rel="stylesheet" href="common.css">` 사용
+- CSS 수정 시 common.css 한 곳만 수정하면 모든 페이지에 자동 반영
+- 코드 중복 제거로 유지보수성 향상

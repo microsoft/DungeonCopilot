@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 3</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>🛡️ Stage 3: Let’s Analyze the Data!</h1>
+    <div class="content">
+        <p>In this quest, we will use statistical data to analyze the market and commercial districts, and uncover insights.</p>
+        <div class="note" role="note" style="text-align: center;">
+            <img src="img/quest3.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </div>
+        
+        <hr />
+        <ol>
+             <li>Go to the following link and download the <button type="button" onclick="window.open('https://livesend.microsoft.com/i/04kuziNUSL3K___sz2uKC7bPau9K0e1jGlhVrMkN2LcwLhu9gikS03PIhFZ9EfETtKTKXzjPJXLJJON8NNkqCFXeAlPofEG___gjNgCul6HypUj8nLxkyA65mJx___PLUSSIGN4mRDhNY','_blank','noopener')">practice file (click)</button> named
+                <span style="color:#7d83cc; font-style:italic;">"Seoul Commercial District Data.xlsx"</span>.
+            </li>
+            <li>Open Excel and load the downloaded file. To fully use Copilot, choose "Save a Copy (Save As)" and upload it to OneDrive.</li>
+            <li>
+                In the Excel Home menu, click the arrow under the "Copilot" icon on the right and select the "App Skills" menu. <br/>
+                <img src="img/excel_copilot.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            </li>
+            <li>Enter the sample prompts below. Modify the parts in [square brackets] as you like (and remove the brackets themselves).</li>
+            <li>Creatively change the content to explore different insights from the data.</li>
+            
+
+
+        <div class="code">
+            <div class="code-title">🚩 Analyzing the Data</div>
+            <p>Use statistical information to analyze the data and uncover insights. </p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>Add a column for floating population by region.</p>
+                <p>Calculate the floating population per store and add a column named "Floating Population Ratio".</p>
+                <p>Show the top 5 regions with the highest floating population ratio.</p>
+                <p>Add a store survival rate column by region. I want to know the 3-year survival rate for all stores.</p>
+                <p>What is the average 3-year survival rate?</p>
+                <p>Add the number of newly opened and closed stores by region for 2024.</p>
+                <p>Add a closure rate column.</p>
+                <p>Highlight the regions where the number of closures is higher than the number of openings.</p>
+
+                <!-- <p>상권 분석을 위해 확인 해야할 지표를 제안해줘</p>
+                <p>상권점수화 모델을 알려줘</p>
+                <p>서울 지역 점수표 만들어줘</p>
+                <p>폐업률이 높은 지역 5개를 알려줘</p>
+                <p>[강남구]와 [중구]의 생존율/개업/폐업를 보여줘</p>
+                <p>연령대별 소비스타일 시트에서 [20대]와 [40대]의 차이를 각 소비스타일별로 답변 값과 어떤 차이를 보이는지와 그 이유를 테이블 형태로 정리해서 보여줘.</p>
+                <p>연령대별 소비스타일 차이를 보이는 사회적인 배경과 트랜드를 웹데이터를 참고해서 알려줘.</p> -->
+            </div>
+        </div>
+        <li>If you need more in-depth data analysis, you can use Advanced Analysis.</li>
+        <li>In the prompt window, type "Use Advanced Analysis mode to get deeper results".</li>
+        <li>Click the "Start" button for Advanced Analysis.
+              <img src="img/advanced.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </li>  
+        <div class="code">
+            <div class="code-title">🚩 Performing Advanced Data Analysis</div>
+            <p>Use Advanced Analysis mode to conduct deeper analysis. </p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>Visualize the correlation between floating population and 3-year survival rate.</p>
+                <p>What is the correlation between the proportion of franchise stores and the 3-year survival rate?</p>
+                <p>Compare the 3-year survival rate between regions with high and low franchise proportions.</p>
+                <p>Visualize the trend of newly opened stores by region.</p>
+                <p>I want to score each commercial district. Propose a scoring model.</p>
+                <p>Recommend weight values for each variable used to score commercial districts.</p>
+                <p>Calculate the commercial district scores using the recommended weights.</p>
+
+
+                <!-- <p>상권 분석을 위해 확인 해야할 지표를 제안해줘</p>
+                <p>상권점수화 모델을 알려줘</p>
+                <p>서울 지역 점수표 만들어줘</p>
+                <p>폐업률이 높은 지역 5개를 알려줘</p>
+                <p>[강남구]와 [중구]의 생존율/개업/폐업를 보여줘</p>
+                <p>연령대별 소비스타일 시트에서 [20대]와 [40대]의 차이를 각 소비스타일별로 답변 값과 어떤 차이를 보이는지와 그 이유를 테이블 형태로 정리해서 보여줘.</p>
+                <p>연령대별 소비스타일 차이를 보이는 사회적인 배경과 트랜드를 웹데이터를 참고해서 알려줘.</p> -->
+            </div>
+            </ol>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

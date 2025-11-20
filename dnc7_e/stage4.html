@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 4</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>🔥 Stage 4: Let’s Dive Deeper into the Data!</h1>
+    <div class="content">
+        <p>In this quest, we will use Copilot Chat to refine the market, commercial area, and target customers based on insights from the data.</p>
+        <div class="note" role="note" style="text-align: center;">
+            <img src="img/quest4.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </div>
+        
+        <hr />
+        <ol>
+            <li>Now let’s continue our data analysis with Copilot Chat.</li>
+            <li>In Excel, click the Copilot button on the Home menu, or use the arrow below it to select Chat and move to Copilot Chat.
+                <img src="img/excel_chat.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            Or you can click <a href>https://m365.cloud.microsoft/chat/</a> to open Copilot Chat directly.</li>
+            <li>
+                When you want answers based on documents, you can select file upload in the Copilot Chat prompt area and specify the file. Select the practice file you downloaded in step 2.<br />
+                <img src="img/upload.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            </li>
+            <li>Continue by entering the sample prompts below. Modify the parts in [square brackets] as you like (and remove the brackets themselves).</li>
+            <li>Creatively change the [bracketed] content and regenerate until you are satisfied.</li>
+        </ol>
+
+        <div class="code">
+            <div class="code-title">🚩 Analyzing the Data</div>
+            <p>Visualize statistical data and carry out analysis through conversational flow.</p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>Visualize the relationship between [floating population] and [number of stores] for each district in Seoul. From now on, use Plotly for all visualization requests.</p>
+                <p>Visualize the trend of openings/closures in [Jung-gu].</p>
+                <p>Is there a correlation between floating population and survival rate?</p>
+                <p>Visualize a heat map of new stores and 3-year survival rate by district.</p>
+                <p>Draw a scatter plot with regression line and correlation coefficient between franchise proportion and overall 3-year survival rate, and explain how survival rate changes as franchise share increases.</p>
+                <p>Visualize the difference in preferred consumption styles between people in their [20s] and [40s] using a bar chart.</p>
+                <p>I am planning to open a restaurant targeting people in their [20s]. Based on [floating population] and [3-year survival rate], suggest which two regions would be good locations. Compare the pros and cons of each region in a table.</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

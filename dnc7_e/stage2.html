@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 2</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>🏹 Stage 2: Let’s Organize the Information Collected!</h1>
+    <div class="content">
+        <p>I also want to know the latest information that is not in the report!</p>
+        <p>In this quest, we will check additional data and organize what we have collected to create a draft report.</p>
+        <div class="note" role="note" style="text-align: center;">
+            <img src="img/quest2.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </div>
+        
+        <hr />
+        <ol>
+            <li>Continue by entering the sample prompts below. Modify the parts in [square brackets] as you like.</li>
+            <li>Creatively change the [bracketed] content and regenerate until you are satisfied.</li>
+        </ol>
+
+        <div class="code">
+            <div class="code-title">🚩 Checking Web Information</div>
+            <p>Use web data to check the latest information and collect additional data.</p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>Based on web data, list and summarize the key food and dining industry issues from 2020 to 2023 by year.</p>
+                <p>Also predict potential 2026 keywords. For each keyword, suggest possible marketing strategies and representative success cases.</p>
+            </div>
+            <hr />
+            <div class="code-title">🚩 Organizing in Report Form</div>
+            <p>Summarize and organize the information collected.</p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>Combine all the responses so far and create a draft report on [topic] that can be shared with my team.</p>
+            </div>
+        </div>
+    
+        <hr />
+        <div class="note" role="note">
+            <strong>Tip</strong> You can select "Edit in Pages" for the responses to turn them into a document. <br/>
+            <img src="img/pages.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

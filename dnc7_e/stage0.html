@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 0</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>🎮 Stage 0: The Beginning of the Journey</h1>
+    <div class="content">
+        <p>Welcome to the world of Dungeon & Copilot!</p>
+        <p>From now on, you will use the even more powerful Copilot with GPT-5 to complete various quests. Enjoy this game by sharing experiences and ideas with your colleagues around you.</p>
+        <p>With the cute Catpilot, cross six quests one by one and design your own restaurant.</p>
+        <p>From exploring market trends to data analysis and creative planning—a hands-on journey, like a board game, is waiting for you.</p>
+        <img src="img/intro.png" alt="" style="max-width:80%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />       
+        <p><strong>Are you ready? Let the adventure begin!</strong></p>
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

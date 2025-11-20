@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stage 5</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<body>
+    <h1>⚡ Stage 5: Now Let’s Create My Own Restaurant!</h1>
+    <div class="content">
+        <p>In this quest, we will start storytelling for your own restaurant based on the analysis you have done.</p>
+        <div class="note" role="note" style="text-align: center;">
+            <img src="img/quest5.png" alt="" style="max-width:60%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />
+            <!-- <hr />
+            <strong>Tip</strong> 생성된 그림안의 한글이 깨지는 것은 엔진의 성능이슈로 인한 것입니다. 한글이 아닌 영어일 때에는 정말 잘 표현됩니다. 하루빨리 한글 품질도 개선되기를 기원합니다. -->
+        </div>
+        
+        <hr />
+        <ol>
+            <li>This quest requires creativity. Use the sample prompts below as a reference only and write your own prompts.</li>
+            <li>It’s okay if you don’t have any ideas at first. Continue the conversation to refine your ideas and keep asking questions until you are satisfied.</li>
+        </ol>
+
+        <div class="code">
+            <div class="code-title">🚩 1. Brainstorming</div>
+            <p>Based on dining trends and your market/commercial area/target analysis, gather ideas for what kind of restaurant you want to create. </p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>I want to open a restaurant in the Gwanghwamun area targeting people in their [20s]. Recommend restaurant types and explain the reasons. Please also consider the pros and cons of different locations within the commercial district.</p>
+                <p>Recommend concepts that are more unique and uncommon than a typical fusion restaurant.</p>
+                <p>Propose marketing strategies to target the Gwanghwamun commercial district.</p>
+            </div>
+            <hr />
+            <div class="code-title">🚩 2. Restaurant Branding</div>
+            <p>Find a fitting name and build a story.</p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>Based on this concept, recommend names suitable for a new [Western-style] restaurant in Gwanghwamun. </p>
+                <p>Recommend fusion restaurant names that feel very Korean with minimal English.</p>
+                <p>Are there any attractive names using French?</p>
+                <p>I like the proposed "Local X Global Fusion Restaurant" concept. I want to open a restaurant called “Seoul Spoon.” Reflecting the 2025 trends, propose an engaging concept, a short story, and promotional ideas to market the restaurant. Include ideas that target the commercial area and the intended customers, and create a story that will capture customers’ interest and be memorable.</p>
+            </div>
+            <hr />
+            <div class="code-title">🚩 3. Menu Planning</div>
+            <p>Create signature menu items that match our restaurant concept.</p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>Suggest ideas for the restaurant’s menu composition. Propose 5 menu items that fit the Local X Global fusion restaurant concept.</p>
+                <p>Based on these menu items, write out the recipes.</p>
+                <p>Provide pricing ranges, plating styles, and nutritional information for the menu.</p>
+                <p>Develop a unique signature dish that can only be enjoyed at our restaurant.</p>
+            </div>
+            <hr />
+            <div class="code-title">🚩 4. Generating Custom Images</div>
+            <p>Create images such as the restaurant logo, menu, and promotional banners. </p>
+            <div class="code-title">[Sample Prompt]</div>
+            <div class="code-box">
+                <p>I like the name “Seoul Spoon.” Generate a restaurant logo image that matches the concept.</p>
+                <p>Draw an image of animated characters visiting our restaurant.</p>
+                <p>Emphasize green tones so it evokes healthy food, and incorporate some Korean text elements.</p>
+                <p>Design a menu that visually highlights our restaurant’s signature dishes.</p>
+                <p>Design a banner that can be used in posts promoting the restaurant.</p>
+            </div>
+        </div>
+        <img src="img/menu.png" alt="" style="max-width:100%; height:auto; border:1px solid #e5e7eb; border-radius:8px;" />	
+    </div>
+    <script>
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const height = document.body.scrollHeight;
+                window.parent.postMessage({type: 'resize', height: height}, '*');
+            }, 100);
+        });
+    </script>
+</body>
+</html>
