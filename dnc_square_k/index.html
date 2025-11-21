@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>던전앤코파일럿 광장</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Categories will be dynamically loaded here -->
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1>🎮 던전앤코파일럿 광장</h1>
+                <p>게이미피케이션 워크샵 포털에 오신 것을 환영합니다!</p>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content" id="content">
+                <div class="content-header">
+                    <h2 id="content-title">환영합니다</h2>
+                </div>
+                <div id="content-body">
+                    <p>왼쪽 메뉴에서 카테고리를 선택해주세요.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modal-content">
+            <span class="modal-close" id="modal-close">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="storage.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
