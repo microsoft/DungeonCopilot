@@ -13,8 +13,6 @@ The development of this project follows several principles:
 
 A new Korean workshop version, `dnc8_k`, was added in June 2026. This version is a Microsoft 365 Copilot hands-on game where participants design a restaurant using Copilot Chat, Excel, Word, and PowerPoint scenarios.
 
-This version was used for a Hanwha Ocean session on June 9, 2026.
-
 ## New Version (Working)
 
 | Folder | Description | Language | URL |
@@ -22,14 +20,6 @@ This version was used for a Hanwha Ocean session on June 9, 2026.
 | dnc5_k | New game for M365 Copilot Chat | Korean | https://microsoft.github.io/DungeonCopilot/dnc5_k/ |
 | dnc6_k | New game for M365 Copilot | Korean | https://microsoft.github.io/DungeonCopilot/dnc6_k/ |
 | dnc8_k | New restaurant workshop game for Microsoft 365 Copilot | Korean | https://microsoft.github.io/DungeonCopilot/dnc8_k/ |
-
-## Offline Package for Network-Restricted Environments
-
-Use the offline package when a customer environment blocks external URLs, including GitHub Pages or other external download links. Download the package below and deliver the ZIP file directly to the customer.
-
-| Package | Use case | File |
-| --- | --- | --- |
-| dnc8_k offline package | Network-restricted customer environments where external URLs are blocked | [offline_packages/dnc8_k_offline_package.zip](offline_packages/dnc8_k_offline_package.zip) |
 
 ---
 
