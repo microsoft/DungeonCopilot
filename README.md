@@ -36,4 +36,5 @@ Use the offline package when a customer environment blocks external URLs, includ
 
 ---
 
-If you'd like to contribute to this project, feel free to reach out anytime at jechoi@microsoft.com.
+If you'd like to contribute to this project, feel free to reach out anytime at jechoi@microsoft.com or suminlee@microsoft.com.
+
