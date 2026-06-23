@@ -1089,12 +1089,12 @@ $(function () {
     if (new URLSearchParams(location.search).get('reset') === 'true') {
         localStorage.removeItem(STORE);
         localStorage.removeItem(STORE_MAX);
-        localStorage.removeItem(STORE_DATASET);
+        sessionStorage.removeItem(STORE_DATASET);
     }
 
     let cur = Number(localStorage.getItem(STORE) || 0);
     let max = Number(localStorage.getItem(STORE_MAX) || 0);
-    let dataset = localStorage.getItem(STORE_DATASET) || 'seoul';
+    let dataset = sessionStorage.getItem(STORE_DATASET) || 'seoul';
 
     if (!Number.isInteger(cur) || cur < 0 || cur >= TOTAL) cur = 0;
     if (!Number.isInteger(max) || max < 0 || max >= TOTAL) max = 0;
@@ -1106,7 +1106,7 @@ $(function () {
     }
 
     function applyDataset() {
-        localStorage.setItem(STORE_DATASET, dataset);
+        sessionStorage.setItem(STORE_DATASET, dataset);
         $('.dataset-btn').each(function () {
             $(this).toggleClass('active', $(this).data('dataset') === dataset);
         });
