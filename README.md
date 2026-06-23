@@ -15,6 +15,8 @@ A new Korean workshop version, `dnc8_k`, was added in June 2026. This version is
 
 This version was used for a Hanwha Ocean session on June 9, 2026.
 
+A Geoje City version, `dnc9_k`, was also added for sessions that use Geoje public data instead of Seoul commercial district data.
+
 ## New Version (Working)
 
 | Folder | Description | Language | URL |
@@ -22,6 +24,7 @@ This version was used for a Hanwha Ocean session on June 9, 2026.
 | dnc5_k | New game for M365 Copilot Chat | Korean | https://microsoft.github.io/DungeonCopilot/dnc5_k/ |
 | dnc6_k | New game for M365 Copilot | Korean | https://microsoft.github.io/DungeonCopilot/dnc6_k/ |
 | dnc8_k | New restaurant workshop game for Microsoft 365 Copilot | Korean | https://microsoft.github.io/DungeonCopilot/dnc8_k/ |
+| dnc9_k | Geoje City public data version of the restaurant workshop game | Korean | https://microsoft.github.io/DungeonCopilot/dnc9_k/ |
 
 ## Offline Package for Network-Restricted Environments
 
