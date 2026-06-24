@@ -717,10 +717,11 @@ body{
 
             <div class="dataset-picker">
                 <div class="dataset-picker-title">실습 데이터 선택</div>
-                <p class="dataset-picker-desc">서울 상권 데이터 또는 거제시 공공데이터 중 세션에 맞는 데이터를 선택하세요. 선택한 데이터에 맞춰 다운로드 파일과 샘플 프롬프트가 바뀝니다.</p>
+                <p class="dataset-picker-desc">서울 상권 데이터, 거제시 공공데이터, 인천 공공데이터 중 세션에 맞는 데이터를 선택하세요. 선택한 데이터에 맞춰 다운로드 파일과 샘플 프롬프트가 바뀝니다. 주소 뒤에 <code>?dataset=seoul</code> · <code>?dataset=geoje</code> · <code>?dataset=incheon</code>을 붙이면 특정 지역으로 바로 들어올 수 있습니다.</p>
                 <div class="dataset-actions">
                     <button type="button" class="dataset-btn active" data-dataset="seoul">서울 데이터</button>
                     <button type="button" class="dataset-btn" data-dataset="geoje">거제 데이터</button>
+                    <button type="button" class="dataset-btn" data-dataset="incheon">인천 데이터</button>
                 </div>
             </div>
 
@@ -733,6 +734,10 @@ body{
                     <span class="dataset-panel" data-dataset-panel="geoje">
                         <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/거제시공공데이터.xlsx','_blank')">📁 거제시공공데이터</button>
                         에 <em>거제시공공데이터.xlsx</em> 파일을 다운로드합니다.
+                    </span>
+                    <span class="dataset-panel" data-dataset-panel="incheon">
+                        <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/인천공공데이터.xlsx','_blank')">📁 인천공공데이터</button>
+                        에 <em>인천공공데이터.xlsx</em> 파일을 다운로드합니다.
                     </span>
                 </li>
                 <li>Excel을 실행하고 다운로드한 파일을 열어 확인합니다. 편집을 위해 OneDrive에 복사본을 저장하는 <strong>복사본 편집</strong>을 누릅니다.
@@ -769,6 +774,16 @@ body{
                     <p>음식점·관광시설·인구를 기준으로 창업 후보 지역 5곳을 추천해줘</p>
                     <p>추천 지역의 장단점을 표로 정리해줘</p>
                 </div>
+                <div class="code-box dataset-panel" data-dataset-panel="incheon">
+                    <p>각 시트의 목적과 주요 컬럼을 요약하고, 식당 창업 분석에 쓸 컬럼을 추천해줘</p>
+                    <p>음식점_통합 시트에서 군구별 음식점 수를 집계하고 상위 5개 군구를 보여줘</p>
+                    <p>업종/유형 기준으로 음식점 개수를 집계해줘</p>
+                    <p>관광_통합 시트에서 군구별 관광자원 수를 요약해줘</p>
+                    <p>인구_구군요약에서 군구별 인구수와 세대수를 비교해줘</p>
+                    <p>음식점 수와 인구수를 함께 비교해서 군구별 잠재 수요를 분석해줘</p>
+                    <p>실습_지역스코어 시트에서 입지점수 상위 5개 군구를 보여줘</p>
+                    <p>추천 군구의 장단점을 표로 정리해줘</p>
+                </div>
             </div>
 
             <ol start="6">
@@ -799,6 +814,15 @@ body{
                     <p>관광시설이 많은 지역과 음식점 밀집 지역을 비교해줘</p>
                     <p>거제시 로컬 식당 입지 점수화 모델을 제안해줘</p>
                     <p>추천된 가중치로 읍면동별 입지 점수를 산출해줘</p>
+                </div>
+                <div class="code-box dataset-panel" data-dataset-panel="incheon">
+                    <p>관광_통합 시트의 관광자원 수와 음식점 수의 관계를 시각화해줘</p>
+                    <p>군구별 인구수와 음식점 수를 비교하는 차트를 만들어줘</p>
+                    <p>공장_산업 시트에서 군구별 공장 수와 종업원 수를 집계해줘</p>
+                    <p>공장 종업원 수가 많아 직장인 점심 수요가 높을 군구를 분석해줘</p>
+                    <p>관광 중심 군구와 음식점 밀집 군구를 비교해줘</p>
+                    <p>인천 로컬 식당 입지 점수화 모델을 제안해줘</p>
+                    <p>추천된 가중치로 군구별 입지 점수를 산출해줘</p>
                 </div>
             </div>
         </div>
@@ -848,6 +872,15 @@ body{
                     <p>[가족 관광객]과 [조선업 종사자]의 식사 수요 차이를 막대 그래프로 시각화해줘</p>
                     <p>[가족 관광객]을 타겟으로 식당을 오픈하려고 해. [관광시설]과 [거주자 인구]를 참고하여 어떤 지역이 좋을지 2개 지역을 제안하고 장단점을 표로 비교해줘.</p>
                 </div>
+                <div class="code-box dataset-panel" data-dataset-panel="incheon">
+                    <p>인천 각 군구 [인구수]와 [음식점 수] 간의 관계를 시각화해줘. 모든 시각화 요청은 plotly를 이용해서 그래프를 그려줘</p>
+                    <p>[부평구] 음식점 업종별 분포를 시각화해줘</p>
+                    <p>관광자원 수와 음식점 수 사이에 상관관계가 있어?</p>
+                    <p>군구별 음식점 수와 인구수를 히트맵으로 시각화해줘</p>
+                    <p>공장 종업원 수와 음식점 수를 기준으로 직장인 수요가 높은 군구를 분석해줘</p>
+                    <p>[가족 관광객]과 [지역 직장인]의 식사 수요 차이를 막대 그래프로 시각화해줘</p>
+                    <p>[가족 관광객]을 타겟으로 식당을 오픈하려고 해. [관광자원수]와 [인구수]를 참고하여 어떤 군구가 좋을지 2개 지역을 제안하고 장단점을 표로 비교해줘.</p>
+                </div>
             </div>
         </div>
 
@@ -880,6 +913,11 @@ body{
                     <p>일반적인 퓨전 레스토랑이 아닌 더 특색 있고 흔하지 않은 컨셉으로 추천해줘.</p>
                     <p>거제시 주요 관광지와 지역 상권을 공략하는 마케팅 전략도 제안해줘.</p>
                 </div>
+                <div class="code-box dataset-panel" data-dataset-panel="incheon">
+                    <p>인천에서 가족 관광객과 지역 직장인을 타겟으로 하는 식당을 오픈하려고 해. 추천할 수 있는 외식업 종류를 근거와 함께 알려줘. 관광 동선과 지역 입지별 장단점도 고려해서 추천해줘.</p>
+                    <p>일반적인 퓨전 레스토랑이 아닌 더 특색 있고 흔하지 않은 컨셉으로 추천해줘.</p>
+                    <p>인천 주요 관광지와 지역 상권을 공략하는 마케팅 전략도 제안해줘.</p>
+                </div>
 
                 <hr>
 
@@ -897,6 +935,12 @@ body{
                     <p>한국식 느낌이 강하게 영어를 최소화한 퓨전 양식당 이름을 추천해줘.</p>
                     <p>프랑스어를 활용해서 매력적인 이름이 없을까?</p>
                     <p>Geoje Spoon 이름에 맞는 식당을 오픈하려고 해. 2026년 트렌드를 반영해서 흥미로운 컨셉과 짧은 스토리, 홍보 아이디어를 제안해줘.</p>
+                </div>
+                <div class="code-box dataset-panel" data-dataset-panel="incheon">
+                    <p>해당 컨셉을 바탕으로 인천의 새로운 로컬 퓨전 식당에 어울리는 이름을 추천해줘.</p>
+                    <p>한국식 느낌이 강하게 영어를 최소화한 퓨전 양식당 이름을 추천해줘.</p>
+                    <p>프랑스어를 활용해서 매력적인 이름이 없을까?</p>
+                    <p>Incheon Spoon 이름에 맞는 식당을 오픈하려고 해. 2026년 트렌드를 반영해서 흥미로운 컨셉과 짧은 스토리, 홍보 아이디어를 제안해줘.</p>
                 </div>
 
                 <hr>
@@ -916,6 +960,12 @@ body{
                     <p>메뉴판을 구성하기 위한 가격대, 플레이팅 스타일, 영양 정보를 작성해줘.</p>
                     <p>우리 식당에서만 맛볼 수 있는 특색 있는 시그니처 메뉴를 개발해줘.</p>
                 </div>
+                <div class="code-box dataset-panel" data-dataset-panel="incheon">
+                    <p>인천 로컬×글로벌 퓨전 레스토랑 컨셉에 맞는 메뉴 5가지를 구성해줘.</p>
+                    <p>이 메뉴들을 기반으로 레시피를 작성해줘.</p>
+                    <p>메뉴판을 구성하기 위한 가격대, 플레이팅 스타일, 영양 정보를 작성해줘.</p>
+                    <p>우리 식당에서만 맛볼 수 있는 특색 있는 시그니처 메뉴를 개발해줘.</p>
+                </div>
 
                 <hr>
 
@@ -931,6 +981,13 @@ body{
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="geoje">
                     <p>Geoje Spoon 이라는 이름이 마음에 들어. 식당 컨셉에 맞는 로고 이미지를 생성해줘.</p>
+                    <p>애니메이션 캐릭터들이 우리 식당에 방문하는 이미지를 그려줘.</p>
+                    <p>건강식이 연상되도록 초록색을 강조하고, 한글 요소도 반영해줘.</p>
+                    <p>우리 식당의 시그니처 메뉴를 잘 표현하는 메뉴판을 디자인해줘.</p>
+                    <p>식당 홍보를 위한 포스트에 사용할 배너를 디자인해줘.</p>
+                </div>
+                <div class="code-box dataset-panel" data-dataset-panel="incheon">
+                    <p>Incheon Spoon 이라는 이름이 마음에 들어. 식당 컨셉에 맞는 로고 이미지를 생성해줘.</p>
                     <p>애니메이션 캐릭터들이 우리 식당에 방문하는 이미지를 그려줘.</p>
                     <p>건강식이 연상되도록 초록색을 강조하고, 한글 요소도 반영해줘.</p>
                     <p>우리 식당의 시그니처 메뉴를 잘 표현하는 메뉴판을 디자인해줘.</p>
@@ -1084,9 +1141,12 @@ $(function () {
     const STORE = 'dncProgress';
     const STORE_MAX = 'dncMaxStage';
     const STORE_DATASET = 'dncDataset';
+    const DATASETS = ['seoul', 'geoje', 'incheon'];
     const TOTAL = 8;
 
-    if (new URLSearchParams(location.search).get('reset') === 'true') {
+    const params = new URLSearchParams(location.search);
+
+    if (params.get('reset') === 'true') {
         localStorage.removeItem(STORE);
         localStorage.removeItem(STORE_MAX);
         sessionStorage.removeItem(STORE_DATASET);
@@ -1094,11 +1154,16 @@ $(function () {
 
     let cur = Number(localStorage.getItem(STORE) || 0);
     let max = Number(localStorage.getItem(STORE_MAX) || 0);
-    let dataset = sessionStorage.getItem(STORE_DATASET) || 'seoul';
+
+    // URL ?dataset= takes priority so a link can open a specific region directly.
+    const urlDataset = (params.get('dataset') || '').toLowerCase();
+    let dataset = DATASETS.includes(urlDataset)
+        ? urlDataset
+        : (sessionStorage.getItem(STORE_DATASET) || 'seoul');
 
     if (!Number.isInteger(cur) || cur < 0 || cur >= TOTAL) cur = 0;
     if (!Number.isInteger(max) || max < 0 || max >= TOTAL) max = 0;
-    if (!['seoul', 'geoje'].includes(dataset)) dataset = 'seoul';
+    if (!DATASETS.includes(dataset)) dataset = 'seoul';
 
     function save() {
         localStorage.setItem(STORE, cur);
