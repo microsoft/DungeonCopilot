@@ -9,6 +9,26 @@ The development of this project follows several principles:
 - It should be built as a static HTML-based website without complex server modules.
 - Although the content is currently planned in Korean, it should be easily portable to other languages.
 
+## Getting Started (Start Here)
+
+Open the latest workshop directly in your browser — no installation required:
+
+**▶ https://microsoft.github.io/DungeonCopilot/dnc2026_k/**
+
+1. Open the link above. The workshop starts at Stage 0 and unlocks the next stage each time you press **다음 → (Next)**.
+2. On the data stage, pick your region — **서울시 / 거제시 / 인천시**. The download file and sample prompts change to match the region you choose.
+3. To jump straight into a specific region, use one of the direct links below.
+4. To reset your progress and start over from Stage 0, add `?reset=true` to the URL (e.g. `…/dnc2026_k/?reset=true`).
+
+| Start option | URL |
+| --- | --- |
+| Workshop home (default: 서울시) | https://microsoft.github.io/DungeonCopilot/dnc2026_k/ |
+| 서울시 데이터로 바로 시작 | https://microsoft.github.io/DungeonCopilot/dnc2026_k/?dataset=seoul |
+| 거제시 데이터로 바로 시작 | https://microsoft.github.io/DungeonCopilot/dnc2026_k/?dataset=geoje |
+| 인천시 데이터로 바로 시작 | https://microsoft.github.io/DungeonCopilot/dnc2026_k/?dataset=incheon |
+
+For customer environments where external URLs are blocked, use the [offline package](#offline-package-for-network-restricted-environments) instead.
+
 ## June 2026 Update
 
 A new Korean workshop version, `dnc2026_k`, was added in June 2026. This version is a Microsoft 365 Copilot hands-on game where participants design a restaurant using Copilot Chat, Excel, Word, and PowerPoint scenarios.
