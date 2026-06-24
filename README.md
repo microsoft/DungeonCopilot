@@ -15,7 +15,7 @@ A new Korean workshop version, `dnc2026_k`, was added in June 2026. This version
 
 This version was used for a Hanwha Ocean session on June 9, 2026.
 
-The 2026 Korean version includes a dataset selector so facilitators can run the same workshop with either Seoul commercial district data or Geoje City public data.
+The 2026 Korean version includes a dataset selector so facilitators can run the same workshop with Seoul commercial district data, Geoje City public data, or Incheon public data. You can also open a specific dataset directly by adding a query string to the URL: `?dataset=seoul`, `?dataset=geoje`, or `?dataset=incheon`.
 
 ## New Version (Working)
 
@@ -23,7 +23,15 @@ The 2026 Korean version includes a dataset selector so facilitators can run the 
 | --- | --- | --- | --- |
 | dnc5_k | New game for M365 Copilot Chat | Korean | https://microsoft.github.io/DungeonCopilot/dnc5_k/ |
 | dnc6_k | New game for M365 Copilot | Korean | https://microsoft.github.io/DungeonCopilot/dnc6_k/ |
-| dnc2026_k | Latest Korean restaurant workshop with Seoul/Geoje dataset selection | Korean | https://microsoft.github.io/DungeonCopilot/dnc2026_k/ |
+| dnc2026_k | Latest Korean restaurant workshop with Seoul/Geoje/Incheon dataset selection | Korean | https://microsoft.github.io/DungeonCopilot/dnc2026_k/ |
+
+### Direct dataset links
+
+| Dataset | URL |
+| --- | --- |
+| Seoul | https://microsoft.github.io/DungeonCopilot/dnc2026_k/?dataset=seoul |
+| Geoje | https://microsoft.github.io/DungeonCopilot/dnc2026_k/?dataset=geoje |
+| Incheon | https://microsoft.github.io/DungeonCopilot/dnc2026_k/?dataset=incheon |
 
 ## Offline Package for Network-Restricted Environments
 
