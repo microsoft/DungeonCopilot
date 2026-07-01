@@ -283,7 +283,7 @@ body{
 }
 
 .stage ol>li::before{
-    content:counter(step-counter);position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    content:counter(step-counter);position:absolute;left:14px;top:13px;
     width:26px;height:26px;background:var(--blue);color:#fff;border-radius:50%;
     display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;
 }
@@ -770,37 +770,30 @@ body{
             </div>
 
             <hr>
-
-            <ol>
-                <li>아래 샘플 프롬프트를 참고해 입력하고, [대괄호] 부분을 취향에 맞게 바꾸면서 마음에 들 때까지 다시 생성해봅니다.</li>
-            </ol>
+            <p>Stage 1에서 2025·2026년 리포트를 살펴봤다면, 이번엔 Copilot Chat의 <strong>웹 검색 기능</strong>으로 그 이전 연도 데이터도 직접 가져와봅니다. 수집한 정보는 보고서로 정리하고, <strong>Pages로 문서화</strong>하면 이후 Stage에서 바로 활용할 수 있습니다.</p>
 
             <div class="code">
-                <div class="code-flag">🚩 웹 정보 확인하기</div>
-                <p class="code-desc">웹 데이터를 활용하여 최신 정보를 확인하고 추가 정보를 수집합니다.</p>
+                <div class="code-flag">&#x1F6A9; 웹 정보 수집하기</div>
+                <p class="code-desc">2025·2026년 리포트 외에 추가 데이터를 웹에서 수집합니다.</p>
                 <div class="code-label">샘플 프롬프트</div>
                 <div class="code-box">
                     <p>지난 2020년도부터 2024년까지의 식품외식산업 이슈는 어떤 것들이 있었는지 웹데이터를 기반으로 연도별로 정리해줘.</p>
                     <p>2027년도 키워드 예측해줘. 그 키워드로 제안할 수 있는 마케팅 전략과 대표적인 성공 사례도 알려줘.</p>
                 </div>
-
                 <hr>
-
-                <div class="code-flag">🚩 보고서 형태로 정리하기</div>
-                <p class="code-desc">수집된 정보를 종합하여 요약·정리합니다.</p>
+                <div class="code-flag">&#x1F6A9; 보고서로 정리하기</div>
+                <p class="code-desc">수집한 정보를 종합해 팀에 공유할 수 있는 보고서 초안을 만듭니다.</p>
                 <div class="code-label">샘플 프롬프트</div>
                 <div class="code-box">
                     <p>답변 내용들을 종합하여, [주제]에 대해 정리하고 팀원들에게 공유할 수 있도록 보고서 초안을 작성해줘.</p>
                 </div>
-            </div>
-
-            <div class="note">
-                <strong>💡 Tip</strong> &nbsp;답변의 내용을 <strong>Pages로 편집</strong>을 선택하여 문서화할 수 있습니다.<br>
-                <img src="img/pages.png" alt="Pages로 편집">
+                <div class="note" style="margin-top:16px">
+                    <strong>&#x1F4A1; Tip</strong>&nbsp; 답변 내용을 <strong>Pages로 편집</strong>을 선택하면 바로 문서화할 수 있습니다. 이후 Stage에서 Word 문서 작성 시 참고 자료로 활용해보세요.<br>
+                    <img src="img/pages.png" alt="Pages로 편집">
+                </div>
             </div>
         </div>
-
-        <div class="stage" data-stage="3">
+<div class="stage" data-stage="3">
             <p class="stage-title">📊 Stage 3 &nbsp;|&nbsp; 데이터를 분석하자</p>
             <p class="stage-lead">통계 데이터를 기반으로 시장과 상권을 분석하고 인사이트를 도출합니다.</p>
 
@@ -834,6 +827,22 @@ body{
                     <div class="note" style="margin-top:12px">
                         파일이 <strong>Excel 웹에서 열리면</strong> 오른쪽 상단의 <strong>복사본 편집</strong> 버튼을 클릭합니다 — Copilot 기능을 쓰려면 파일이 내 OneDrive에 저장되어 있어야 해요.<br>
                         파일이 PC로 <strong>다운로드된 경우</strong>에는 <a href="https://onedrive.com/" target="_blank"><strong>OneDrive 웹</strong></a>에 업로드한 뒤 Excel 웹에서 열어주세요.
+                        <div class="dataset-panel" data-dataset-panel="incheon" style="display:none">
+                            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
+                                <div style="text-align:center">
+                                    <img src="img/incheon_onedrive_upload.png" alt="OneDrive 파일 업로드" style="width:100%;border-radius:10px;box-shadow:var(--shadow-sm)">
+                                    <p style="font-size:12px;color:var(--t2);margin-top:4px">① OneDrive → Create or upload → Files upload</p>
+                                </div>
+                                <div style="text-align:center">
+                                    <img src="img/incheon_onedrive_file.png" alt="인천공공데이터 파일 선택" style="width:100%;border-radius:10px;box-shadow:var(--shadow-sm)">
+                                    <p style="font-size:12px;color:var(--t2);margin-top:4px">② 인천공공데이터 파일 확인</p>
+                                </div>
+                                <div style="text-align:center">
+                                    <img src="img/incheon_copy_edit.png" alt="복사본 편집 버튼" style="width:100%;border-radius:10px;box-shadow:var(--shadow-sm)">
+                                    <p style="font-size:12px;color:var(--t2);margin-top:4px">③ Excel 웹에서 복사본 편집 클릭</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </li>
                 <li>Excel 오른쪽 패널의 Copilot 아이콘을 클릭합니다. 기본적으로 <strong>'통합 문서 편집(편집 허용)'</strong> 상태로 시작하며, 필요하면 '채팅만'으로 전환해 질문만 할 수도 있습니다.<br>
