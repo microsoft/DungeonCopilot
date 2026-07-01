@@ -576,6 +576,15 @@ body{
 .enter-btn:hover{background:#005CC8;transform:translateY(-1px)}
 @media(max-width:760px){.prelude-panel{padding:28px 20px 36px}.prelude-grid{grid-template-columns:1fr}.gcse-row{grid-template-columns:1fr 1fr}.prelude-enter{flex-direction:column;align-items:flex-start}.enter-btn{width:100%}}
 @media(max-width:480px){.gcse-row{grid-template-columns:1fr}}
+  .var-chip {
+    display: inline-block; background: rgba(0,113,227,.10);
+    border: 1.5px dashed var(--blue); border-radius: 6px;
+    padding: 0 7px; color: var(--blue); font-weight: 700;
+    font-size: inherit; min-width: 28px; cursor: text;
+    outline: none; transition: background .15s, border-color .15s; line-height: 1.4;
+  }
+  .var-chip:focus { background: rgba(0,113,227,.20); border-style: solid; }
+  .var-chip.filled { background: rgba(0,113,227,.15); border-style: solid; color: var(--t1); }
 </style>
 </head>
 
@@ -877,7 +886,7 @@ body{
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
                     <p>각 시트의 목적과 주요 컬럼을 요약하고, 식당 창업 분석에 바로 쓸 수 있는 컬럼을 추천해줘.</p>
-                    <p>음식점_통합 시트에서 군구별 음식점 수와 대표메뉴 키워드를 분석해줘.</p>
+                    <p>음식점_통합 시트에서 군구별 음식점 수를 집계하고, 업종/유형 기준으로 어떤 카테고리가 많은지 분석해줘.</p>
                     <p>관광_통합 시트에서 군구별 관광자원 수를 요약하고, 관광객 대상 식당 후보 지역을 추천해줘.</p>
                     <p>공장_산업 시트의 종업원수와 음식점_통합 시트를 비교해 직장인 점심 수요가 높을 만한 지역을 찾아줘.</p>
                     <p>인구_구군요약의 20대~40대 인구와 관광자원수를 기준으로 가족 관광객, MZ, 직장인 중 어떤 타겟이 적합한지 비교해줘.</p>
@@ -967,7 +976,7 @@ body{
                     <p>주소지별 인구수와 음식점 수를 히트맵으로 시각화해줘</p>
                     <p>주차장유무와 좌석수를 기준으로 단체 고객에게 적합한 음식점 유형을 분석해줘</p>
                     <p>[가족 관광객]과 [지역 주민]의 식사 수요 차이를 막대 그래프로 시각화해줘</p>
-                    <p>[가족 관광객]을 타겟으로 식당을 오픈하려고 해. [관광시설]과 [인구수]를 참고하여 어떤 지역이 좋을지 2개 지역을 제안하고 장단점을 표로 비교해줘.</p>
+                    <p>[가족 관광객]을 타겟으로 식당을 오픈하려고 해. [관광자원수]와 [인구수]를 참고하여 어떤 지역이 좋을지 2개 지역을 제안하고 장단점을 표로 비교해줘.</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
                     <p>인천 각 군구 [인구수]와 [음식점 수] 간의 관계를 시각화해줘. 모든 시각화 요청은 plotly를 이용해서 그래프를 그려줘.</p>
@@ -1364,6 +1373,24 @@ body{
         document.body.removeChild(textarea);
     }
 
+    function initVarChips() {
+        document.querySelectorAll('.code-box p').forEach(function(p) {
+            if (p.querySelector('.var-chip')) return;
+            var html = p.innerHTML;
+            if (!/\[[^\]]+\]/.test(html)) return;
+            p.innerHTML = html.replace(/\[([^\]]+)\]/g, function(_, text) {
+                return '<span class="var-chip" contenteditable="true" spellcheck="false">' + text + '</span>';
+            });
+            p.querySelectorAll('.var-chip').forEach(function(chip) {
+                chip.addEventListener('input', function() { chip.classList.add('filled'); });
+                chip.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') { e.preventDefault(); chip.blur(); }
+                    e.stopPropagation();
+                });
+            });
+        });
+    }
+
     function initCopyButtons() {
         document.querySelectorAll('.code-box p').forEach((p) => {
             if (p.querySelector('.copy-line-btn')) return;
@@ -1482,6 +1509,7 @@ body{
         return true;
     }
 
+    initVarChips();
     initCopyButtons();
     applyDataset();
     renderTabs();
