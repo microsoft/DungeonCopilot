@@ -600,6 +600,28 @@ body{
     white-space: nowrap;
   }
   .var-option:hover { background: rgba(0,113,227,.18); transform: scale(1.05); }
+
+  /* Var chip toast notification */
+  .var-toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    background: var(--blue); color: #fff; padding: 10px 22px;
+    border-radius: 999px; font-size: 14px; font-weight: 700; z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0,113,227,.38); pointer-events: none;
+    animation: toast-in .2s ease;
+  }
+  @keyframes toast-in {
+    from { opacity:0; transform: translateX(-50%) translateY(8px); }
+    to   { opacity:1; transform: translateX(-50%) translateY(0); }
+  }
+  .var-option-copilot {
+    background: linear-gradient(135deg,rgba(0,113,227,.12),rgba(191,90,242,.12)) !important;
+    border-color: var(--blue) !important; color: var(--blue) !important;
+  }
+  .var-options-hint {
+    font-size: 11px; color: var(--t3); width: 100%;
+    padding-top: 6px; margin-top: 4px;
+    border-top: 1px solid rgba(0,0,0,.07); text-align: center;
+  }
 </style>
 </head>
 
@@ -666,7 +688,7 @@ body{
             </div>
             <div class="prelude-card">
                 <h3>02 · 나만의 식당 만들기</h3>
-                <p>시장 조사부터 데이터 분석, 메뉴·브랜드 기획까지 이어가며 내 식당의 방향을 구체화합니다.</p>
+                <p>시장 조사부터 데이터 분석, 메뉴, 브랜드 기획까지 이어가며 내 식당의 방향을 구체화합니다.</p>
             </div>
             <div class="prelude-card">
                 <h3>03 · 런칭 발표</h3>
@@ -851,8 +873,19 @@ body{
                         <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/인천공공데이터.xlsx','_blank')">📁 인천공공데이터</button>
                     </span>
                     <div class="note" style="margin-top:12px">
-                        파일이 <strong>Excel 웹에서 열리면</strong> 오른쪽 상단의 <strong>복사본 편집</strong> 버튼을 클릭합니다 — Copilot 기능을 쓰려면 파일이 내 OneDrive에 저장되어 있어야 해요.<br>
+                        파일이 <strong>Excel 웹에서 열리면</strong> 오른쪽 상단의 <strong>복사본 편집</strong> 버튼을 클릭합니다, Copilot 기능을 쓰려면 파일이 내 OneDrive에 저장되어 있어야 해요.<br>
+                        <img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"><br>
                         파일이 PC로 <strong>다운로드된 경우</strong>에는 <a href="https://onedrive.com/" target="_blank"><strong>OneDrive 웹</strong></a>에 업로드한 뒤 Excel 웹에서 열어주세요.
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+                            <div style="text-align:center">
+                                <img src="img/incheon_onedrive_upload.png" alt="OneDrive Create or upload Files upload" style="width:100%;border-radius:10px">
+                                <p style="font-size:12px;color:var(--t2);margin-top:4px">① Create or upload → Files upload</p>
+                            </div>
+                            <div style="text-align:center">
+                                <img src="img/incheon_onedrive_file.png" alt="OneDrive에 업로드된 파일 확인" style="width:100%;border-radius:10px">
+                                <p style="font-size:12px;color:var(--t2);margin-top:4px">② 파일이 OneDrive에 올라온 것 확인</p>
+                            </div>
+                        </div>
                         <div class="dataset-panel" data-dataset-panel="incheon" style="display:none">
                             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
                                 <div style="text-align:center">
@@ -882,14 +915,11 @@ body{
                 <p class="code-desc">선택한 데이터셋을 활용하여 데이터를 분석하고 인사이트를 확인합니다.</p>
                 <div class="code-label">샘플 프롬프트</div>
                 <div class="code-box dataset-panel active" data-dataset-panel="seoul">
-                    <p>시트별 데이터 구조와 주요 컬럼을 요약해줘</p>
-                    <p>지역별 유동인구 컬럼을 추가해줘</p>
-                    <p>가게당 유동인구수를 구해서 "유동인구비율" 컬럼을 추가해줘</p>
-                    <p>유동인구비율이 높은 지역 5개를 보여줘</p>
-                    <p>지역별 가게 생존율 컬럼을 추가해줘. 전체가게 3년 생존율이 궁금해</p>
-                    <p>지역별 개업가게수와 폐업가게수를 추가해줘</p>
-                    <p>폐업가게수가 개업가게수보다 많은 지역을 하이라이트해줘</p>
-                    <p>분석 결과로 창업 후보 지역 5곳을 추천해줘</p>
+                    <p>이 데이터에서 식당 창업에 유망한 지역 TOP 5를 찾아줘. 어떤 지표를 활용했는지 이유도 함께 설명해줘.</p>
+                    <p>경쟁이 낮고 수요가 높은 블루오션 지역이 있어? 데이터 근거로 추천해줘.</p>
+                    <p>폐업보다 개업이 많은 성장 지역 vs 반대로 정체 중인 지역을 구분하고, 창업 관점에서 어떤 의미인지 알려줘.</p>
+                    <p>프렌차이즈 밀도와 생존율 사이에 어떤 관계가 있어? 독립 창업엔 어떤 지역이 더 유리해?</p>
+                    <p>이 분석을 바탕으로 [20대]를 타겟으로 하는 식당에 가장 적합한 지역 2곳을 골라줘. 이유도 표로 비교해줘.</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="geoje">
                     <p>시트별 데이터 구조와 주요 컬럼을 요약해줘</p>
@@ -902,12 +932,10 @@ body{
                     <p>창업 후보 지역을 추천하고 장단점을 표로 정리해줘</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
-                    <p>각 시트의 목적과 주요 컬럼을 요약하고, 식당 창업 분석에 바로 쓸 수 있는 컬럼을 추천해줘.</p>
-                    <p>음식점_통합 시트에서 군구별 음식점 수를 집계하고, 업종/유형 기준으로 어떤 카테고리가 많은지 분석해줘.</p>
-                    <p>관광_통합 시트에서 군구별 관광자원 수를 요약하고, 관광객 대상 식당 후보 지역을 추천해줘.</p>
-                    <p>공장_산업 시트의 종업원수와 음식점_통합 시트를 비교해 직장인 점심 수요가 높을 만한 지역을 찾아줘.</p>
-                    <p>인구_구군요약의 20대~40대 인구와 관광자원수를 기준으로 가족 관광객, MZ, 직장인 중 어떤 타겟이 적합한지 비교해줘.</p>
-                    <p>군구별 음식점수, 관광자원수, 인구수를 한눈에 볼 수 있는 차트를 만들고 인사이트를 3줄로 요약해줘.</p>
+                    <p>이 데이터를 분석해서 인천에서 식당 창업하기 좋은 군구 TOP 3를 추천해줘. 근거도 함께 설명해줘.</p>
+                    <p>관광객 수요가 높은 군구와 직장인 수요가 높은 군구를 각각 찾아줘. 두 타겟에 맞는 식당 컨셉이 어떻게 달라져야 할지도 제안해줘.</p>
+                    <p>음식점이 적고 인구·관광자원이 많은 '블루오션' 군구가 있어? 창업 기회 관점에서 설명해줘.</p>
+                    <p>이 데이터를 바탕으로 [타겟 고객]에게 가장 적합한 인천 군구를 추천해줘. 장단점도 표로 비교해줘.</p>
                 </div>
             </div>
 
@@ -922,29 +950,24 @@ body{
                 <p class="code-desc">아래 프롬프트를 통해 심층 분석을 이어갑니다.</p>
                 <div class="code-label">샘플 프롬프트</div>
                 <div class="code-box dataset-panel active" data-dataset-panel="seoul">
-                    <p>유동인구와 3년 생존율 간의 상관관계를 분석해줘</p>
-                    <p>프렌차이즈 비율과 3년 생존율의 상관관계는?</p>
-                    <p>프렌차이즈 비율이 높은 상위/하위 지역별 3년 생존율 비교</p>
-                    <p>지역별 개업가게수 트렌드 시각화해줘</p>
-                    <p>상권을 점수화하고 싶어. 점수화 모델을 제안해줘</p>
-                    <p>상권 점수화에 사용할 변수별 가중치 추천 요청</p>
-                    <p>추천된 가중치로 지역별 상권 점수를 산출하고 상위 5곳을 보여줘</p>
+                    <p>유동인구, 생존율, 개폐업 데이터를 종합해서 지역별 상권 활력 점수를 만들어줘. 어떤 가중치를 썼는지도 설명해줘.</p>
+                    <p>상권 점수 상위 5곳과 하위 5곳의 특징 차이를 분석하고, 창업 전략 관점에서 시사점을 정리해줘.</p>
+                    <p>개업가게수 연도별 트렌드를 시각화하고, 최근 급성장 중인 지역과 침체 중인 지역을 찾아줘.</p>
+                    <p>나만의 창업 조건(예: 유동인구 상위 30%, 생존율 평균 이상, 프렌차이즈 비율 낙음)을 설정하고 조건에 맞는 지역을 필터링해줘.</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="geoje">
                     <p>관광객이용시설 수와 거제9미 음식점 수의 관계를 분석해줘</p>
                     <p>분류명(거제9미)별 평균 좌석수를 계산해줘</p>
-                    <p>예약·음식포장·카드사용 가능 비율을 분류명별로 비교해줘</p>
+                    <p>예약, 음식포장, 카드사용 가능 비율을 분류명별로 비교해줘</p>
                     <p>월별 인구수에서 남녀 인구 비율 변화를 정리해줘</p>
                     <p>거제 로컬 식당 입지 점수화 모델을 제안해줘</p>
                     <p>입지 점수화에 사용할 변수별 가중치 추천 요청</p>
                     <p>추천된 가중치로 지역별 입지 점수를 산출해줘</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
-                    <p>각 군구의 음식점수, 관광자원수, 종업원수를 가중합해 '입지점수'를 계산하는 새 시트를 만들어줘. 가중치 기준도 함께 제안해줘.</p>
-                    <p>인천 식당 창업을 위한 입지 점수화 모델을 제안해줘. 어떤 변수를 써야 할까?</p>
-                    <p>추천된 가중치로 군구별 입지 점수를 산출하고 상위 5곳을 보여줘.</p>
-                    <p>관광 중심 군구 vs 직장인 밀집 군구 비교 — 식당 타겟 관점에서 어디가 더 유리한지 분석해줘.</p>
-                    <p>추천 군구 1곳을 골라 왜 그 지역인지 근거와 함께 창업 전략을 요약해줘.</p>
+                    <p>인천 창업 최적 입지 점수화 모델을 직접 만들어줘. 어떤 변수를 쓸지, 왜 그 가중치인지 근거도 설명해줘.</p>
+                    <p>점수화 결과를 막대 차트로 시각화하고, 상위 군구와 하위 군구의 특징을 비교해줘.</p>
+                    <p>내가 [타겟 고객]을 타겟으로 한다면, 입지 점수 외에 어떤 추가 조건을 봐야 해? 최종 추천 군구 1곳을 골라줘.</p>
                 </div>
             </div>
         </div>
@@ -1015,7 +1038,7 @@ body{
 
             <div class="note">
                 📊 → 🍽️ <strong>분석에서 창업으로!</strong><br>
-                지금까지 트렌드를 읽고, 상권 데이터를 파헤쳤어요. 이제 그 인사이트를 가지고 <strong>여러분만의 식당</strong>을 만들 차례입니다. 앞서 Copilot Chat에서 나눈 대화를 <strong>그대로 이어서</strong> 진행하세요 — 데이터에서 발견한 지역·타겟·트렌드가 자동으로 맥락이 됩니다. 샘플 프롬프트는 출발점일 뿐, 여러분만의 식당을 직접 만들어가보세요! 🍽️ 🎨
+                지금까지 트렌드를 읽고, 상권 데이터를 파헤쳤어요. 이제 그 인사이트를 가지고 <strong>여러분만의 식당</strong>을 만들 차례입니다. 앞서 Copilot Chat에서 나눈 대화를 <strong>그대로 이어서</strong> 진행하세요, 데이터에서 발견한 지역·타겟·트렌드가 자동으로 맥락이 됩니다. 샘플 프롬프트는 출발점일 뿐, 여러분만의 식당을 직접 만들어가보세요! 🍽️ 🎨
             </div>
 
             <div class="code">
@@ -1024,17 +1047,17 @@ body{
                 <div class="code-label">샘플 프롬프트</div>
                 <div class="code-box dataset-panel active" data-dataset-panel="seoul">
                     <p>앞에서 분석한 서울 데이터를 참고해서, [20대]를 타겟으로 하는 식당 아이디어를 3가지 제안해줘. [지역명] 상권의 유동인구와 생존율 데이터를 근거로 설명해줘.</p>
-                    <p>그 중 가장 차별화된 컨셉을 골라 — 흔하지 않고 서울 감성에 맞는 방향으로 구체화해줘.</p>
+                    <p>그 중 가장 차별화된 컨셉을 골라, 흔하지 않고 서울 감성에 맞는 방향으로 구체화해줘.</p>
                     <p>[20대]가 SNS에서 발견하고 가고 싶어질 만한 마케팅 전략도 제안해줘.</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="geoje">
-                    <p>앞에서 분석한 거제 데이터를 참고해서, [가족 관광객]을 타겟으로 하는 식당 아이디어를 3가지 제안해줘. 거제9미·관광자원수·인구 데이터를 근거로 설명해줘.</p>
-                    <p>그 중 가장 차별화된 컨셉을 골라 — 흔하지 않고 거제의 바다·자연 감성에 어울리는 방향으로 구체화해줘.</p>
+                    <p>앞에서 분석한 거제 데이터를 참고해서, [가족 관광객]을 타겟으로 하는 식당 아이디어를 3가지 제안해줘. 거제9미, 관광자원수, 인구 데이터를 근거로 설명해줘.</p>
+                    <p>그 중 가장 차별화된 컨셉을 골라, 흔하지 않고 거제의 바다, 자연 감성에 어울리는 방향으로 구체화해줘.</p>
                     <p>[가족 관광객]이 SNS에서 발견하고 가고 싶어질 만한 마케팅 전략도 제안해줘.</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
-                    <p>앞에서 분석한 인천 데이터를 참고해서, [타겟 고객]을 타겟으로 하는 식당 아이디어를 3가지 제안해줘. 군구별 특성과 관광·직장인 수요를 근거로 설명해줘.</p>
-                    <p>그 중 가장 차별화된 컨셉을 골라 — 흔하지 않고, 인천의 항구 도시 감성과 어울리는 방향으로 구체화해줘.</p>
+                    <p>앞에서 분석한 인천 데이터를 참고해서, [타겟 고객]을 타겟으로 하는 식당 아이디어를 3가지 제안해줘. 군구별 특성과 관광, 직장인 수요를 근거로 설명해줘.</p>
+                    <p>그 중 가장 차별화된 컨셉을 골라, 흔하지 않고, 인천의 항구 도시 감성과 어울리는 방향으로 구체화해줘.</p>
                     <p>[타겟 고객]이 SNS에서 발견하고 가고 싶어질 만한 마케팅 전략도 제안해줘.</p>
                 </div>
 
@@ -1112,7 +1135,7 @@ body{
                 <p class="code-tip">💡 이미지 결과가 마음에 들지 않으면 색감, 분위기, 구도, 포함할 텍스트를 구체적으로 다시 요청해보세요.</p>
             </div>
 
-            <div class="note"><strong>샘플 이미지</strong> — 아래는 메뉴판 이미지 생성 결과 예시입니다. 실습에서는 여러분의 식당 콘셉트에 맞게 새 이미지를 생성해보세요.</div>
+            <div class="note"><strong>샘플 이미지</strong>, 아래는 메뉴판 이미지 생성 결과 예시입니다. 실습에서는 여러분의 식당 콘셉트에 맞게 새 이미지를 생성해보세요.</div>
             <img src="img/menu.png" alt="메뉴 예시">
         </div>
 
@@ -1163,6 +1186,10 @@ body{
             <ol start="5">
                 <li>Word 화면 내 Copilot Chat과 대화를 통해 내용을 이어서 작성할 수 있습니다. Copilot Chat 대화 기록에서 기존 답변(보고서 초안, Excel 차트 설명, 메뉴 구성표, 포스터 카피, 바이럴 캠페인 등)을 바로 <strong>문서에 추가</strong>할 수 있습니다.<br>
                     <img src="img/word_chat.png" alt="Word Chat">
+                    <div class="note" style="margin-top:10px">
+                        💡 답변 왼쪽의 <strong>+</strong> 버튼을 누르면 Copilot의 답변이 커서 위치에 바로 삽입됩니다. 앞 Stage에서 나온 분석 결과·메뉴 구성·브랜드 스토리를 그대로 가져와 기획서를 완성해보세요.<br>
+                        <img src="img/word_chat_insert.png" alt="Copilot Chat 답변 문서 삽입" style="width:100%;border-radius:10px;margin-top:8px;display:block">
+                    </div>
                 </li>
             </ol>
 
@@ -1188,6 +1215,7 @@ body{
                     <p>/<strong>(기획서 파일)</strong> 을 바탕으로 우리 식당을 소개하는 발표 자료를 만들어줘. 식당 컨셉, 타겟 고객, 메뉴 구성, 브랜드 아이덴티티 순서로 구성해줘.</p>
                     <p>/<strong>(기획서 파일)</strong> 을 바탕으로 투자자에게 설명하는 발표 자료를 만들어줘. 시장 데이터, 차별화 전략, 예상 수익 모델을 중심으로 설득력 있게 구성해줘.</p>
                     <p>/<strong>(기획서 파일)</strong> 을 바탕으로 동네 주민에게 새 맛집을 소개하는 발표 자료를 만들어줘. 따뜻하고 친근한 톤으로, 메뉴 하이라이트와 오픈 이벤트 정보가 잘 보이게 해줘.</p>
+                    <p>/<strong>(기획서 파일)</strong> 을 바탕으로 SNS 마케팅 캠페인 기획안 슬라이드를 만들어줘. 타겟 채널, 콘텐츠 아이디어, 오픈 이벤트 플랜이 한눈에 들어오게 구성해줘.</p>
                 </div>
                 <p class="code-tip">💡 디자인 선택에서 원하는 템플릿을 지정하여 프리젠테이션을 생성할 수 있습니다.</p>
             </div>
@@ -1207,10 +1235,10 @@ body{
                 <p class="code-desc">PowerPoint 웹에서 발표 자료를 다듬을 때 사용할 수 있는 추천 프롬프트입니다.</p>
                 <div class="code-label">샘플 프롬프트</div>
                 <div class="code-box">
-                    <p>이 프레젠테이션의 흐름을 더 설득력 있게 다듬어줘. 청중이 이해하기 쉽게 슬라이드 순서와 메시지를 개선해줘.</p>
-                    <p>우리 식당 콘셉트에 어울리는 표지 슬라이드 이미지를 제안하고, PowerPoint에서 만들 수 있는 시각 스타일을 추천해줘.</p>
-                    <p>Stage 5에서 만든 로고·메뉴판·홍보 포스터 이미지를 활용해서 발표용 한 장짜리 캠페인 슬라이드 구성을 제안해줘.</p>
-                    <p>이 발표를 위한 1분 오프닝 멘트와 예상 질문 5개, 답변 스크립트를 작성해줘.</p>
+                    <p>전체 슬라이드 흐름을 검토하고, 설득력이 약한 부분을 찾아 개선해줘. 슬라이드 순서와 핵심 메시지도 다듬어줘.</p>
+                    <p>표지 슬라이드를 더 임팩트 있게 바꿔줘. 우리 식당 컨셉과 타겟 고객이 한눈에 보이도록 레이아웃과 문구를 제안해줘.</p>
+                    <p>앞에서 만든 로고, 메뉴판, 홍보 포스터 이미지를 이 발표 자료에 넣어줘. 어느 슬라이드에 배치하면 좋을지 제안하고, 캠페인 콘셉트를 한 슬라이드로 요약해줘.</p>
+                    <p>이 발표를 위한 1분 오프닝 멘트와 예상 질문 3가지, 짧은 답변 스크립트를 작성해줘.</p>
                 </div>
             </div>
         </div>
@@ -1396,53 +1424,82 @@ body{
     }
 
     const VAR_OPTIONS = {
-        '20대':          ['10대', '20대', '30대', '40대', '50대', 'MZ세대'],
-        '40대':          ['10대', '20대', '30대', '40대', '50대'],
-        '유동인구':       ['유동인구', '직장인구', '주거인구'],
-        '가게수':         ['가게수', '음식점 수', '점포수'],
-        '3년 생존율':     ['3년 생존율', '프렌차이즈 비율', '폐업율'],
-        '가족 관광객':    ['가족 관광객', 'MZ세대', '직장인', '혼밥족', '관광객'],
-        '관광자원수':     ['관광자원수', '인구수', '종업원수', '음식점 수'],
-        '인구수':         ['인구수', '관광자원수', '종업원수', '음식점 수'],
-        '음식점 수':      ['음식점 수', '관광자원수', '인구수', '종업원수'],
-        '관광시설':       ['관광자원수', '인구수', '음식점 수'],
-        '좌석수':         ['좌석수', '주차장유무', '영업시간'],
-        '분류명':         ['분류명', '업종/유형'],
-        '지역 주민':      ['가족 관광객', '지역 주민', '직장인', 'MZ세대'],
-        '중구':           ['중구', '종로구', '강남구', '마포구', '홍대'],
-        '지역명':         ['광화문', '종로', '강남', '홍대', '성수'],
-        '타겟 고객':      ['가족 관광객', 'MZ세대', '직장인', '혼밥족'],
-        '식당명':         ['Seoul Spoon', 'Incheon Table', '로컬스푼', '항구식탁'],
+        '20대':          ['10대', '20대', '30대', '40대', '50대', 'MZ세대', '직장인', '대학생'],
+        '40대':          ['20대', '30대', '40대', '50대', '주부', '직장인'],
+        '유동인구':       ['유동인구', '직장인구', '주거인구', '관광객 수'],
+        '가게수':         ['가게수', '음식점 수', '프렌차이즈 수', '점포수'],
+        '3년 생존율':     ['3년 생존율', '1년 생존율', '폐업율', '프렌차이즈 비율'],
+        '가족 관광객':    ['가족 관광객', 'MZ세대', '직장인', '혼밥족', '관광객', '지역 주민', '외국인 관광객'],
+        '관광자원수':     ['관광자원수', '음식점 수', '인구수', '종업원수', '숙박시설 수'],
+        '인구수':         ['인구수', '20대 인구', '관광자원수', '종업원수', '음식점 수'],
+        '음식점 수':      ['음식점 수', '관광자원수', '인구수', '종업원수', '프렌차이즈 수'],
+        '관광시설':       ['관광자원수', '숙박시설', '음식점 수', '관광지 방문객'],
+        '좌석수':         ['좌석수', '주차장유무', '영업시간', '예약 가능 여부'],
+        '분류명':         ['분류명', '업종/유형', '거제9미'],
+        '지역 주민':      ['가족 관광객', '지역 주민', '직장인', 'MZ세대', '외국인 관광객'],
+        '중구':           ['중구', '종로구', '강남구', '마포구', '성수동', '홍대입구'],
+        '지역명':         ['광화문', '종로', '강남', '홍대', '성수', '여의도', '잠실'],
+        '타겟 고객':      ['가족 관광객', 'MZ세대', '직장인', '혼밥족', '외국인 관광객', '지역 주민'],
+        '특정 아젠다':    ['브랜드 스토리', '타겟 고객 분석', '메뉴 하이라이트', '마케팅 전략', '창업 비용'],
+        '식당명':         '__copilot__',
     };
 
     let _optionsEl = null;
     let _activeChip = null;
 
+    function showToast(msg) {
+        var t = document.createElement('div');
+        t.className = 'var-toast';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        setTimeout(function() { if (t.parentNode) t.remove(); }, 2800);
+    }
+
     function showVarOptions(chip) {
         hideVarOptions();
-        const key = chip.textContent.trim();
-        const opts = VAR_OPTIONS[key];
-        if (!opts || opts.length === 0) return;
+        var key = chip.textContent.trim();
+        var opts = VAR_OPTIONS[key];
+        if (!opts) return;
         _activeChip = chip;
         _optionsEl = document.createElement('div');
         _optionsEl.className = 'var-options';
-        opts.forEach(function(opt) {
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'var-option';
-            btn.textContent = opt;
-            btn.addEventListener('mousedown', function(e) {
+
+        if (opts === '__copilot__') {
+            var askBtn = document.createElement('button');
+            askBtn.type = 'button';
+            askBtn.className = 'var-option var-option-copilot';
+            askBtn.textContent = '\ud83e\udd16 Copilot\uc5d0\uac8c \ubb3c\uc5b4\ubcf4\uae30';
+            askBtn.addEventListener('mousedown', function(e) {
                 e.preventDefault();
-                chip.textContent = opt;
-                chip.classList.add('filled');
+                var prompt = '\uc9c0\uae08\uae4c\uc9c0 \ub0b4\uac00 \uc2dd\ub2f9 \ucf58\uc14b, \ud0c0\uac9f \uace0\uac1d, \uc9c0\uc5ed, \uba54\ub274 \ubc29\ud5a5\uc5d0 \ub300\ud574 \uace0\ubbfc\ud55c \ub0b4\uc6a9\uc744 \ubc14\ud0d5\uc73c\ub85c \uc2dd\ub2f9 \uc774\ub984\uc744 3\uac00\uc9c0 \ucd94\ucc9c\ud574\uc918. \uac01\uac01 \uc774\ub984\uc758 \uc758\ubbf8\uc640 \uc5b4\uc6b8\ub9ac\ub294 \ubd84\uc704\uae30\ub3c4 \ud568\uaed8 \uc124\uba85\ud574\uc918.';
+                navigator.clipboard.writeText(prompt).catch(function(){});
+                window.open('https://m365.cloud.microsoft/chat/', '_blank');
+                showToast('\ud504\ub86c\ud504\ud2b8 \ubcf5\uc0ac \uc644\ub8cc! Copilot Chat\uc5d0 \ubd99\uc5ec\ub123\uc5b4 \uc8fc\uc138\uc694 \u2728');
                 hideVarOptions();
             });
-            _optionsEl.appendChild(btn);
-        });
+            _optionsEl.appendChild(askBtn);
+        } else {
+            opts.forEach(function(opt) {
+                var btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'var-option';
+                btn.textContent = opt;
+                btn.addEventListener('mousedown', function(e) {
+                    e.preventDefault();
+                    chip.textContent = opt;
+                    chip.classList.add('filled');
+                    hideVarOptions();
+                });
+                _optionsEl.appendChild(btn);
+            });
+            var hint = document.createElement('p');
+            hint.className = 'var-options-hint';
+            hint.textContent = '\ub610\ub294 \uce69\uc744 \ud074\ub9ad\ud55c \ub4a4 \uc9c1\uc811 \uc785\ub825\ud558\uc138\uc694';
+            _optionsEl.appendChild(hint);
+        }
+
         document.body.appendChild(_optionsEl);
-        const rect = chip.getBoundingClientRect();
-        const top = rect.bottom + window.scrollY + 6;
-        const left = Math.min(rect.left + window.scrollX, window.innerWidth - 360);
+        var rect = chip.getBoundingClientRect();
         _optionsEl.style.top = (rect.bottom + 6) + 'px';
         _optionsEl.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 360)) + 'px';
     }
@@ -1458,7 +1515,7 @@ body{
         }
     });
 
-    function initVarChips() {
+        function initVarChips() {
         document.querySelectorAll('.code-box p').forEach(function(p) {
             if (p.querySelector('.var-chip')) return;
             var html = p.innerHTML;
@@ -1467,7 +1524,7 @@ body{
                 return '<span class="var-chip" contenteditable="true" spellcheck="false">' + text + '</span>';
             });
             p.querySelectorAll('.var-chip').forEach(function(chip) {
-                chip.addEventListener('focus', function() { showVarOptions(chip); });
+                chip.addEventListener('click', function(e) { e.stopPropagation(); showVarOptions(chip); });
                 chip.addEventListener('input', function() {
                     chip.classList.add('filled');
                     hideVarOptions();
