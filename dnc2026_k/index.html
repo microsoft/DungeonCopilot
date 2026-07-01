@@ -585,6 +585,21 @@ body{
   }
   .var-chip:focus { background: rgba(0,113,227,.20); border-style: solid; }
   .var-chip.filled { background: rgba(0,113,227,.15); border-style: solid; color: var(--t1); }
+  .var-options {
+    position: fixed; z-index: 999;
+    display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px;
+    background: #fff; border: 1px solid rgba(0,113,227,.2);
+    border-radius: 14px; box-shadow: 0 8px 28px rgba(0,0,0,.13);
+    max-width: 340px;
+  }
+  .var-option {
+    padding: 5px 13px; background: rgba(0,113,227,.08);
+    border: 1px solid rgba(0,113,227,.22); border-radius: 999px;
+    color: var(--blue); font-weight: 700; font-size: 13px;
+    cursor: pointer; font-family: inherit; transition: background .12s, transform .1s;
+    white-space: nowrap;
+  }
+  .var-option:hover { background: rgba(0,113,227,.18); transform: scale(1.05); }
 </style>
 </head>
 
@@ -1373,6 +1388,69 @@ body{
         document.body.removeChild(textarea);
     }
 
+    const VAR_OPTIONS = {
+        '20대':          ['10대', '20대', '30대', '40대', '50대', 'MZ세대'],
+        '40대':          ['10대', '20대', '30대', '40대', '50대'],
+        '유동인구':       ['유동인구', '직장인구', '주거인구'],
+        '가게수':         ['가게수', '음식점 수', '점포수'],
+        '3년 생존율':     ['3년 생존율', '프렌차이즈 비율', '폐업율'],
+        '가족 관광객':    ['가족 관광객', 'MZ세대', '직장인', '혼밥족', '관광객'],
+        '관광자원수':     ['관광자원수', '인구수', '종업원수', '음식점 수'],
+        '인구수':         ['인구수', '관광자원수', '종업원수', '음식점 수'],
+        '음식점 수':      ['음식점 수', '관광자원수', '인구수', '종업원수'],
+        '관광시설':       ['관광자원수', '인구수', '음식점 수'],
+        '좌석수':         ['좌석수', '주차장유무', '영업시간'],
+        '분류명':         ['분류명', '업종/유형'],
+        '지역 주민':      ['가족 관광객', '지역 주민', '직장인', 'MZ세대'],
+        '중구':           ['중구', '종로구', '강남구', '마포구', '홍대'],
+        '지역명':         ['광화문', '종로', '강남', '홍대', '성수'],
+        '타겟 고객':      ['가족 관광객', 'MZ세대', '직장인', '혼밥족'],
+        '식당명':         ['Seoul Spoon', 'Incheon Table', '로컬스푼', '항구식탁'],
+    };
+
+    let _optionsEl = null;
+    let _activeChip = null;
+
+    function showVarOptions(chip) {
+        hideVarOptions();
+        const key = chip.textContent.trim();
+        const opts = VAR_OPTIONS[key];
+        if (!opts || opts.length === 0) return;
+        _activeChip = chip;
+        _optionsEl = document.createElement('div');
+        _optionsEl.className = 'var-options';
+        opts.forEach(function(opt) {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'var-option';
+            btn.textContent = opt;
+            btn.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                chip.textContent = opt;
+                chip.classList.add('filled');
+                hideVarOptions();
+            });
+            _optionsEl.appendChild(btn);
+        });
+        document.body.appendChild(_optionsEl);
+        const rect = chip.getBoundingClientRect();
+        const top = rect.bottom + window.scrollY + 6;
+        const left = Math.min(rect.left + window.scrollX, window.innerWidth - 360);
+        _optionsEl.style.top = (rect.bottom + 6) + 'px';
+        _optionsEl.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 360)) + 'px';
+    }
+
+    function hideVarOptions() {
+        if (_optionsEl) { _optionsEl.remove(); _optionsEl = null; }
+        _activeChip = null;
+    }
+
+    document.addEventListener('click', function(e) {
+        if (_optionsEl && !_optionsEl.contains(e.target) && e.target !== _activeChip) {
+            hideVarOptions();
+        }
+    });
+
     function initVarChips() {
         document.querySelectorAll('.code-box p').forEach(function(p) {
             if (p.querySelector('.var-chip')) return;
@@ -1382,10 +1460,20 @@ body{
                 return '<span class="var-chip" contenteditable="true" spellcheck="false">' + text + '</span>';
             });
             p.querySelectorAll('.var-chip').forEach(function(chip) {
-                chip.addEventListener('input', function() { chip.classList.add('filled'); });
+                chip.addEventListener('focus', function() { showVarOptions(chip); });
+                chip.addEventListener('input', function() {
+                    chip.classList.add('filled');
+                    hideVarOptions();
+                });
                 chip.addEventListener('keydown', function(e) {
-                    if (e.key === 'Enter') { e.preventDefault(); chip.blur(); }
+                    if (e.key === 'Enter') { e.preventDefault(); chip.blur(); hideVarOptions(); }
+                    if (e.key === 'Escape') { chip.blur(); hideVarOptions(); }
                     e.stopPropagation();
+                });
+                chip.addEventListener('blur', function() {
+                    setTimeout(function() {
+                        if (!_optionsEl || !_optionsEl.matches(':hover')) hideVarOptions();
+                    }, 150);
                 });
             });
         });
