@@ -681,7 +681,7 @@ body{
         </div>
     </section>
 
-    <nav class="glass tab-bar" role="tablist" aria-label="스테이지 선택">
+    <nav class="glass tab-bar" role="tablist" aria-label="스테이지 선택" style="display:none">
         <button class="tab-btn" role="tab" data-stage="0">Stage 0</button>
         <button class="tab-btn locked" role="tab" data-stage="1">🔒 Stage 1</button>
         <button class="tab-btn locked" role="tab" data-stage="2">🔒 Stage 2</button>
@@ -766,8 +766,7 @@ body{
             <hr>
 
             <ol>
-                <li>아래 샘플 프롬프트를 이어서 입력합니다. [대괄호] 부분을 취향에 따라 수정하세요.</li>
-                <li>창의적으로 변경해보면서 마음에 들 때까지 다시 생성해 봅니다.</li>
+                <li>아래 샘플 프롬프트를 참고해 입력하고, [대괄호] 부분을 취향에 맞게 바꾸면서 마음에 들 때까지 다시 생성해봅니다.</li>
             </ol>
 
             <div class="code">
@@ -816,28 +815,25 @@ body{
             </div>
 
             <ol>
-                <li>다음 링크로 이동하여
+                <li>아래 버튼으로 실습 데이터 파일을 받습니다.
                     <span class="dataset-panel active" data-dataset-panel="seoul">
                         <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/서울지역상권데이터.xlsx','_blank')">📁 서울지역상권데이터</button>
-                        에 <em>서울지역상권데이터.xlsx</em> 파일을 다운로드합니다.
                     </span>
                     <span class="dataset-panel" data-dataset-panel="geoje">
                         <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/거제시공공데이터.xlsx','_blank')">📁 거제시공공데이터</button>
-                        에 <em>거제시공공데이터.xlsx</em> 파일을 다운로드합니다.
                     </span>
                     <span class="dataset-panel" data-dataset-panel="incheon">
                         <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/인천공공데이터.xlsx','_blank')">📁 인천공공데이터</button>
-                        에 <em>인천공공데이터.xlsx</em> 파일을 다운로드합니다.
                     </span>
+                    <div class="note" style="margin-top:12px">
+                        파일이 <strong>Excel 웹에서 열리면</strong> 오른쪽 상단의 <strong>복사본 편집</strong> 버튼을 클릭합니다 — Copilot 기능을 쓰려면 파일이 내 OneDrive에 저장되어 있어야 해요.<br>
+                        파일이 PC로 <strong>다운로드된 경우</strong>에는 <a href="https://onedrive.com/" target="_blank"><strong>OneDrive 웹</strong></a>에 업로드한 뒤 Excel 웹에서 열어주세요.
+                    </div>
                 </li>
-                <li>Excel을 실행하고 다운로드한 파일을 열어 확인합니다. 편집을 위해 OneDrive에 복사본을 저장하는 <strong>복사본 편집</strong>을 누릅니다.
-                    <img src="img/excel_file.png" alt="Excel Copilot1">
+                <li>Excel 오른쪽 패널의 Copilot 아이콘을 클릭합니다. 기본적으로 <strong>'통합 문서 편집(편집 허용)'</strong> 상태로 시작하며, 필요하면 '채팅만'으로 전환해 질문만 할 수도 있습니다.<br>
+                    <img src="img/excel_copilot.png" alt="Excel Copilot 패널">
                 </li>
-                <li>Excel에서 Copilot 아이콘을 클릭해 오른쪽 패널을 엽니다. 기본적으로 <strong>'통합 문서 편집(편집 허용)'</strong> 상태로 시작하며, 필요하면 '채팅만'으로 바꿔 질문만 할 수도 있습니다.<br>
-                    <img src="img/excel_copilot.png" alt="Excel Copilot2">
-                </li>
-                <li>아래 샘플 프롬프트를 입력합니다.</li>
-                <li>내용을 창의적으로 변경하면서 데이터의 인사이트를 확인합니다.</li>
+                <li>아래 샘플 프롬프트를 참고해 입력하고, 취향에 맞게 바꾸면서 데이터의 인사이트를 확인합니다.</li>
             </ol>
 
             <div class="code">
@@ -865,14 +861,12 @@ body{
                     <p>창업 후보 지역을 추천하고 장단점을 표로 정리해줘</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
-                    <p>각 시트의 목적과 주요 컬럼을 요약하고, 식당 창업 분석에 쓸 컬럼을 추천해줘</p>
-                    <p>음식점_통합 시트에서 군구별 음식점 수를 집계하고 상위 5개 군구를 보여줘</p>
-                    <p>업종/유형 기준으로 음식점 개수를 집계해줘</p>
-                    <p>관광_통합 시트에서 군구별 관광자원 수를 요약해줘</p>
-                    <p>인구_구군요약에서 군구별 인구수와 세대수를 비교해줘</p>
-                    <p>음식점 수와 인구수를 함께 비교해서 군구별 잠재 수요를 분석해줘</p>
-                    <p>실습_지역스코어 시트에서 입지점수 상위 5개 군구를 보여줘</p>
-                    <p>추천 군구의 장단점을 표로 정리해줘</p>
+                    <p>각 시트의 목적과 주요 컬럼을 요약하고, 식당 창업 분석에 바로 쓸 수 있는 컬럼을 추천해줘.</p>
+                    <p>음식점_통합 시트에서 군구별 음식점 수와 대표메뉴 키워드를 분석해줘.</p>
+                    <p>관광_통합 시트에서 군구별 관광자원 수를 요약하고, 관광객 대상 식당 후보 지역을 추천해줘.</p>
+                    <p>공장_산업 시트의 종업원수와 음식점_통합 시트를 비교해 직장인 점심 수요가 높을 만한 지역을 찾아줘.</p>
+                    <p>인구_구군요약의 20대~40대 인구와 관광자원수를 기준으로 가족 관광객, MZ, 직장인 중 어떤 타겟이 적합한지 비교해줘.</p>
+                    <p>군구별 음식점수, 관광자원수, 인구수를 한눈에 볼 수 있는 차트를 만들고 인사이트를 3줄로 요약해줘.</p>
                 </div>
             </div>
 
@@ -906,13 +900,11 @@ body{
                     <p>추천된 가중치로 지역별 입지 점수를 산출해줘</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
-                    <p>관광_통합 시트의 관광자원 수와 음식점 수의 관계를 시각화해줘</p>
-                    <p>군구별 인구수와 음식점 수를 비교하는 차트를 만들어줘</p>
-                    <p>공장_산업 시트에서 군구별 공장 수와 종업원 수를 집계해줘</p>
-                    <p>공장 종업원 수가 많아 직장인 점심 수요가 높을 군구를 분석해줘</p>
-                    <p>관광 중심 군구와 음식점 밀집 군구를 비교해줘</p>
-                    <p>인천 로컬 식당 입지 점수화 모델을 제안해줘</p>
-                    <p>추천된 가중치로 군구별 입지 점수를 산출해줘</p>
+                    <p>각 군구의 음식점수, 관광자원수, 종업원수를 가중합해 '입지점수'를 계산하는 새 시트를 만들어줘. 가중치 기준도 함께 제안해줘.</p>
+                    <p>인천 식당 창업을 위한 입지 점수화 모델을 제안해줘. 어떤 변수를 써야 할까?</p>
+                    <p>추천된 가중치로 군구별 입지 점수를 산출하고 상위 5곳을 보여줘.</p>
+                    <p>관광 중심 군구 vs 직장인 밀집 군구 비교 — 식당 타겟 관점에서 어디가 더 유리한지 분석해줘.</p>
+                    <p>추천 군구 1곳을 골라 왜 그 지역인지 근거와 함께 창업 전략을 요약해줘.</p>
                 </div>
             </div>
         </div>
@@ -963,12 +955,10 @@ body{
                     <p>[가족 관광객]을 타겟으로 식당을 오픈하려고 해. [관광시설]과 [인구수]를 참고하여 어떤 지역이 좋을지 2개 지역을 제안하고 장단점을 표로 비교해줘.</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
-                    <p>인천 각 군구 [인구수]와 [음식점 수] 간의 관계를 시각화해줘. 모든 시각화 요청은 plotly를 이용해서 그래프를 그려줘</p>
-                    <p>[부평구] 음식점 업종별 분포를 시각화해줘</p>
+                    <p>인천 각 군구 [인구수]와 [음식점 수] 간의 관계를 시각화해줘. 모든 시각화 요청은 plotly를 이용해서 그래프를 그려줘.</p>
+                    <p>군구별 음식점수, 관광자원수, 종업원수를 한눈에 볼 수 있는 차트를 만들고 인사이트를 3줄로 요약해줘.</p>
                     <p>관광자원 수와 음식점 수 사이에 상관관계가 있어?</p>
-                    <p>군구별 음식점 수와 인구수를 히트맵으로 시각화해줘</p>
-                    <p>공장 종업원 수와 음식점 수를 기준으로 직장인 수요가 높은 군구를 분석해줘</p>
-                    <p>[가족 관광객]과 [지역 직장인]의 식사 수요 차이를 막대 그래프로 시각화해줘</p>
+                    <p>공장 종업원 수와 음식점 수를 기준으로 직장인 수요가 높은 군구를 분석해줘.</p>
                     <p>[가족 관광객]을 타겟으로 식당을 오픈하려고 해. [관광자원수]와 [인구수]를 참고하여 어떤 군구가 좋을지 2개 지역을 제안하고 장단점을 표로 비교해줘.</p>
                 </div>
             </div>
@@ -1225,7 +1215,7 @@ body{
         </div>
     </main>
 
-    <div class="glass nav-bar">
+    <div class="glass nav-bar" style="display:none">
         <button id="prevBtn" class="nav-btn">← 이전</button>
         <div class="dots" id="dots" aria-label="진행 상황"></div>
         <button id="nextBtn" class="nav-btn">다음 →</button>
@@ -1487,4 +1477,5 @@ body{
 </script>
 </body>
 </html>
+
 
