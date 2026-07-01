@@ -556,6 +556,26 @@ body{
   }
   .copy-line-btn:hover { background: #fff; }
   .copy-line-btn.copied { color: #fff; background: var(--blue); border-color: transparent; }
+
+/* Prelude panel */
+.prelude-panel{border-radius:var(--r-2xl);padding:44px 48px 52px;overflow:hidden;position:relative;margin-bottom:28px}
+.prelude-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 15px;border-radius:var(--r-pill);background:rgba(0,113,227,.08);color:var(--blue);font-weight:800;font-size:13px}
+.prelude-title{font-size:clamp(28px,4vw,44px);line-height:1.08;letter-spacing:-1.8px;font-weight:900;margin:0 0 14px;color:var(--t1)}
+.prelude-lead{font-size:17px;line-height:1.65;color:var(--t2);font-weight:600;max-width:820px;margin-bottom:28px}
+.prelude-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:22px 0 28px}
+.prelude-card{background:rgba(0,0,0,.028);border:1px solid rgba(0,0,0,.06);border-radius:var(--r-xl);padding:20px 22px}
+.prelude-card h3{font-size:16px;font-weight:850;margin:0 0 10px;color:var(--t1)}
+.prelude-card p{font-size:14px;line-height:1.62;color:var(--t2);margin:0}
+.gcse-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px;margin-bottom:4px}
+.gcse-item{background:rgba(255,255,255,.58);border:1px solid rgba(0,0,0,.06);border-radius:var(--r-lg);padding:15px 16px}
+.gcse-item strong{display:block;color:var(--blue);font-size:15px;margin-bottom:5px}
+.gcse-item span{display:block;color:var(--t2);font-size:12.5px;line-height:1.45}
+.prelude-enter{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-top:28px;padding:20px 24px;border-radius:var(--r-xl);background:linear-gradient(135deg,rgba(0,113,227,.09),rgba(191,90,242,.09));border:1px solid rgba(0,113,227,.16)}
+.prelude-enter-text{font-size:15px;line-height:1.58;color:var(--t1)}
+.enter-btn{flex:0 0 auto;border:none;border-radius:var(--r-pill);background:var(--blue);color:#fff;font-family:'Figtree',-apple-system,sans-serif;font-size:15px;font-weight:850;padding:13px 26px;cursor:pointer;box-shadow:0 7px 22px rgba(0,113,227,.32);transition:transform .2s,background .2s}
+.enter-btn:hover{background:#005CC8;transform:translateY(-1px)}
+@media(max-width:760px){.prelude-panel{padding:28px 20px 36px}.prelude-grid{grid-template-columns:1fr}.gcse-row{grid-template-columns:1fr 1fr}.prelude-enter{flex-direction:column;align-items:flex-start}.enter-btn{width:100%}}
+@media(max-width:480px){.gcse-row{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -610,6 +630,57 @@ body{
         </div>
     </header>
 
+    <section class="prelude-panel glass" id="workshop-prelude">
+        <div class="prelude-kicker">DUNGEON &amp; COPILOT &nbsp;·&nbsp; WORKSHOP</div>
+        <h2 class="prelude-title">던전앤코파일럿 워크샵</h2>
+        <p class="prelude-lead">오늘 진행할 워크샵은 Copilot과 함께 나만의 식당을 기획해보는 참여형 실습입니다. 여러분은 이제부터 창업을 앞둔 예비 오너가 되어, 시장 트렌드를 읽고 상권 데이터를 분석하고 브랜드 콘셉트와 발표 자료까지 완성해봅니다.</p>
+
+        <div class="prelude-grid">
+            <div class="prelude-card">
+                <h3>01 · Copilot에게 미션 주기</h3>
+                <p>Copilot이 더 좋은 답을 하도록 목표, 배경, 참고자료, 결과 형식을 분명하게 요청하는 법을 익힙니다.</p>
+            </div>
+            <div class="prelude-card">
+                <h3>02 · 나만의 식당 만들기</h3>
+                <p>시장 조사부터 데이터 분석, 메뉴·브랜드 기획까지 이어가며 내 식당의 방향을 구체화합니다.</p>
+            </div>
+            <div class="prelude-card">
+                <h3>03 · 런칭 발표</h3>
+                <p>마지막에는 만든 식당 콘셉트를 짧게 공유합니다. 선착순 3분 발표, 커피쿠폰이 기다립니다.</p>
+            </div>
+        </div>
+
+        <div class="code">
+            <div class="code-flag">🧭 프롬프트 작성 공식: GCSE</div>
+            <p class="code-desc">좋은 프롬프트는 길게 쓰는 것이 아니라, 필요한 요소를 빠뜨리지 않는 것이 중요합니다.</p>
+            <div class="gcse-row">
+                <div class="gcse-item"><strong>Goal</strong><span>무엇을 해달라는지 명확히 말합니다.</span></div>
+                <div class="gcse-item"><strong>Context</strong><span>왜 필요한지, 어떤 상황인지 알려줍니다.</span></div>
+                <div class="gcse-item"><strong>Source</strong><span>첨부 파일, 표, 문서 등 참고 범위를 지정합니다.</span></div>
+                <div class="gcse-item"><strong>Expectations</strong><span>표, 요약, 보고서처럼 원하는 형식을 제시합니다.</span></div>
+            </div>
+        </div>
+
+        <div class="code" id="prompt-coach-guide" style="margin-top:20px">
+            <div class="code-flag">🪄 오늘 함께할 코치: Prompt Coach</div>
+            <p class="code-desc">프롬프트가 막히거나 결과가 애매할 때는 Prompt Coach에게 먼저 물어보세요.</p>
+            <div class="note" style="margin-bottom:14px">
+                <strong>추가 방법</strong><br>
+                Copilot Chat 접속 → <strong>에이전트</strong> → <strong>에이전트 더보기</strong> → <strong>Prompt Coach</strong> 검색 → <strong>추가</strong>를 선택합니다. 이미 추가되어 있다면 에이전트 검색에서 바로 찾을 수 있습니다.
+            </div>
+            <div class="code-label">이렇게 요청해볼 수 있어요</div>
+            <div class="code-box">
+                <p>이 프롬프트를 더 좋은 결과가 나오도록 GCSE 구조로 개선해줘. 목표, 문맥, 참고자료, 기대 형식이 잘 드러나게 다듬어줘.</p>
+                <p>내가 작성한 프롬프트가 원하는 결과를 잘 못 주는 이유를 분석하고, 더 나은 프롬프트 예시를 제안해줘.</p>
+            </div>
+        </div>
+
+        <div class="prelude-enter">
+            <div class="prelude-enter-text"><strong>던전의 문이 열립니다.</strong><br>이제 여러분의 식당 런칭 여정이 시작됩니다. 완벽한 정답을 찾기보다, Copilot과 대화하면서 아이디어를 넓히고 더 설득력 있는 결과물로 다듬어보세요.</div>
+            <button type="button" class="enter-btn" id="enterDungeonBtn">던전 입장하기 →</button>
+        </div>
+    </section>
+
     <nav class="glass tab-bar" role="tablist" aria-label="스테이지 선택">
         <button class="tab-btn" role="tab" data-stage="0">Stage 0</button>
         <button class="tab-btn locked" role="tab" data-stage="1">🔒 Stage 1</button>
@@ -627,6 +698,16 @@ body{
         </div>
 
         <div class="stage" data-stage="0">
+            <div class="note" id="web-practice-guide">
+                <strong>오늘 실습 환경 안내</strong><br>
+                오늘 실습은 모두 <strong>Edge 브라우저의 웹 환경</strong>에서 진행합니다. 앱으로 열리면 화면이나 Copilot 기능이 다르게 보일 수 있으니, 실습 중에는 아래 웹 주소를 기준으로 따라와 주세요.<br><br>
+                <strong>Copilot Chat</strong>: <a href="https://m365.cloud.microsoft/chat/" target="_blank">https://m365.cloud.microsoft/chat/</a><br>
+                <strong>Excel 웹</strong>: <a href="https://excel.cloud.microsoft/" target="_blank">https://excel.cloud.microsoft/</a><br>
+                <strong>Word 웹</strong>: <a href="https://word.cloud.microsoft/" target="_blank">https://word.cloud.microsoft/</a><br>
+                <strong>PowerPoint 웹</strong>: <a href="https://powerpoint.cloud.microsoft/" target="_blank">https://powerpoint.cloud.microsoft/</a><br><br>
+                PDF/XLSX 실습 파일은 먼저 <strong>OneDrive 웹</strong>에 업로드한 뒤, Copilot Chat 또는 Office 웹에서 불러와 사용합니다. 로컬 PC에만 있는 파일은 Copilot이 읽지 못해요 😢
+            </div>
+
             <p class="stage-title">🎮 Stage 0 &nbsp;|&nbsp; 여정의 시작</p>
             <p class="stage-lead">던전앤코파일럿의 세계에 오신 것을 환영합니다!</p>
 
@@ -634,9 +715,9 @@ body{
                 <img src="img/intro.png" alt="Intro">
             </div>
 
-            <p><strong>다양한 AI 모델</strong>과 <strong>응답 모드</strong>를 선택할 수 있는 <strong>Copilot</strong>과 함께 지금부터 퀘스트를 수행하게 됩니다.<br>빠른 응답부터 깊이 있는 분석까지, 상황에 맞게 Copilot을 전략적으로 활용해 보세요!</p>
-            <p>시장 트렌드 탐색, 데이터 분석, 자료 작성, 창의적 기획까지 — 보드게임처럼 즐기는 실습형 여정이 여러분을 기다립니다.</p>
-            <p>귀여운 캣파일럿과 함께 6개의 퀘스트를 하나씩 건너며 나만의 식당을 디자인해보세요. 동료들과 아이디어를 나누며 더욱 즐겁게 참여해주세요! 🤓</p>
+            <p>🐾 <strong>캣파일럿</strong>과 함께 떠나는 <strong>6개의 퀘스트</strong>!<br>이번 여정의 파트너는 <strong>Microsoft 365 Copilot</strong>입니다.</p>
+            <p>시장 트렌드 탐색부터 데이터 분석, 자료 작성, 창의적 기획까지, 보드게임처럼 한 칸씩 퀘스트를 클리어하며 <strong>나만의 식당</strong>을 완성하는 실습형 여정이 시작됩니다. Copilot을 전략적으로 활용해 보세요!</p>
+            <p>동료들과 아이디어를 나누면 재미는 두 배! 자, 첫 번째 퀘스트로 출발할까요? 😼</p>
         </div>
 
         <div class="stage" data-stage="1">
@@ -650,13 +731,13 @@ body{
             <hr>
 
             <ol>
-                <li>다음 링크에서 실습 PDF 파일을 다운로드한 뒤, <a href="https://onedrive.live.com/" target="_blank"><strong>OneDrive</strong></a>에 업로드합니다. <strong>로컬에 있는 파일은 Copilot이 읽을 수 없습니다.</strong>
+                <li>다음 링크에서 실습 PDF 파일을 다운로드한 뒤, <a href="https://onedrive.com/" target="_blank"><strong>OneDrive</strong></a>에 업로드합니다. <strong>로컬 PC에 있는 파일은 Copilot이 읽을 수 없습니다.</strong>
                     <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/2026_식품외식산업_7대이슈.pdf','_blank')">📁 2026 식품외식산업 7대이슈</button>
                     <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/2025_식품외식산업_7대이슈.pdf','_blank')">📁 2025 식품외식산업 7대이슈</button>
                 </li>
                 <li><a href="https://m365.cloud.microsoft/chat/" target="_blank">https://m365.cloud.microsoft/chat/</a>에 접속하여 Copilot Chat으로 이동합니다.</li>
                 <li>프롬프트 입력창에서 <strong>/</strong> 를 입력하고, OneDrive에 업로드한 실습 PDF 파일을 선택합니다.<br>
-                    <img src="img/upload.png" alt="Copilot Chat에서 슬래시로 OneDrive 파일 선택">
+                    <img src="img/slash_select.png" alt="Copilot Chat에서 슬래시로 OneDrive 파일 선택">
                     <p class="code-tip">💡 파일 업로드 버튼(📎) 대신 <strong>/</strong> 를 입력하면 OneDrive에 저장된 파일을 바로 불러올 수 있습니다. 이후 Stage에서도 동일한 방법으로 파일을 참조할 수 있어요.</p>
                 </li>
                 <li>아래의 샘플 프롬프트를 입력합니다. [대괄호] 부분은 취향에 따라 수정하고, 마음에 들 때까지 다시 생성해봅니다.</li>
@@ -669,7 +750,7 @@ body{
                 <div class="code-box">
                     <p><em>/2026 식품외식산업 7대 이슈.pdf</em>, <em>/2025 식품외식산업 7대 이슈.pdf</em> 이 파일에서 주요 이슈별 내용과 언급된 예시들을 요약해서 작성해줘.</p>
                     <p>각 연도의 7대 이슈를 한 문장씩 요약하고 이슈별 공통점과 차이점을 표로 정리해줘.</p>
-                    <p>2026년과 2025년 이슈 중 [키워드1]과 [키워드2]의 성장률, 시장 규모, 주요 성장 동인 변화를 비교해줘.</p>
+                    <p>2026년과 2025년 이슈 중 [키워드1]과 [키워드2]의 성장률, 시장 규모, 주요 성장 동인 변화를 비교해줘.<br><span class="code-tip" style="display:inline-block;margin-top:6px">💡 예시 키워드: "밀키트"와 "배달앱" / "건강식"과 "비건" / "1인 가구"와 "프리미엄 간편식"</span></p>
                 </div>
             </div>
         </div>
@@ -1335,6 +1416,13 @@ $(function () {
     });
 
     initCopyButtons();
+
+    const enterBtn = document.getElementById('enterDungeonBtn');
+    if (enterBtn) {
+        enterBtn.addEventListener('click', function () {
+            document.querySelector('.tab-bar').scrollIntoView({ behavior: 'smooth' });
+        });
+    }
     applyDataset();
     renderTabs();
     goTo(cur);
