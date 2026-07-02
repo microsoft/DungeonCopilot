@@ -782,25 +782,28 @@ body{
 
             <hr>
 
-            <ol>
-                <li>다음 링크에서 실습 PDF 파일을 다운로드한 뒤, <a href="https://onedrive.com/" target="_blank"><strong>OneDrive</strong></a>에 업로드합니다. <strong>로컬 PC에 있는 파일은 Copilot이 읽을 수 없습니다.</strong>
+                        <ol>
+                <li>아래 버튼으로 실습 PDF 파일을 다운로드합니다.
                     <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/2026_식품외식산업_7대이슈.pdf','_blank')">📁 2026 식품외식산업 7대이슈</button>
                     <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/2025_식품외식산업_7대이슈.pdf','_blank')">📁 2025 식품외식산업 7대이슈</button>
                 </li>
                 <li><a href="https://m365.cloud.microsoft/chat/" target="_blank">https://m365.cloud.microsoft/chat/</a>에 접속하여 Copilot Chat으로 이동합니다.</li>
-                <li>프롬프트 입력창에서 <strong>/</strong> 를 입력하고, OneDrive에 업로드한 실습 PDF 파일을 선택합니다.<br>
-                    <img src="img/slash_select.png" alt="Copilot Chat에서 슬래시로 OneDrive 파일 선택">
-                    <p class="code-tip">💡 <strong>+</strong> 버튼으로 로컬 PC 파일을 직접 업로드할 수도 있지만, 이번 실습에서는 <strong>/</strong> 를 입력해 OneDrive 파일을 불러오는 방식으로 진행합니다. OneDrive에 올라간 파일은 Copilot이 이후 Stage에서도 계속 참조할 수 있어서, 한 번만 올려두면 매번 다시 첨부할 필요가 없어요. ✨</p>
+                <li>프롬프트 입력창 왼쪽의 <strong>+</strong> 버튼을 눌러 다운로드한 PDF 파일을 직접 업로드합니다.<br>
+                    <img src="img/upload.png" alt="Copilot Chat 파일 첨부 화면">
+                    <div class="note" style="margin-top:10px">
+                        <strong>💡 Copilot Chat 파일 첨부 방법</strong><br>
+                        <strong>① + 버튼</strong> — 로컬 PC 파일을 바로 업로드합니다. 이번 Stage처럼 1회용으로 간단히 사용할 때 편리해요.<br>
+                        <strong>② / 슬래시</strong> — OneDrive에 저장된 파일을 불러옵니다. 이후 Stage에서 같은 파일을 반복 참조할 때 유용합니다. (Stage 3→4 Excel 파일 분석에서 활용)
+                    </div>
                 </li>
                 <li>아래의 샘플 프롬프트를 입력합니다. [대괄호] 부분은 취향에 따라 수정하고, 마음에 들 때까지 다시 생성해봅니다.</li>
             </ol>
-
             <div class="code">
                 <div class="code-flag">🚩 자료 이해하기</div>
                 <p class="code-desc">외식 산업 리포트 문서를 이해하고 인사이트를 도출합니다.</p>
                 <div class="code-label">샘플 프롬프트</div>
                 <div class="code-box">
-                    <p><em>/2026 식품외식산업 7대 이슈.pdf</em>, <em>/2025 식품외식산업 7대 이슈.pdf</em> 이 파일에서 주요 이슈별 내용과 언급된 예시들을 요약해서 작성해줘.</p>
+                    <p>업로드한 두 PDF 파일에서 연도별 주요 이슈와 언급된 예시들을 요약해서 작성해줘.</p>
                     <p>각 연도의 7대 이슈를 한 문장씩 요약하고 이슈별 공통점과 차이점을 표로 정리해줘.</p>
                     <p>2026년과 2025년 이슈 중 [키워드1]과 [키워드2]의 성장률, 시장 규모, 주요 성장 동인 변화를 비교해줘.<br><span class="code-tip" style="display:inline-block;margin-top:6px">💡 예시 키워드: "밀키트"와 "배달앱" / "건강식"과 "비건" / "1인 가구"와 "프리미엄 간편식"</span></p>
                 </div>
