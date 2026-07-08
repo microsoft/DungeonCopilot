@@ -877,7 +877,7 @@ body{
                     </span>
                     <div class="note" style="margin-top:12px">
                         파일이 <strong>Excel 웹에서 열리면</strong> 오른쪽 상단의 <strong>복사본 편집</strong> 버튼을 클릭합니다, Copilot 기능을 쓰려면 파일이 내 OneDrive에 저장되어 있어야 해요.<br>
-                        <img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"><br>
+                        <span class="dataset-panel active" data-dataset-panel="seoul"><img src="img/seoul_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="geoje"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="incheon"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><br>
                         파일이 PC로 <strong>다운로드된 경우</strong>에는 <a href="https://onedrive.com/" target="_blank"><strong>OneDrive 웹</strong></a>에 업로드한 뒤 Excel 웹에서 열어주세요.
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
                             <div style="text-align:center">
@@ -916,38 +916,38 @@ body{
             <div class="code">
                 <div class="code-flag">🚩 데이터 분석하기</div>
                 <p class="code-desc">선택한 데이터셋을 활용하여 데이터를 분석하고 인사이트를 확인합니다.</p>
-                <div class="code-label" style="margin-top:0">�� Excel 편집 허용 — Copilot으로 데이터 직접 조작</div>
+                <div class="code-label dataset-panel active" data-dataset-panel="seoul" style="margin-top:0">📊 Excel 편집 허용 — Copilot으로 데이터 직접 조작</div>
                 <div class="code-box dataset-panel active" data-dataset-panel="seoul">
                     <p>유동인구비율이 높은 지역 5개를 찾고 "유동인구비율" 컬럼을 추가해줘.</p>
                     <p>폐업가게수가 개업가게수보다 많은 지역을 하이라이트해줘.</p>
                     <p>경쟁이 낮고 유동인구가 높은 블루오션 지역을 찾아 "블루오션 점수" 컬럼을 추가해줘.</p>
                 </div>
-                <div class="code-label" style="margin-top:12px">💬 채팅만 — Copilot Chat으로 인사이트 도출</div>
+                <div class="code-label dataset-panel active" data-dataset-panel="seoul" style="margin-top:12px">💬 채팅만 — Copilot Chat으로 인사이트 도출</div>
                 <div class="code-box dataset-panel active" data-dataset-panel="seoul">
                     <p>이 데이터에서 식당 창업에 유망한 지역 TOP 5를 찾아줘. 어떤 지표를 활용했는지 이유도 함께 설명해줘.</p>
                     <p>경쟁이 낮고 수요가 높은 블루오션 지역이 있어? 데이터 근거로 추천해줘.</p>
                     <p>프렌차이즈 밀도와 생존율 사이에 어떤 관계가 있어? 독립 창업엔 어떤 지역이 더 유리해?</p>
                     <p>이 분석을 바탕으로 [20대]를 타겟으로 하는 식당에 가장 적합한 지역 2곳을 골라줘. 이유도 표로 비교해줘.</p>
                 </div>
-                <div class="code-label" style="margin-top:0">📊 Excel 편집 허용 — Copilot으로 데이터 직접 조작</div>
+                <div class="code-label dataset-panel" data-dataset-panel="geoje" style="margin-top:0">📊 Excel 편집 허용 — Copilot으로 데이터 직접 조작</div>
                 <div class="code-box dataset-panel" data-dataset-panel="geoje">
                     <p>이 데이터에서 창업 분석에 쓸 수 있는 핵심 지표를 추천해줘. 지역별로 집계하고 요약해줘.</p>
                     <p>단체 손님 수용이 가능한 음식점 유형을 찾고, 주차 가능 여부도 함께 분류해줘.</p>
                     <p>관광자원 수가 많은 지역 vs 인구 밀집 지역을 구분해서 두 컬럼을 만들어줘.</p>
                 </div>
-                <div class="code-label" style="margin-top:12px">💬 채팅만, Copilot Chat으로 인사이트 도출</div>
+                <div class="code-label dataset-panel" data-dataset-panel="geoje" style="margin-top:12px">💬 채팅만 — Copilot Chat으로 인사이트 도출</div>
                 <div class="code-box dataset-panel" data-dataset-panel="geoje">
                     <p>이 데이터를 분석해서 거제에서 식당 창업하기 좋은 지역 TOP 3를 추천해줘. 근거도 함께 설명해줘.</p>
                     <p>[타겟 고객]을 타겟으로 한다면 어떤 지역이 가장 적합해? 장단점을 표로 비교해줘.</p>
                     <p>관광자원 수와 인구수를 한눈에 볼 수 있는 차트를 만들고 인사이트를 3줄로 요약해줘.</p>
                 </div>
-                                <div class="code-label" style="margin-top:0">📊 Excel 편집 허용, Copilot으로 데이터 직접 조작</div>
+                <div class="code-label dataset-panel" data-dataset-panel="incheon" style="margin-top:0">📊 Excel 편집 허용 — Copilot으로 데이터 직접 조작</div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
                     <p>이 데이터에서 군구별 음식점 수, 인구수, 기업체 직원 수를 집계하고, 창업 입지 분석에 가장 중요한 지표 3개를 추천해줘.</p>
                     <p>음식점이 적고 인구와 직장인(기업체 직원)이 많은 군구를 찾아서 "블루오션 점수" 컬럼을 추가해줘.</p>
                     <p>네이버 평점·인기도가 높은 맛집이 밀집한 군구와 직장인 수요가 높은 군구를 각각 컬럼으로 구분하고 상위 3곳씩 하이라이트해줘.</p>
                 </div>
-                <div class="code-label" style="margin-top:12px">💬 채팅만, Copilot Chat으로 인사이트 도출</div>
+                <div class="code-label dataset-panel" data-dataset-panel="incheon" style="margin-top:12px">💬 채팅만 — Copilot Chat으로 인사이트 도출</div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
                     <p>이 데이터를 분석해서 인천에서 식당 창업하기 좋은 군구 TOP 3를 추천해줘. 근거도 함께 설명해줘.</p>
                     <p>[타겟 고객]을 타겟으로 한다면 어떤 군구가 가장 적합해? 장단점을 표로 비교해줘.</p>
@@ -1418,6 +1418,8 @@ body{
         renderDots();
         const header = document.querySelector('.header');
         if (header) header.style.display = cur === 0 ? '' : 'none';
+        const nextBtn = document.getElementById('nextBtn');
+        if (nextBtn) nextBtn.style.display = cur >= TOTAL - 1 ? 'none' : '';
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
