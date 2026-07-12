@@ -556,6 +556,13 @@ body{
   }
   .copy-line-btn:hover { background: #fff; }
   .copy-line-btn.copied { color: #fff; background: var(--blue); border-color: transparent; }
+  .mention {
+    color: #464feb; font-weight: 700;
+    background: rgba(70,79,235,.10);
+    border: 1px solid rgba(70,79,235,.45);
+    border-radius: 5px; padding: 0 5px 1px;
+    white-space: nowrap; cursor: default;
+  }
 
 /* Prelude panel */
 .prelude-panel{border-radius:var(--r-2xl);padding:44px 48px 52px;overflow:hidden;position:relative;margin-bottom:28px}
@@ -1001,7 +1008,8 @@ body{
                         <div class="note" style="margin-bottom:16px">
                 <strong>지금까지 Copilot Chat에서 나눈 대화를 그대로 이어서 진행하세요.</strong><br>
                 트렌드 리서치, 보고서 초안, Excel 데이터 맥락이 대화 기록에 남아 있어 Copilot이 흐름을 이어갑니다.<br>
-                대화 기록이 없거나 새로 시작하려면 <a href="https://m365.cloud.microsoft/chat/" target="_blank">https://m365.cloud.microsoft/chat/</a> 에서 새 대화를 열고, <strong>/</strong> 로 파일을 다시 선택하세요.
+                대화 기록이 없거나 새로 시작하려면 <a href="https://m365.cloud.microsoft/chat/" target="_blank">https://m365.cloud.microsoft/chat/</a> 에서 새 대화를 열고, <strong>/</strong> 로 파일을 다시 선택하세요.<br>
+                💡 프롬프트 안의 <span class="mention" style="cursor:default">/파일명</span> 처럼 생긴 파란 칩은 <strong>파일 참조(멘션)</strong>예요. 원래는 채팅창에서 <strong>/</strong> 를 입력해 목록에서 파일을 골라야 하지만, <strong>Copy 버튼으로 복사해서 붙여넣기만</strong> 하면 이 참조가 자동으로 세팅됩니다.
             </div>
             <ol>
                 <li>Copilot Chat 대화에서 아래 샘플 프롬프트를 이어서 입력합니다. Stage 3에서 Excel 채팅만으로 나눈 대화 흐름이 여기 이어집니다. 프롬프트 안의 <span class="var-chip" style="cursor:default;font-size:inherit">20대</span> 같은 파란색 항목을 클릭하면 추천 옵션이 뜨거나 직접 입력해서 바꿀 수 있습니다.</li>
@@ -1012,7 +1020,7 @@ body{
                 <p class="code-desc">Stage 3에서 Excel로 파악한 데이터를 Copilot Chat으로 가져와 시각화하고 깊은 인사이트를 도출합니다. 여기서 만든 차트와 분석 결과는 Stage 6 Word 문서에서 바로 활용됩니다.</p>
                 <div class="code-label">샘플 프롬프트</div>
                 <div class="code-box dataset-panel active" data-dataset-panel="seoul">
-                    <p>/서울지역상권데이터.xlsx 파일을 참고해서 주요 지표를 요약해줘. 어떤 데이터로 식당 창업 입지를 분석할 수 있는지 설명해줘.</p>
+                    <p><span class="mention" data-entity="&lt;entity type='file'&gt;서울지역상권데이터.xlsx&lt;/entity&gt;">/서울지역상권데이터.xlsx</span> 파일을 참고해서 주요 지표를 요약해줘. 어떤 데이터로 식당 창업 입지를 분석할 수 있는지 설명해줘.</p>
                     <p>서울의 각 구 [유동인구]와 [가게수] 간의 관계를 시각화해줘. 모든 시각화 요청은 plotly를 이용해서 그래프를 그려줘</p>
                     <p>[중구] 개업/폐업 추이를 시각화해줘</p>
                     <p>유동인구수와 3년 생존율에 상관관계가 있어?</p>
@@ -1023,7 +1031,7 @@ body{
                     <p>지금까지 분석한 서울 데이터를 바탕으로, 식당 창업을 위한 핵심 인사이트를 3가지로 정리해줘. 이 내용을 Word 보고서 서두에 쓸 수 있게 간결한 문단 형식으로 작성해줘.</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="geoje">
-                    <p>/거제시공공데이터.xlsx 파일을 참고해서 주요 지표를 요약해줘. 어떤 데이터로 식당 창업 입지를 분석할 수 있는지 설명해줘.</p>
+                    <p><span class="mention" data-entity="&lt;entity type='file'&gt;거제시공공데이터.xlsx&lt;/entity&gt;">/거제시공공데이터.xlsx</span> 파일을 참고해서 주요 지표를 요약해줘. 어떤 데이터로 식당 창업 입지를 분석할 수 있는지 설명해줘.</p>
                     <p>거제 음식점의 [좌석수]와 [분류명] 간의 관계를 시각화해줘. 모든 시각화 요청은 plotly를 이용해서 그래프를 그려줘</p>
                     <p>거제9미 분류명별 음식점 분포를 시각화해줘</p>
                     <p>관광객이용시설 수와 음식점 수 사이에 상관관계가 있어?</p>
@@ -1034,7 +1042,7 @@ body{
                     <p>지금까지 분석한 거제 데이터를 바탕으로, 식당 창업을 위한 핵심 인사이트를 3가지로 정리해줘. 이 내용을 Word 보고서 서두에 쓸 수 있게 간결한 문단 형식으로 작성해줘.</p>
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="incheon">
-                    <p>/인천공공데이터.xlsx 파일을 참고해서 주요 지표를 요약해줘. 어떤 데이터로 식당 창업 입지를 분석할 수 있는지 설명해줘.</p>
+                    <p><span class="mention" data-entity="&lt;entity type='file'&gt;인천공공데이터.xlsx&lt;/entity&gt;">/인천공공데이터.xlsx</span> 파일을 참고해서 주요 지표를 요약해줘. 어떤 데이터로 식당 창업 입지를 분석할 수 있는지 설명해줘.</p>
                     <p>인천 각 군구 [인구수]와 [음식점 수] 간의 관계를 시각화해줘. 모든 시각화 요청은 plotly를 이용해서 그래프를 그려줘.</p>
                     <p>군구별 음식점 수, 인구수, 기업체 직원 수를 한눈에 볼 수 있는 차트를 만들고 인사이트를 3줄로 요약해줘.</p>
                     <p>군구별 [20~40대 인구] 비중을 계산해서 젊은 세대·직장인이 많은 군구를 찾아줘.</p>
@@ -1579,6 +1587,9 @@ body{
                 event.stopPropagation();
                 const clone = p.cloneNode(true);
                 clone.querySelectorAll('button').forEach((button) => button.remove());
+                clone.querySelectorAll('.mention[data-entity]').forEach((m) => {
+                    m.textContent = m.getAttribute('data-entity');
+                });
                 const promptText = clone.textContent.trim();
                 try {
                     await navigator.clipboard.writeText(promptText);
@@ -1588,6 +1599,21 @@ body{
                     showCopied(btn);
                 }
             });
+        });
+    }
+
+    function initMentionCopy() {
+        document.addEventListener('copy', function(e) {
+            const sel = window.getSelection();
+            if (!sel || sel.rangeCount === 0 || sel.isCollapsed) return;
+            const frag = sel.getRangeAt(0).cloneContents();
+            const mentions = frag.querySelectorAll('.mention[data-entity]');
+            if (!mentions.length) return;
+            mentions.forEach((m) => { m.textContent = m.getAttribute('data-entity'); });
+            if (e.clipboardData) {
+                e.clipboardData.setData('text/plain', frag.textContent);
+                e.preventDefault();
+            }
         });
     }
 
@@ -1687,6 +1713,7 @@ body{
 
     initVarChips();
     initCopyButtons();
+    initMentionCopy();
     applyDataset();
     renderTabs();
     if (!showWorkshopPrelude()) {
