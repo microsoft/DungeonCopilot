@@ -63,9 +63,11 @@ body{
     background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));transition:width .4s cubic-bezier(.34,1.56,.64,1)}
 
 /* ===== slide card ===== */
-.deck{border-radius:var(--r-2xl);padding:clamp(26px,4vw,46px);position:relative;overflow:hidden;min-height:560px;display:flex;flex-direction:column}
+.deck{border-radius:var(--r-2xl);padding:clamp(24px,3.4vw,40px);position:relative;overflow:hidden;height:clamp(540px,72vh,680px);display:flex;flex-direction:column}
 .slide{display:none;animation:slide-in .5s cubic-bezier(.22,1,.36,1)}
-.slide.active{display:flex;flex-direction:column;justify-content:center;flex:1 1 auto}
+.slide.active{display:flex;flex-direction:column;justify-content:safe center;flex:1 1 auto;overflow-y:auto;overflow-x:hidden;padding-right:4px}
+.slide.active::-webkit-scrollbar{width:7px}
+.slide.active::-webkit-scrollbar-thumb{background:rgba(0,0,0,.14);border-radius:9999px}
 @keyframes slide-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 .slide-kicker{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;padding:7px 15px;border-radius:var(--r-pill);
@@ -139,6 +141,11 @@ body{
 .agent-card p{font-size:13px;line-height:1.6;color:var(--t2);margin:0}
 .agent-note{font-size:13px;color:var(--t2);line-height:1.6;margin-top:8px}
 .agent-note strong{color:var(--blue)}
+
+/* ===== screenshots ===== */
+.shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0 4px}
+.shot-grid img{width:100%;height:auto;border-radius:var(--r-lg);border:1px solid rgba(0,0,0,.08);box-shadow:var(--shadow-sm);display:block}
+@media(max-width:520px){.shot-grid{grid-template-columns:1fr}}
 
 /* ===== outro ===== */
 .outro{text-align:center;padding:12px 0}
@@ -304,6 +311,10 @@ body{
             <h2 class="slide-title">Prompt <span class="accent">Coach</span></h2>
             <p class="slide-lead">프롬프트가 막히거나 결과가 애매할 때는 <strong>Prompt Coach</strong>에게 먼저 물어보세요. GCSE 구조로 프롬프트를 다듬어줍니다.</p>
             <p class="agent-note"><strong>추가 방법</strong> · Copilot Chat 접속 → 에이전트 → 에이전트 더보기 → <strong>Prompt Coach</strong> 검색 → 추가. 이미 추가돼 있다면 에이전트 검색에서 바로 찾을 수 있어요.</p>
+            <div class="shot-grid">
+                <img src="img/prompt_coach_1.png" alt="Prompt Coach 에이전트 상세 화면">
+                <img src="img/prompt_coach_2.png" alt="Prompt Coach 대화 시작 화면">
+            </div>
             <div class="code-label">이렇게 요청해볼 수 있어요</div>
             <div class="prompt-box">
                 <button class="copy-btn" type="button">복사</button>
