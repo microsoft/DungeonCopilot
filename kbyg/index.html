@@ -44,7 +44,7 @@ body{
     75%{transform:translate(40px,25px) scale(1.03)}
 }
 
-.app{position:relative;z-index:1;width:min(100%,880px);min-height:100vh;
+.app{position:relative;z-index:1;width:min(100%,1040px);min-height:100vh;
     margin:0 auto;padding:22px 18px 40px;display:flex;flex-direction:column;gap:16px;}
 
 .glass{background:var(--glass);backdrop-filter:var(--blur);-webkit-backdrop-filter:var(--blur);
@@ -83,6 +83,7 @@ body{
 .cover-visual{margin:26px 0 6px;text-align:center}
 .cover-visual img{display:block;width:min(100%,440px);height:auto;margin:0 auto;border-radius:var(--r-xl);
     border:1px solid rgba(0,0,0,.06);box-shadow:var(--shadow-md);background:#fff}
+.cover-visual.wide img{width:min(100%,900px)}
 
 .concept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0 8px}
 .concept-card{background:rgba(0,0,0,.028);border:1px solid rgba(0,0,0,.06);border-radius:var(--r-xl);padding:20px 22px}
@@ -224,7 +225,7 @@ body{
             <div class="slide-kicker">🧩 Microsoft 365 Copilot</div>
             <h2 class="slide-title">Microsoft 365 Copilot,<br><span class="accent">AI Built for Work</span></h2>
             <p class="slide-lead">Microsoft 365 Copilot은 Word · Excel · PowerPoint · Outlook · Teams 등 Microsoft 365 앱과 서비스에서 사용할 수 있는 <strong>업무용 AI</strong>입니다.</p>
-            <div class="cover-visual">
+            <div class="cover-visual wide">
                 <img src="img/copilot_m365_apps.png" alt="Microsoft 365 앱과 Copilot">
             </div>
             <div class="callout">그렇다면 Copilot은 내 업무 맥락을 어떻게 이해할까요? 그 바탕이 되는 것이 다음에 볼 <span class="hl">Work IQ</span>입니다.</div>
@@ -262,7 +263,7 @@ body{
                 <div class="concept-card"><span class="emoji">🧩</span><h3>에이전트</h3><p>리서치 도구·분석가처럼 특정 작업에 특화된 도우미를 고를 수 있어요.</p></div>
                 <div class="concept-card"><span class="emoji">⚙️</span><h3>좌측 상단</h3><p>Work IQ 사용 여부와 응답 방식(모델)을 선택하는 곳이에요.</p></div>
             </div>
-            <div class="cover-visual"><img src="img/chat_home.png" alt="Copilot Chat 기본 화면"></div>
+            <div class="cover-visual wide"><img src="img/chat_home.png" alt="Copilot Chat 기본 화면"></div>
         </section>
 
         <!-- Slide · 슬래시로 데이터 참조 -->
@@ -271,7 +272,7 @@ body{
             <h2 class="slide-title"><span class="accent">"/"</span>로 참조할 데이터 지정하기</h2>
             <p class="slide-lead">입력창에 <strong>슬래시(/)</strong>를 입력하면 특정 파일·메일·모임 등을 콕 집어 참조로 지정할 수 있어요. "이 문서를 보고" 정확히 알려주는 방법이에요.</p>
             <div class="callout">사람 · 파일 · 모임 · 이메일 · 채팅 · 채널 · 사이트 등에서 원하는 항목을 골라 대화에 연결할 수 있습니다.</div>
-            <div class="cover-visual"><img src="img/chat_slash.png" alt="슬래시로 참조할 데이터 지정"></div>
+            <div class="cover-visual wide"><img src="img/chat_slash.png" alt="슬래시로 참조할 데이터 지정"></div>
         </section>
 
         <!-- Slide · 개인 설정 -->
@@ -284,7 +285,7 @@ body{
                 <div class="concept-card"><span class="emoji">🧠</span><h3>저장된 메모리</h3><p>자주 쓰는 정보를 기억하게 해 더 맞춤한 답을 받을 수 있어요.</p></div>
                 <div class="concept-card"><span class="emoji">🗃️</span><h3>작업 프로필 · 채팅 기록</h3><p>업무 프로필과 이전 대화를 응답에 반영하도록 켜고 끌 수 있어요.</p></div>
             </div>
-            <div class="cover-visual"><img src="img/chat_settings.png" alt="Copilot 개인 설정 화면"></div>
+            <div class="cover-visual wide"><img src="img/chat_settings.png" alt="Copilot 개인 설정 화면"></div>
         </section>
 
         <!-- Slide · 모델 선택 -->
@@ -297,7 +298,7 @@ body{
                 <div class="concept-card"><span class="emoji">🛠️</span><h3>고급 작업(Frontier)</h3><p>계획·연구·실행이 필요한 복잡한 작업에 적합해요.</p></div>
                 <div class="concept-card"><span class="emoji">🤖</span><h3>모델 직접 선택</h3><p>Opus(Claude) · MAI(Microsoft) · GPT(OpenAI) 등 원하는 모델을 지정할 수 있어요.</p></div>
             </div>
-            <div class="cover-visual"><img src="img/chat_model.png" alt="모델 선택 메뉴"></div>
+            <div class="cover-visual wide"><img src="img/chat_model.png" alt="모델 선택 메뉴"></div>
             <div class="callout" style="margin-top:20px"><strong>이제 준비 완료!</strong> 열어둔 Copilot Chat에서 첫 번째 실습을 함께 해봅시다.</div>
         </section>
 
