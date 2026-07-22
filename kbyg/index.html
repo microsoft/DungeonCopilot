@@ -111,6 +111,14 @@ body{
 .env-item .env-name{font-weight:850;font-size:14px;color:var(--t1);flex:0 0 132px}
 .env-item a{color:var(--blue);text-decoration:none;font-weight:700;font-size:13.5px;word-break:break-all}
 .env-item a:hover{text-decoration:underline}
+.env-btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:22px 0 8px}
+.env-btn{display:flex;align-items:center;gap:13px;text-decoration:none;background:rgba(0,0,0,.028);
+    border:1px solid rgba(0,0,0,.07);border-radius:var(--r-pill);padding:13px 20px;transition:transform .15s,box-shadow .15s,background .15s,border-color .15s}
+.env-btn:hover{transform:translateY(-2px);background:#fff;box-shadow:var(--shadow-md);border-color:rgba(0,113,227,.28)}
+.env-btn .env-ico{width:36px;height:36px;flex:0 0 36px;display:grid;place-items:center;border-radius:11px;font-size:19px}
+.env-btn .env-label{display:flex;flex-direction:column;line-height:1.3}
+.env-btn .env-label b{font-size:14.5px;font-weight:850;color:var(--t1)}
+.env-btn .env-label span{font-size:11.5px;color:var(--t3);font-weight:700}
 
 /* ===== practice / prompt ===== */
 .practice-flag{display:flex;align-items:center;gap:9px;font-weight:850;font-size:15px;color:var(--t1);margin:22px 0 6px}
@@ -478,11 +486,11 @@ body{
             <div class="slide-kicker">📱 실습 환경 안내</div>
             <h2 class="slide-title">오늘은 <span class="accent">웹 환경</span>에서<br>진행합니다</h2>
             <p class="slide-lead">오늘 실습은 모두 <strong>Edge 브라우저의 웹 환경</strong>에서 진행합니다. 실습 중에는 아래 웹 주소로 접속해 주세요.</p>
-            <div class="env-list">
-                <div class="env-item"><span class="env-name">Copilot Chat</span><a href="https://m365.cloud.microsoft/chat/" target="_blank">https://m365.cloud.microsoft/chat/</a></div>
-                <div class="env-item"><span class="env-name">Excel 웹</span><a href="https://excel.cloud.microsoft/" target="_blank">https://excel.cloud.microsoft/</a></div>
-                <div class="env-item"><span class="env-name">Word 웹</span><a href="https://word.cloud.microsoft/" target="_blank">https://word.cloud.microsoft/</a></div>
-                <div class="env-item"><span class="env-name">PowerPoint 웹</span><a href="https://powerpoint.cloud.microsoft/" target="_blank">https://powerpoint.cloud.microsoft/</a></div>
+            <div class="env-btns">
+                <a class="env-btn" href="https://m365.cloud.microsoft/chat/" target="_blank"><span class="env-ico" style="background:rgba(0,113,227,.12)">🤖</span><span class="env-label"><b>Copilot Chat</b><span>바로 열기 →</span></span></a>
+                <a class="env-btn" href="https://excel.cloud.microsoft/" target="_blank"><span class="env-ico" style="background:rgba(48,209,88,.16)">📊</span><span class="env-label"><b>Excel 웹</b><span>바로 열기 →</span></span></a>
+                <a class="env-btn" href="https://word.cloud.microsoft/" target="_blank"><span class="env-ico" style="background:rgba(0,113,227,.12)">📝</span><span class="env-label"><b>Word 웹</b><span>바로 열기 →</span></span></a>
+                <a class="env-btn" href="https://powerpoint.cloud.microsoft/" target="_blank"><span class="env-ico" style="background:rgba(255,55,95,.14)">📽️</span><span class="env-label"><b>PowerPoint 웹</b><span>바로 열기 →</span></span></a>
             </div>
             <div class="callout">PDF/XLSX 실습 파일은 먼저 <a href="https://onedrive.com/" target="_blank" style="color:var(--blue);font-weight:800">OneDrive 웹</a>에 업로드한 뒤, Copilot Chat 또는 Office 웹에서 불러와 사용합니다. 로컬 PC에만 있는 파일은 Copilot이 읽지 못해요 😢</div>
         </section>
