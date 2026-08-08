@@ -475,43 +475,72 @@ body { overflow-y: hidden; }
 .guide-block .lg, .guide-line { font-size: 13px; line-height: 1.5; }
 .guide-line { color: var(--bone-dim); }
 
-/* 가로가 넉넉하면 HUD를 옆 기둥으로 세워 캔버스에 세로를 다 준다 */
+/* 가로가 넉넉하면 HUD를 옆 기둥으로 세워 캔버스에 세로를 다 준다.
+   던전은 정사각형이라 세로가 한계다. 사이드바는 폭을 고정해 화면이 커져도
+   레이아웃이 흔들리지 않게 하고, 전체를 가운데 정렬한다. */
 @media (min-width: 1120px) and (min-aspect-ratio: 1/1) {
   .play-wrap {
     flex-direction: row; align-items: center; justify-content: center;
-    gap: var(--s4);
+    gap: clamp(16px, 1.6vw, 32px);
     padding: var(--s3);
   }
   .hud {
-    width: clamp(230px, 20vw, 300px); max-width: none;
+    flex: 0 0 auto;
+    width: clamp(240px, 19vw, 340px); max-width: none;
     display: flex; flex-direction: column;
     align-items: stretch;
     gap: clamp(10px, 2vh, 20px);
-    padding: var(--s4);
+    padding: clamp(14px, 1.1vw, 22px);
     align-self: stretch;
     min-height: 0; overflow: hidden;
   }
+  .canvas-frame { flex: 0 0 auto; }
   .hud-left, .hud-right { flex-direction: column; align-items: stretch; gap: var(--s3); }
   .hud-left .hud-badge, .hud-right .hud-badge { width: 100%; }
-  .hud-right { margin-top: auto; }
+  /* 안내 블록이 숨겨진 짧은 화면에서도 가운데가 비지 않도록 고르게 벌린다 */
+  .hud { justify-content: space-between; }
+  .hud-right { margin-top: 0; }
   .hud-center { gap: clamp(8px, 1.6vh, 16px); }
   .hp-row { flex-wrap: wrap; }
+  /* 사이드바 폭이 고정이므로 글자 크기도 과하게 키우지 않는다 */
+  .hud .hud-label { font-size: clamp(10.5px, 1.4vh, 13px); }
+  .hud .hud-value { font-size: clamp(15px, 2vh, 19px); }
   .hud .heart { width: clamp(16px, 2.2vh, 22px); height: clamp(15px, 2vh, 20px); }
   .hud .hp-text { font-size: clamp(14px, 1.8vh, 17px); }
   .hud .progress-row { flex-wrap: wrap; }
-  .hud .progress-bar { flex-basis: 100%; height: clamp(12px, 1.7vh, 16px); }
-  .hud-badge.total .hud-value { font-size: clamp(15px, 2.1vh, 20px); }
-  .hud-right .btn.tiny { padding-block: clamp(7px, 1.3vh, 12px); font-size: clamp(12px, 1.5vh, 14px); }
+  .hud .progress-label { font-size: clamp(11px, 1.5vh, 14px); }
+  .hud .progress-bar { flex-basis: 100%; height: clamp(12px, 1.7vh, 18px); }
+  .hud .progress-text { font-size: clamp(11px, 1.5vh, 14px); }
+  .hud-badge.total .hud-value { font-size: clamp(15px, 2.2vh, 22px); }
+  .hud-right .btn.tiny { padding-block: clamp(7px, 1.3vh, 13px); font-size: clamp(12px, 1.6vh, 15px); }
+  .guide-title { font-size: clamp(11px, 1.4vh, 13px); }
+  .guide-block .lg, .guide-line { font-size: clamp(13px, 1.7vh, 16px); }
   /* 범례가 사이드바로 올라갔으니 캔버스 아래는 비운다 */
   .canvas-frame .legend { display: none; }
   #game-canvas {
-    width: min(calc(100vh - 40px), calc(100vw - 360px), 1020px);
+    /* 세로 여유와 (전체폭 - 사이드바 최대 340 - 여백) 중 작은 쪽 */
+    width: min(calc(100vh - 40px), calc(100vw - 400px));
   }
 }
 
 /* 세로가 넉넉할 때만 안내 블록을 띄운다 — 짧은 화면에서 HUD가 잘리는 걸 막는다 */
-@media (min-width: 1120px) and (min-aspect-ratio: 1/1) and (min-height: 840px) {
+@media (min-width: 1120px) and (min-aspect-ratio: 1/1) and (min-height: 760px) {
   .hud-guide { display: flex; flex-direction: column; gap: var(--s3); }
+}
+/* 세로가 빠듯하거나 사이드바가 좁으면 안내 블록을 압축해 넘치지 않게 한다 */
+@media (min-width: 1120px) and (min-aspect-ratio: 1/1) and (max-height: 1000px) {
+  .hud { gap: var(--s3); }
+  .hud-guide { gap: var(--s2); }
+  .guide-block { padding: var(--s2) var(--s3); gap: 2px; }
+  .guide-title { padding-bottom: var(--s1); margin-bottom: 0; font-size: 11px; }
+  .guide-block .lg, .guide-line { font-size: 12px; line-height: 1.35; }
+  .hud .hud-label { font-size: 10.5px; }
+  .hud .hud-value { font-size: 15px; }
+  .hud .hud-badge { padding: 3px var(--s3); }
+  .hud .heart { width: 16px; height: 15px; }
+  .hud .hp-text { font-size: 14px; }
+  .hud .progress-bar { height: 13px; }
+  .hud-right .btn.tiny { padding-block: 8px; font-size: 13px; }
 }
 
 .toast {
