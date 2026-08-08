@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 부스 PC에서 파일을 고쳤는데 옛 버전이 뜨는 일을 막는다 -->
+<meta http-equiv="Cache-Control" content="no-store">
+<title>던전앤코파일럿 8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Galmuri11:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%2316120c'/%3E%3Crect x='3' y='2' width='10' height='3' fill='%23e2622a'/%3E%3Crect x='4' y='5' width='8' height='6' fill='%23e9dfc6'/%3E%3Crect x='5' y='7' width='2' height='2' fill='%2316120c'/%3E%3Crect x='9' y='7' width='2' height='2' fill='%2316120c'/%3E%3Crect x='4' y='12' width='8' height='2' fill='%23f0b429'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="stone-field">
+
+<div id="app">
+
+  <!-- ================= 타이틀 화면 ================= -->
+  <section id="screen-title" class="screen active">
+    <div class="title-wrap">
+      <div class="title-art" style="background-image:url('assets/title.png')"></div>
+
+      <div class="title-content">
+        <h1 class="game-title">
+          <span class="t-line1">던전 앤</span>
+          <span class="t-line2">코파일럿</span>
+          <span class="t-badge">8</span>
+        </h1>
+        <p class="game-sub">Microsoft 365 Copilot 퀴즈 던전 RPG</p>
+
+        <div class="title-panel">
+          <div class="field">
+            <span class="field-label">게임 방식</span>
+            <div id="gamemode-select" class="mode-select"></div>
+          </div>
+
+          <label class="field" id="name-field">
+            <span class="field-label">도전자 이름</span>
+            <input id="name-input" type="text" maxlength="12" placeholder="이름을 입력하세요" autocomplete="off">
+          </label>
+
+          <div class="field">
+            <span class="field-label">난이도</span>
+            <div id="difficulty-select" class="mode-select"></div>
+          </div>
+
+          <div class="field">
+            <span class="field-label">퀴즈 주제</span>
+            <div id="mode-select" class="mode-select"></div>
+          </div>
+
+          <div class="start-row">
+            <button id="start-btn" class="btn primary big">던전 입장</button>
+            <p id="start-hint" class="start-hint">몬스터에 부딪히면 퀴즈가 시작됩니다.<br>10점을 모으면 포털이 열립니다.</p>
+          </div>
+
+          <div class="controls-hint">
+            <span><b>이동</b> 방향키 / WASD / D-패드 / 클릭</span>
+            <span><b>전투</b> 몬스터와 충돌</span>
+            <span><b>답변</b> 화면에 표시된 버튼</span>
+            <span><b>일시정지</b> ESC / Start</span>
+            <span><b>음소거</b> M</span>
+          </div>
+          <div id="pad-status" class="pad-status"><i class="pad-dot"></i>게임패드 미연결 — 패드 버튼을 누르면 연결됩니다</div>
+          <p id="file-warn" class="file-warn">
+            <b>파일로 직접 열었습니다.</b> 게임패드와 몬스터 초상화가 동작하지 않을 수 있습니다.
+            폴더의 <code>서버로-열기.bat</code>으로 실행하세요.
+            <a href="gamepad-test.html">패드 진단 열기</a>
+          </p>
+        </div>
+
+        <div class="rules-strip" id="rules-dungeon">
+          <div class="rule"><b>체력 10</b><span>0이 되면 종료</span></div>
+          <div class="rule"><b>10점</b><span>포털이 열림</span></div>
+          <div class="rule"><b>깊을수록</b><span>보상이 커짐</span></div>
+        </div>
+        <div class="rules-strip" id="rules-explore" hidden>
+          <div class="rule"><b>문제 1개</b><span>슬롯으로 난이도 결정</span></div>
+          <div class="rule"><b>맞히면 성공</b><span>틀리면 다시 도전</span></div>
+          <div class="rule"><b>기록 없음</b><span>바로 다음 사람</span></div>
+        </div>
+      </div>
+
+      <div class="title-leaderboard" id="title-lb-box">
+        <h2 class="lb-title">명예의 전당</h2>
+        <div id="title-leaderboard"></div>
+        <button id="reset-lb" class="btn ghost tiny">기록 초기화</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 게임 플레이 ================= -->
+  <section id="screen-play" class="screen">
+    <div class="play-wrap">
+
+      <header class="hud">
+        <div class="hud-left">
+          <div class="hud-badge">
+            <span class="hud-label">도전자</span>
+            <span id="hud-name" class="hud-value">-</span>
+          </div>
+          <div class="hud-badge stage">
+            <span class="hud-label">스테이지</span>
+            <span id="hud-stage" class="hud-value">1</span>
+          </div>
+        </div>
+
+        <div class="hud-center">
+          <div class="hp-row">
+            <div id="hud-hearts" class="hearts"></div>
+            <span id="hud-hp-text" class="hp-text">10/10</span>
+          </div>
+          <div class="progress-row">
+            <span class="progress-label">포털까지</span>
+            <div class="progress-bar"><div id="hud-progress-fill" class="progress-fill"></div></div>
+            <span id="hud-progress-text" class="progress-text">0 / 10</span>
+          </div>
+        </div>
+
+        <div class="hud-guide">
+          <div class="guide-block">
+            <span class="guide-title">몬스터</span>
+            <span class="lg low">● 하급 +3</span>
+            <span class="lg mid">●● 중급 +6</span>
+            <span class="lg high">●●● 상급 +10</span>
+          </div>
+          <div class="guide-block">
+            <span class="guide-title">조작</span>
+            <span class="guide-line">방향키 / WASD 이동</span>
+            <span class="guide-line">바닥 클릭 시 자동 이동</span>
+            <span class="guide-line" id="guide-answer">퀴즈 답: 1 · 2 · 3 · 4</span>
+            <span class="guide-line">ESC 일시정지</span>
+          </div>
+        </div>
+
+        <div class="hud-right">
+          <div id="hud-portal" class="hud-badge portal">
+            <span class="hud-label">포털</span>
+            <span class="hud-value">OPEN</span>
+          </div>
+          <div class="hud-badge total">
+            <span class="hud-label">총점</span>
+            <span id="hud-total" class="hud-value">0</span>
+          </div>
+          <button id="mute-btn" class="btn ghost tiny" title="소리 켜기/끄기 (M)">소리 ON</button>
+          <button id="pause-btn" class="btn ghost tiny" title="일시정지 (ESC)">⏸</button>
+        </div>
+      </header>
+
+      <div class="canvas-frame">
+        <canvas id="game-canvas" width="608" height="608"></canvas>
+        <div class="legend">
+          <span class="lg low">● 하급 +3</span>
+          <span class="lg mid">●● 중급 +6</span>
+          <span class="lg high">●●● 상급 +10</span>
+        </div>
+      </div>
+
+      <div id="toast" class="toast"></div>
+    </div>
+  </section>
+
+  <!-- ================= 스테이지 전환 ================= -->
+  <section id="screen-stage" class="screen">
+    <div class="stage-card">
+      <div class="stage-portal-ico"></div>
+      <p class="stage-eyebrow">포털을 통과했습니다</p>
+      <h2 class="stage-title">STAGE <span id="stage-num">2</span></h2>
+      <div class="stage-stats">
+        <div><span class="s-label">누적 점수</span><b id="stage-total">0</b></div>
+        <div><span class="s-label">남은 체력</span><b id="stage-hp">10/10</b></div>
+      </div>
+      <p class="stage-note">더 깊이 내려갈수록 보상이 커집니다</p>
+      <button id="stage-continue" class="btn primary big">더 깊이 내려가기</button>
+    </div>
+  </section>
+
+  <!-- ================= 게임 오버 ================= -->
+  <section id="screen-over" class="screen">
+    <div class="over-wrap">
+      <div class="over-card">
+        <h2 class="over-title">GAME OVER</h2>
+        <p class="over-sub"><b id="over-name">-</b> 도전자의 모험이 끝났습니다</p>
+
+        <div class="over-stats">
+          <div class="ostat"><span>도달 스테이지</span><b id="over-stage">1</b></div>
+          <div class="ostat"><span>총 획득 점수</span><b id="over-points">0</b></div>
+          <div class="ostat"><span>순위</span><b id="over-rank">-</b></div>
+        </div>
+
+        <p class="over-note">기록을 스태프에게 보여주고 보상을 받으세요</p>
+
+        <div class="over-actions">
+          <button id="retry-btn" class="btn primary">다시 도전</button>
+          <button id="home-btn" class="btn ghost">타이틀로</button>
+        </div>
+      </div>
+
+      <div class="over-lb">
+        <h2 class="lb-title">명예의 전당</h2>
+        <div id="over-leaderboard"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 탐험 모드: 슬롯 ================= -->
+  <section id="screen-slot" class="screen">
+    <div class="slot-card">
+      <p class="slot-eyebrow">이번 도전자의 상대는</p>
+      <div class="slot-window">
+        <div id="slot-reel" class="slot-reel">???</div>
+      </div>
+      <p id="slot-caption" class="slot-caption">운명을 뽑는 중…</p>
+    </div>
+  </section>
+
+  <!-- ================= 탐험 모드: 문제 ================= -->
+  <section id="screen-solo" class="screen">
+    <div class="solo-wrap">
+      <header class="solo-head">
+        <div id="solo-portrait" class="solo-portrait"></div>
+        <div class="solo-head-info">
+          <span id="solo-tier" class="battle-tier">상급 문제</span>
+          <h2 id="solo-monster" class="solo-monster">데몬 로드</h2>
+        </div>
+        <div class="battle-timer">
+          <span id="solo-timer-text" class="timer-text">20초</span>
+          <div class="timer-bar"><div id="solo-timer-fill" class="timer-fill"></div></div>
+        </div>
+      </header>
+
+      <div class="solo-body">
+        <p id="solo-question" class="battle-question"></p>
+        <div class="solo-answers">
+          <div id="solo-options" class="battle-options"></div>
+          <p id="solo-hint" class="battle-hint"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 탐험 모드: 결과 ================= -->
+  <section id="screen-solo-result" class="screen">
+    <div class="solo-result-wrap">
+      <div id="solo-result-card" class="solo-result-card">
+        <div class="result-head-row">
+          <div id="solo-verdict-mark" class="verdict-mark"></div>
+          <div>
+            <h2 id="solo-verdict" class="solo-verdict">축하합니다</h2>
+            <p id="solo-verdict-sub" class="solo-verdict-sub"></p>
+          </div>
+        </div>
+
+        <div class="solo-detail">
+          <div class="solo-answer-box">
+            <span class="s-label">정답</span>
+            <b id="solo-answer-text">-</b>
+          </div>
+          <div class="result-exp">
+            <strong>해설</strong>
+            <span id="solo-exp"></span>
+          </div>
+        </div>
+
+        <div class="solo-actions">
+          <button id="solo-next" class="btn primary big">다음 도전자 <small>(Enter · A)</small></button>
+          <button id="solo-exit" class="btn ghost">타이틀로</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 일시정지 ================= -->
+  <div id="pause-modal" class="battle-modal">
+    <div class="pause-box">
+      <h2 class="pause-title">일시정지</h2>
+      <p class="pause-sub">모험을 잠시 멈췄습니다</p>
+
+      <div class="pause-stats">
+        <div><span class="s-label">스테이지</span><b id="pause-stage">1</b></div>
+        <div><span class="s-label">누적 점수</span><b id="pause-total">0</b></div>
+        <div><span class="s-label">남은 체력</span><b id="pause-hp">10/10</b></div>
+      </div>
+
+      <div class="pause-actions">
+        <button id="pause-resume" class="btn primary big">계속하기 <small>(ESC · A)</small></button>
+        <button id="pause-quit" class="btn">기록 남기고 종료 <small>(Q · B)</small></button>
+        <button id="pause-abandon" class="btn ghost">기록 없이 나가기</button>
+      </div>
+
+      <div id="abandon-confirm" class="abandon-confirm">
+        <p>이번 기록은 저장되지 않습니다. 나갈까요?</p>
+        <div class="abandon-actions">
+          <button id="abandon-yes" class="btn">나가기</button>
+          <button id="abandon-no" class="btn ghost">취소</button>
+        </div>
+      </div>
+
+      <p class="pause-note">
+        <b>기록 남기고 종료</b>하면 현재 스테이지와 점수가 리더보드에 반영됩니다.
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= 전투 모달 ================= -->
+  <div id="battle-modal" class="battle-modal">
+    <div class="battle-box">
+      <div class="battle-head">
+        <div id="battle-portrait" class="battle-portrait"></div>
+        <div class="battle-info">
+          <span id="battle-tier" class="battle-tier">하급 몬스터</span>
+          <h3 id="battle-monster-name" class="battle-name">슬라임</h3>
+          <div class="battle-stakes">
+            <span id="battle-reward" class="stake win">승리 +3점</span>
+            <span id="battle-risk" class="stake lose">패배 -2HP</span>
+          </div>
+        </div>
+        <div class="battle-timer">
+          <span id="battle-timer-text" class="timer-text">25초</span>
+          <div class="timer-bar"><div id="battle-timer-fill" class="timer-fill"></div></div>
+        </div>
+      </div>
+
+      <p id="battle-question" class="battle-question"></p>
+      <div id="battle-options" class="battle-options"></div>
+      <p id="battle-hint" class="battle-hint"></p>
+      <div id="battle-result" class="battle-result"></div>
+    </div>
+  </div>
+
+</div>
+
+<script src="js/quiz.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/battle.js"></script>
+<script src="js/solo.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/gamepad.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
