@@ -215,7 +215,7 @@ function loadLevel(i) {
     coyote: 0, jumpBuf: 0,
     invuln: 0,
     dashing: 0, dashCool: 0,
-    draftCool: 0, draftLastY: null,
+    draftCool: 0, draftUsed: false,
     state: 'idle'
   };
 
@@ -280,13 +280,12 @@ function requestDraft() {
   }
   if (bx === null) return;
 
-  // 앞으로 깔 수는 있어도 위로 쌓을 수는 없다.
-  // 이게 없으면 발판을 계단처럼 쌓아 하늘까지 올라간다
-  if (p.draftLastY !== null && by < p.draftLastY) return;
-  p.draftLastY = by;
+  // 한 번 뜰 때 한 장만. 공중에서 계속 깔 수 있으면
+  // 제자리에서 발판을 이어 밟으며 떠 있을 수 있다.
+  // 관문이 4칸이라 한 장이면 충분하다
+  if (p.draftUsed) return;
+  p.draftUsed = true;
 
-  // 발판은 최대 2장까지 남긴다. 새로 놓을 때 배열을 갈아치우면
-  // 지금 밟고 선 발판이 사라져 관문을 건널 수 없다
   Game.drafts.push({ x: bx, y: by, w, h: 12, life: CONFIG.DRAFT_MS, max: CONFIG.DRAFT_MS });
   if (Game.drafts.length > 2) Game.drafts.shift();
 
@@ -370,7 +369,7 @@ function updatePlayer(dt) {
     p.onGround = true;
     p.coyote = CONFIG.COYOTE;
     p.vy = 0;
-    if (!standingOnDraft(p)) p.draftLastY = null;
+    if (!standingOnDraft(p)) p.draftUsed = false;
   } else {
     if (hit === 'ceil') p.vy = 0;
     if (p.onGround) p.coyote = CONFIG.COYOTE;
@@ -687,7 +686,7 @@ function respawnAtCheckpoint() {
 
   p.vx = 0; p.vy = 0;
   p.dashing = 0;
-  p.draftLastY = null;
+  p.draftUsed = false;
   p.invuln = CONFIG.INVULN_MS;
   Game.drafts = [];
 }
