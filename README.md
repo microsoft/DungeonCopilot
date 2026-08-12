@@ -37,6 +37,30 @@ This version was used for a Hanwha Ocean session on June 9, 2026.
 
 The 2026 Korean version includes a dataset selector so facilitators can run the same workshop with Seoul commercial district data, Geoje City public data, or Incheon public data. You can also open a specific dataset directly by adding a query string to the URL: `?dataset=seoul`, `?dataset=geoje`, or `?dataset=incheon`.
 
+## Series
+
+`Dungeon & Copilot` now covers more than one genre. The `dnc*` folders are the quiz-dungeon line; new genres get their own prefix.
+
+| Prefix | Genre | Latest |
+| --- | --- | --- |
+| `dnc*` | Quiz dungeon RPG | [dnc8_k](https://microsoft.github.io/DungeonCopilot/dnc8_k/) |
+| `dnc2026_k` | Hands-on workshop | [dnc2026_k](https://microsoft.github.io/DungeonCopilot/dnc2026_k/) |
+| `cpw_k` | Side-scrolling platformer | [cpw_k](https://microsoft.github.io/DungeonCopilot/cpw_k/) |
+
+### Copilot World (cpw_k)
+
+A Mario-style platformer where each stage grants one Copilot capability as a power-up, and places a gate that cannot be passed without it. Players learn `which feature solves which problem` by playing rather than by listening.
+
+| Stage | Setting | Power-up | Gate |
+| --- | --- | --- | --- |
+| 1-1 | Chat Plains | Prompt (Copilot Chat) | A wall too high to jump |
+| 1-2 | Word Castle | Draft (Copilot in Word) | A gap with no footing |
+| 1-3 | Excel Mine | Analyze (Analyst) | Walls of piled-up data |
+| 1-4 | Research Tower | Grounding (Researcher) | Platforms hidden in fog |
+| 1-5 | Cowork Castle | — | Boss, requires all three |
+
+Korean UI, gamepad and touch support, offline-capable (no external assets beyond Google Fonts).
+
 ## New Version (Working)
 
 | Folder | Description | Language | URL |
@@ -44,6 +68,7 @@ The 2026 Korean version includes a dataset selector so facilitators can run the 
 | dnc5_k | New game for M365 Copilot Chat | Korean | https://microsoft.github.io/DungeonCopilot/dnc5_k/ |
 | dnc6_k | New game for M365 Copilot | Korean | https://microsoft.github.io/DungeonCopilot/dnc6_k/ |
 | dnc2026_k | Latest Korean restaurant workshop with Seoul/Geoje/Incheon dataset selection | Korean | https://microsoft.github.io/DungeonCopilot/dnc2026_k/ |
+| cpw_k | Copilot World - side-scrolling platformer, one capability per stage | Korean | https://microsoft.github.io/DungeonCopilot/cpw_k/ |
 
 ### Direct dataset links
 

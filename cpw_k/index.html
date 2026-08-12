@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store">
+<meta name="theme-color" content="#0c1120">
+<style>html,body{background:#0c1120;color:#e9eef8;margin:0}</style>
+<title>코파일럿 월드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Galmuri11:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230c1120'/%3E%3Crect x='4' y='2' width='8' height='4' fill='%23f7cfa4'/%3E%3Crect x='4' y='1' width='8' height='2' fill='%233a2a1c'/%3E%3Crect x='5' y='7' width='6' height='5' fill='%232f6fd0'/%3E%3Crect x='7' y='7' width='2' height='5' fill='%23ff9a3c'/%3E%3Crect x='4' y='13' width='3' height='2' fill='%232a2622'/%3E%3Crect x='9' y='13' width='3' height='2' fill='%232a2622'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ================= HUD ================= -->
+  <header id="hud">
+    <div class="hud-left">
+      <span id="hud-stage" class="hud-stage">1-1</span>
+      <span id="hud-hp" class="hud-hp"></span>
+    </div>
+    <div id="hud-abilities" class="hud-abilities"></div>
+    <div class="hud-right">
+      <span class="hud-coin-wrap">크레딧 <b id="hud-coin">0</b></span>
+      <span class="hud-score-wrap">SCORE <b id="hud-score">00000</b></span>
+      <button id="pause-btn" class="mini-btn" title="일시정지 (ESC)">⏸</button>
+      <button id="mute-btn" class="mini-btn">소리 ON</button>
+    </div>
+  </header>
+
+  <!-- ================= 게임 화면 ================= -->
+  <main id="stage-wrap">
+    <canvas id="game" width="960" height="544"></canvas>
+    <div id="banner" class="banner"></div>
+
+    <!-- ---------- 타이틀 ---------- -->
+    <section id="ov-title" class="overlay active">
+      <div class="panel panel-title">
+        <div class="logo">
+          <span class="logo-1">코파일럿</span>
+          <span class="logo-2">월드</span>
+        </div>
+        <p class="logo-sub">Microsoft 365 Copilot 기능 체험 플랫포머</p>
+
+        <div id="file-warn" class="warn hidden">
+          <b>파일로 직접 열었습니다.</b> 게임패드가 동작하지 않을 수 있습니다.
+          폴더의 <code>서버로-열기.bat</code>으로 실행하세요.
+        </div>
+
+        <label class="field">
+          <span class="field-label">도전자 이름</span>
+          <input id="name-input" type="text" maxlength="12" placeholder="이름을 입력하세요" autocomplete="off">
+        </label>
+
+        <button id="start-btn" class="btn btn-primary">모험 시작</button>
+
+        <div class="howto">
+          <div class="howto-row"><b>이동</b> ← → / A D / 스틱</div>
+          <div class="howto-row"><b>점프</b> Space · ↑ / 패드 A</div>
+          <div class="howto-row"><b>대시</b> Shift / 패드 X <span class="dim">(분석 습득 후)</span></div>
+          <div class="howto-row"><b>초안</b> ↓ + 점프 / 패드 B <span class="dim">(초안 습득 후)</span></div>
+          <div class="howto-row"><b>일시정지</b> ESC / Start &nbsp;·&nbsp; <b>음소거</b> M</div>
+        </div>
+
+        <div class="stage-preview">
+          <div class="sp"><b>1-1</b> 채팅 평원 <span>💬 프롬프트</span></div>
+          <div class="sp"><b>1-2</b> 워드 성 <span>📄 초안</span></div>
+          <div class="sp"><b>1-3</b> 엑셀 광산 <span>📊 분석</span></div>
+          <div class="sp"><b>1-4</b> 리서치 탑 <span>🔎 근거</span></div>
+          <div class="sp boss"><b>1-5</b> 코워크 성 <span>👑 보스</span></div>
+        </div>
+
+        <div id="pad-status" class="pad-status">게임패드 미연결 — 패드 버튼을 누르면 연결됩니다</div>
+
+        <details class="board-wrap">
+          <summary>리더보드</summary>
+          <div id="title-board"></div>
+          <button id="board-clear" class="btn btn-ghost btn-sm">기록 초기화</button>
+        </details>
+      </div>
+    </section>
+
+    <!-- ---------- 스테이지 인트로 ---------- -->
+    <section id="ov-intro" class="overlay">
+      <div class="panel panel-sm center">
+        <div id="intro-num" class="intro-num">STAGE 1-1</div>
+        <h2 id="intro-name" class="intro-name">채팅 평원</h2>
+        <p id="intro-sub" class="intro-sub">Copilot Chat</p>
+        <p id="intro-goal" class="intro-goal"></p>
+        <button id="intro-btn" class="btn btn-primary">출발</button>
+      </div>
+    </section>
+
+    <!-- ---------- 파워업 ---------- -->
+    <section id="ov-power" class="overlay">
+      <div class="panel panel-sm center power">
+        <div class="power-label">능력 획득</div>
+        <div id="power-ico" class="power-ico">💬</div>
+        <h2 id="power-name" class="power-name">프롬프트</h2>
+        <p id="power-product" class="power-product">Copilot Chat</p>
+        <p id="power-desc" class="power-desc"></p>
+        <div class="power-how-wrap">
+          <span class="power-how-label">사용법</span>
+          <span id="power-how" class="power-how"></span>
+        </div>
+        <button id="power-btn" class="btn btn-primary">계속</button>
+      </div>
+    </section>
+
+    <!-- ---------- 퀴즈 ---------- -->
+    <section id="ov-quiz" class="overlay">
+      <div class="panel panel-quiz">
+        <div id="quiz-stage" class="quiz-stage"></div>
+        <h2 id="quiz-q" class="quiz-q"></h2>
+        <div id="quiz-opts" class="quiz-opts"></div>
+        <div id="quiz-result" class="quiz-result"></div>
+        <button id="quiz-next" class="btn btn-primary hidden">계속</button>
+      </div>
+    </section>
+
+    <!-- ---------- 스테이지 클리어 ---------- -->
+    <section id="ov-clear" class="overlay">
+      <div class="panel panel-sm center">
+        <div class="clear-badge">STAGE CLEAR</div>
+        <h2 id="clear-title" class="intro-name"></h2>
+        <div class="stat-row">
+          <div class="stat"><span>점수</span><b id="clear-score">0</b></div>
+          <div class="stat"><span>크레딧</span><b id="clear-coin">0</b></div>
+          <div class="stat"><span>체력</span><b id="clear-hp">3 / 3</b></div>
+        </div>
+        <p id="clear-next" class="intro-sub"></p>
+        <button id="clear-btn" class="btn btn-primary">다음 스테이지</button>
+      </div>
+    </section>
+
+    <!-- ---------- 일시정지 ---------- -->
+    <section id="ov-pause" class="overlay">
+      <div class="panel panel-sm center">
+        <h2 class="intro-name">일시정지</h2>
+        <div class="stat-row">
+          <div class="stat"><span>스테이지</span><b id="pause-stage"></b></div>
+          <div class="stat"><span>점수</span><b id="pause-score">0</b></div>
+        </div>
+        <button id="resume-btn" class="btn btn-primary">계속하기</button>
+        <button id="pause-quit" class="btn btn-ghost">타이틀로 (기록 없음)</button>
+      </div>
+    </section>
+
+    <!-- ---------- 게임 오버 ---------- -->
+    <section id="ov-over" class="overlay">
+      <div class="panel panel-sm center">
+        <div class="over-badge">GAME OVER</div>
+        <p class="intro-sub"><b id="over-name">도전자</b> 님의 모험이 끝났습니다</p>
+        <div class="stat-row">
+          <div class="stat"><span>도달</span><b id="over-stage"></b></div>
+          <div class="stat"><span>점수</span><b id="over-score">0</b></div>
+          <div class="stat"><span>순위</span><b id="over-rank">-</b></div>
+        </div>
+        <button id="retry-btn" class="btn btn-primary">다시 도전</button>
+        <button id="over-home" class="btn btn-ghost">타이틀로</button>
+      </div>
+    </section>
+
+    <!-- ---------- 엔딩 ---------- -->
+    <section id="ov-ending" class="overlay">
+      <div class="panel panel-end center">
+        <div class="clear-badge gold">ALL CLEAR</div>
+        <h2 class="intro-name"><span id="end-name"></span> 님, 코워크를 넘었습니다</h2>
+        <p class="end-msg">
+          프롬프트로 묻고, 초안으로 시작하고, 분석으로 뚫고, 근거로 확인했습니다.<br>
+          이제 혼자 다 하지 않아도 됩니다.
+        </p>
+        <div class="stat-row">
+          <div class="stat"><span>총점</span><b id="end-score">0</b></div>
+          <div class="stat"><span>크레딧</span><b id="end-coin">0</b></div>
+          <div class="stat"><span>기록</span><b id="end-time">0:00</b></div>
+          <div class="stat"><span>순위</span><b id="end-rank">-</b></div>
+        </div>
+        <div id="end-board"></div>
+        <p class="dim small">기록을 스태프에게 보여주고 보상을 받으세요</p>
+        <button id="end-btn" class="btn btn-primary">타이틀로</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= 터치 조작 ================= -->
+  <div id="touch-ctrl">
+    <div class="tc-pad">
+      <button id="tc-left" class="tc">◀</button>
+      <button id="tc-right" class="tc">▶</button>
+    </div>
+    <div class="tc-act">
+      <button id="tc-draft" class="tc small">초안</button>
+      <button id="tc-dash" class="tc small">대시</button>
+      <button id="tc-jump" class="tc">점프</button>
+    </div>
+  </div>
+
+  <footer id="foot">
+    <span>Dungeon &amp; Copilot 시리즈 — 코파일럿 월드</span>
+  </footer>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/levels.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/gamepad.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
