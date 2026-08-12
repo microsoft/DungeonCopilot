@@ -7,8 +7,8 @@ const CONFIG = {
   VIEW_COLS: 30,
   VIEW_ROWS: 17,
   MAX_HP: 5,
-  GRAVITY: 0.58,
-  JUMP_V: -11.8,
+  GRAVITY: 0.56,
+  JUMP_V: -12.0,
   MOVE: 3.5,
   AIR_MOVE: 3.5,
   MAX_FALL: 15,
@@ -18,7 +18,7 @@ const CONFIG = {
   DASH_MS: 190,
   DASH_COOL: 620,
   DRAFT_MS: 4200,       // 초안 발판 유지 시간
-  INVULN_MS: 1300
+  INVULN_MS: 1900       // 부스에서 한 번 하고 마는 게임이라 넉넉하게 준다
 };
 
 const STATE = {
@@ -34,6 +34,8 @@ const Game = {
   player: null,
   foes: [], coins: [], drafts: [], chores: [], particles: [], floats: [],
   boss: null,
+  checkpoints: [],
+  lastDeathX: null,
   abilities: {},               // { prompt:true, ... }
   promptDone: false,
   keys: {},
@@ -185,6 +187,8 @@ function loadLevel(i) {
   Game.particles = [];
   Game.floats = [];
   Game.shake = 0;
+  Game.checkpoints = [];
+  Game.lastDeathX = null;
 
   Game.coins = lv.coins.map(c => ({
     x: c.x * T() + 4, y: c.y * T() + 4, taken: false
@@ -198,7 +202,7 @@ function loadLevel(i) {
     vy: 0,
     homeX: f.x * T(),
     patrol: (f.patrol || 3) * T(),
-    dead: 0,
+    dead: 0, cooldown: 0,
     hp: f.kind === 'repeat' ? 2 : 1
   }));
 
@@ -211,7 +215,7 @@ function loadLevel(i) {
     coyote: 0, jumpBuf: 0,
     invuln: 0,
     dashing: 0, dashCool: 0,
-    draftCool: 0, draftCount: 0,
+    draftCool: 0, draftLastY: null,
     state: 'idle'
   };
 
@@ -260,14 +264,32 @@ function requestDash() {
 function requestDraft() {
   const p = Game.player;
   if (Game.state !== STATE.PLAY || !Game.abilities.draft) return;
-  // 공중에서 최대 2번. 무제한이면 발판을 쌓아 하늘까지 올라간다
-  if (p.onGround || p.draftCount >= 2 || p.draftCool > 0) return;
+  if (p.onGround || p.draftCool > 0) return;
+
   const t = T();
-  const bx = Math.round((p.x + p.w / 2 - t * 2) / 4) * 4;
+  const w = t * 3;
   const by = Math.floor((p.y + p.h + 6) / 4) * 4;
-  if (collidesSolid(bx, by, t * 4, 12)) return;
-  Game.drafts = [{ x: bx, y: by, w: t * 4, h: 12, life: CONFIG.DRAFT_MS, max: CONFIG.DRAFT_MS }];
-  p.draftCount++;
+
+  // 발판은 나아가는 쪽으로 깐다. 몸 중앙에 놓으면 방금 떠난 발판과 겹쳐
+  // 배치가 거부되고, 정작 관문 앞에서 아무 일도 일어나지 않는다
+  let bx = null;
+  const base = p.dir > 0 ? p.x - 6 : p.x + p.w + 6 - w;
+  for (let step = 0; step <= t * 2; step += 8) {
+    const cand = Math.round((base + p.dir * step) / 4) * 4;
+    if (!collidesSolid(cand, by, w, 12)) { bx = cand; break; }
+  }
+  if (bx === null) return;
+
+  // 앞으로 깔 수는 있어도 위로 쌓을 수는 없다.
+  // 이게 없으면 발판을 계단처럼 쌓아 하늘까지 올라간다
+  if (p.draftLastY !== null && by < p.draftLastY) return;
+  p.draftLastY = by;
+
+  // 발판은 최대 2장까지 남긴다. 새로 놓을 때 배열을 갈아치우면
+  // 지금 밟고 선 발판이 사라져 관문을 건널 수 없다
+  Game.drafts.push({ x: bx, y: by, w, h: 12, life: CONFIG.DRAFT_MS, max: CONFIG.DRAFT_MS });
+  if (Game.drafts.length > 2) Game.drafts.shift();
+
   p.draftCool = 260;
   p.vy = Math.min(p.vy, -2);
   Sfx.play('build');
@@ -348,7 +370,7 @@ function updatePlayer(dt) {
     p.onGround = true;
     p.coyote = CONFIG.COYOTE;
     p.vy = 0;
-    if (!standingOnDraft(p)) p.draftCount = 0;
+    if (!standingOnDraft(p)) p.draftLastY = null;
   } else {
     if (hit === 'ceil') p.vy = 0;
     if (p.onGround) p.coyote = CONFIG.COYOTE;
@@ -368,7 +390,10 @@ function updatePlayer(dt) {
   /* ---- 낙사 ---- */
   if (p.y > (LEVEL_H + 2) * T()) {
     damage(1, true);
+    return;                       // 되살아난 프레임에는 나머지 판정을 건너뛴다
   }
+
+  updateCheckpoint();
 
   /* ---- 가시 ---- */
   const t = T();
@@ -459,13 +484,18 @@ function checkPickups() {
     }
   }
 
+  // 능력 상자는 세로 전체를 가로막는 띠로 판정한다.
+  // 위로 뛰어넘어 놓치면 그 스테이지를 깰 방법이 없어진다
   const box = Game.abilityBox;
-  if (box && !box.taken && overlap(null, p.x, p.y, p.w, p.h, box.x - 8, box.y - 10, 42, 46)) {
+  if (box && !box.taken &&
+    p.x + p.w > box.x - 18 && p.x < box.x + 42) {
     box.taken = true;
     grantAbility(box.key);
   }
 
-  if (Game.goal && overlap(null, p.x, p.y, p.w, p.h, Game.goal.x - 10, Game.goal.y, 52, 72)) {
+  // 골 깃발도 세로 전체로 판정한다. 뛰어넘어 지나치면
+  // 스테이지 끝에서 벽에 부딪힌 채 영영 끝나지 않는다
+  if (Game.goal && p.x + p.w > Game.goal.x - 10 && p.x < Game.goal.x + 42) {
     clearStage();
   }
 }
@@ -488,6 +518,7 @@ function updateFoes(dt) {
   for (const f of Game.foes) {
     if (f.dead > 0) { f.dead -= dt; continue; }
     if (f.dead < 0) continue;
+    if (f.cooldown > 0) f.cooldown -= dt;
 
     // 화면 밖은 갱신하지 않는다
     if (f.x < Game.cameraX - 200 || f.x > Game.cameraX + CONFIG.VIEW_COLS * t + 200) continue;
@@ -509,15 +540,21 @@ function updateFoes(dt) {
     if (f.y > (LEVEL_H + 2) * t) { f.dead = -1; continue; }
 
     // 충돌
-    if (overlap(null, p.x, p.y, p.w, p.h, f.x, f.y, f.w, f.h)) {
-      const stomping = p.vy > 1.2 && (p.y + p.h) - f.y < 20;
+    if (f.cooldown <= 0 && overlap(null, p.x, p.y, p.w, p.h, f.x, f.y, f.w, f.h)) {
+      // 내려오는 중이고 발이 적의 몸통 위쪽에 있으면 밟은 것으로 본다.
+      // 판정을 좁게 잡으면 밟으려다 옆구리로 맞는 일이 잦아 재미가 없다
+      const feet = p.y + p.h;
+      const stomping = p.vy > 0.4 && feet < f.y + f.h * 0.65;
       if (stomping) {
         killFoe(f);
         p.vy = CONFIG.JUMP_V * 0.62;
       } else if (p.dashing > 0) {
         killFoe(f, true);
-      } else {
+      } else if (p.invuln <= 0) {
         damage(1);
+        // 같은 적에게 계속 갈려 죽지 않도록 잠시 물러난다 (dnc8과 같은 방식)
+        f.cooldown = 2600;
+        f.vx = (f.x < p.x ? -1 : 1) * Math.abs(f.vx || 1) * 1.6;
       }
     }
   }
@@ -632,22 +669,47 @@ function damage(n, fell) {
   }
 }
 
-/** 낙사하면 카메라 왼쪽 끝의 안전한 땅으로 되돌린다 */
+/** 낙사하면 마지막으로 안전하게 서 있던 곳으로 되돌린다.
+    같은 자리에서 계속 떨어지면 한 단계씩 뒤로 물러나 무한 사망을 막는다 */
 function respawnAtCheckpoint() {
   const p = Game.player, t = T();
-  const startTx = Math.floor((Game.cameraX + 3 * t) / t);
-  for (let tx = startTx; tx >= 0; tx--) {
-    for (let ty = 2; ty < LEVEL_H; ty++) {
-      if (isSolidAt(tx, ty) && !isSolidAt(tx, ty - 1) && !isSolidAt(tx, ty - 2)) {
-        p.x = tx * t + 5; p.y = (ty - 1) * t - 4;
-        p.vx = 0; p.vy = 0;
-        return;
-      }
-    }
+  const list = Game.checkpoints;
+
+  // 직전 사망과 같은 지점이면 더 앞선 체크포인트를 버린다
+  if (Game.lastDeathX !== null && Math.abs(p.x - Game.lastDeathX) < t * 3 && list.length > 1) {
+    list.pop();
   }
-  p.x = Game.level.start.x * t + 4;
-  p.y = Game.level.start.y * t;
+  Game.lastDeathX = p.x;
+
+  const cp = list[list.length - 1];
+  if (cp) { p.x = cp.x; p.y = cp.y; }
+  else { p.x = Game.level.start.x * t + 4; p.y = Game.level.start.y * t; }
+
   p.vx = 0; p.vy = 0;
+  p.dashing = 0;
+  p.draftLastY = null;
+  p.invuln = CONFIG.INVULN_MS;
+  Game.drafts = [];
+}
+
+/** 넓고 평평한 땅 위에 서 있으면 부활 지점으로 기억해 둔다 */
+function updateCheckpoint() {
+  const p = Game.player, t = T();
+  if (!p.onGround || p.vy !== 0) return;
+  if (standingOnDraft(p)) return;                 // 초안 발판은 사라지므로 제외
+
+  const gy = Math.floor((p.y + p.h + 2) / t);
+  const gx = Math.floor((p.x + p.w / 2) / t);
+  // 좌우로 한 칸씩 더 땅이 이어져야 안전한 지점으로 본다
+  if (!isSolidAt(gx - 1, gy) || !isSolidAt(gx, gy) || !isSolidAt(gx + 1, gy)) return;
+  if (isHazardAt(gx, gy - 1) || isHazardAt(gx - 1, gy - 1) || isHazardAt(gx + 1, gy - 1)) return;
+
+  const last = Game.checkpoints[Game.checkpoints.length - 1];
+  if (last && p.x - last.x < t * 6) return;       // 너무 촘촘하게 쌓지 않는다
+  if (last && p.x < last.x) return;
+  Game.checkpoints.push({ x: p.x, y: p.y });
+  if (Game.checkpoints.length > 12) Game.checkpoints.shift();
+  Game.lastDeathX = null;                          // 전진했으니 사망 연쇄를 끊는다
 }
 
 function addScore(n, x, y, label) {

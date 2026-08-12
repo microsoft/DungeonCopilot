@@ -146,7 +146,8 @@ const L1 = buildLevel({
   start: { x: 2, y: 13 },
   goal: { x: 96, y: 14 },
   ops: [
-    ground(0, 24), ground(28, 52), ground(56, 74), ground(78, 99),
+    // 일반 낭떠러지는 2칸. 점프 한계(3칸)에 딱 맞추면 매번 아슬아슬해진다
+    ground(0, 25), ground(28, 53), ground(56, 74), ground(78, 99),
 
     plat(12, 15, 11), coins(12, 15, 10),
     plat(20, 22, 10), coins(20, 22, 9),
@@ -155,8 +156,9 @@ const L1 = buildLevel({
     coins(25, 27, 12),
     coins(53, 55, 12),
 
-    foe(18, 14, 'mail'), foe(31, 14, 'mail', 4), foe(41, 14, 'meeting'),
-    foe(48, 14, 'mail', 3), foe(60, 14, 'meeting', 4),
+    // 1-1은 첫 스테이지라 적을 적게 둔다. 여기서 끝나면 아무것도 못 배운다
+    foe(18, 14, 'mail'), foe(34, 14, 'mail', 4),
+    foe(48, 14, 'meeting', 3), foe(60, 14, 'mail', 4),
 
     // ── 관문: 프롬프트 블록 → 벽 높이까지 이어지는 1칸 계단
     put(66, 14, '?'),
@@ -166,7 +168,7 @@ const L1 = buildLevel({
     coins(73, 76, 9),
 
     plat(82, 85, 11), coins(82, 85, 10),
-    foe(88, 14, 'repeat', 4),
+    foe(84, 14, 'repeat', 3),
     coins(90, 94, 12),
     put(96, 14, 'G')
   ]
@@ -187,18 +189,18 @@ const L2 = buildLevel({
   start: { x: 2, y: 13 },
   goal: { x: 100, y: 14 },
   ops: [
-    ground(0, 26), ground(30, 46), ground(52, 76), ground(82, 103),
+    ground(0, 27), ground(30, 46), ground(51, 76), ground(81, 103),
 
     plat(6, 9, 13),
     plat(14, 17, 12), coins(14, 17, 11),
     plat(21, 24, 10), coins(21, 24, 9),
-    foe(19, 14, 'mail'), foe(34, 14, 'meeting', 4), foe(42, 14, 'mail'),
+    // 관문 바로 앞에는 적을 두지 않는다. 도움닫기를 방해받으면 건널 수 없다
+    foe(19, 14, 'mail'), foe(34, 14, 'meeting', 4),
 
     plat(33, 36, 11), coins(33, 36, 10),
     plat(40, 43, 9), coins(40, 43, 8),
 
     // ── 관문 1: 초안 없이는 못 건너는 낭떠러지 (47~51)
-    put(45, 14, '^'),
     coins(48, 50, 10),
 
     plat(57, 61, 11), coins(57, 61, 10),
@@ -229,7 +231,7 @@ const L3 = buildLevel({
   start: { x: 2, y: 13 },
   goal: { x: 102, y: 14 },
   ops: [
-    ground(0, 40), ground(46, 70), ground(76, 105),
+    ground(0, 40), ground(45, 70), ground(75, 105),
 
     plat(12, 15, 12), coins(12, 15, 11),
     foe(18, 14, 'repeat', 4),
@@ -276,7 +278,7 @@ const L4 = buildLevel({
   start: { x: 2, y: 13 },
   goal: { x: 104, y: 14 },
   ops: [
-    ground(0, 24), ground(56, 62), ground(97, 107),
+    ground(0, 24), ground(56, 63), ground(97, 107),
 
     plat(6, 10, 13),
     plat(14, 18, 11), coins(14, 18, 10),
@@ -322,7 +324,7 @@ const L5 = buildLevel({
   goal: null,
   boss: { x: 58, y: 6 },
   ops: [
-    ground(0, 14), ground(20, 23), ground(38, 71),
+    ground(0, 14), ground(19, 23), ground(38, 71),
 
     // ── 데이터 벽
     col(10, 10, 14, 'D'), col(11, 10, 14, 'D'),

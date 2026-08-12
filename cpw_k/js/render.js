@@ -167,6 +167,16 @@ function render() {
   if (box && !box.taken) {
     const ab = ABILITY[box.key];
     const fy = Math.sin(Date.now() / 320) * 4;
+
+    // 세로 전체가 획득 구간이라는 것을 눈으로 알 수 있게 빛기둥을 세운다
+    const bandX = box.x - 18, bandW = 60;
+    const lg = ctx.createLinearGradient(bandX, 0, bandX + bandW, 0);
+    lg.addColorStop(0, 'rgba(255,255,255,0)');
+    lg.addColorStop(0.5, ab.color + '55');
+    lg.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.fillStyle = lg;
+    ctx.fillRect(bandX, 0, bandW, H);
+
     ctx.save();
     ctx.globalAlpha = 0.30 + Math.sin(Date.now() / 240) * 0.12;
     ctx.fillStyle = ab.color;
@@ -197,7 +207,8 @@ function render() {
       ctx.globalAlpha = f.dead / 260;
       ctx.translate(0, (1 - f.dead / 260) * 18);
     }
-    ctx.globalAlpha *= 1;
+    // 물러나는 중이면 반투명 — 지금은 부딪혀도 안전하다는 표시
+    if (f.cooldown > 0) ctx.globalAlpha *= 0.45;
     ctx.fillStyle = 'rgba(0,0,0,0.25)';
     ctx.beginPath();
     ctx.ellipse(f.x + f.w / 2, f.y + f.h - 1, f.w / 2.3, 4, 0, 0, Math.PI * 2);
