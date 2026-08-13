@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store">
+<meta name="theme-color" content="#0c1120">
+<style>html,body{background:#0c1120;color:#e9eef8;margin:0}</style>
+<title>코파일럿 타워디펜스</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Galmuri11:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230c1120'/%3E%3Crect x='2' y='6' width='12' height='3' fill='%2327324f'/%3E%3Crect x='3' y='2' width='4' height='4' fill='%23f0b429'/%3E%3Crect x='9' y='2' width='4' height='4' fill='%232fae5f'/%3E%3Crect x='3' y='10' width='4' height='4' fill='%235b8def'/%3E%3Crect x='9' y='10' width='4' height='4' fill='%23b06cf0'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ================= HUD ================= -->
+  <header id="hud">
+    <div class="hud-block">
+      <span id="hud-wave" class="hud-wave">WAVE 1 / 10</span>
+      <span id="hud-wave-name" class="hud-wave-name"></span>
+    </div>
+
+    <div class="hud-iq">
+      <span class="iq-label">Work IQ</span>
+      <div class="iq-bar"><div id="iq-fill" class="iq-fill"></div></div>
+      <b id="iq-num">45</b>
+      <span id="iq-mult" class="iq-mult">공격력 x1.00</span>
+    </div>
+
+    <div class="hud-block hud-right">
+      <span class="hud-stat">받은편지함 <b id="hud-inbox">20 / 20</b></span>
+      <span class="hud-stat">크레딧 <b id="hud-credit" class="gold">0</b></span>
+      <span class="hud-stat">SCORE <b id="hud-score" class="mono">00000</b></span>
+      <button id="speed-btn" class="mini-btn" title="배속 (F)">1x</button>
+      <button id="pause-btn" class="mini-btn" title="일시정지 (ESC)">⏸</button>
+      <button id="mute-btn" class="mini-btn">소리 ON</button>
+    </div>
+  </header>
+
+  <!-- ================= 게임 화면 ================= -->
+  <main id="stage-wrap">
+    <canvas id="game" width="960" height="544"></canvas>
+    <div id="banner" class="banner"></div>
+    <div id="tower-panel" class="tower-panel"></div>
+
+    <!-- ---------- 타이틀 ---------- -->
+    <section id="ov-title" class="overlay active">
+      <div class="panel panel-title">
+        <div class="logo">
+          <span class="logo-1">코파일럿</span>
+          <span class="logo-2">타워디펜스</span>
+        </div>
+        <p class="logo-sub">밀려오는 일을, 맞는 에이전트로 막아내세요</p>
+
+        <div id="file-warn" class="warn hidden">
+          <b>파일로 직접 열었습니다.</b> 게임패드가 동작하지 않을 수 있습니다.
+          폴더의 <code>서버로-열기.bat</code>으로 실행하세요.
+        </div>
+
+        <div class="match-table">
+          <div class="mt-head"><span>들어오는 일</span><span>이걸 처리하는 에이전트</span></div>
+          <div class="mt-row" style="--c:#f0b429"><span>📧 밀린 메일</span><b>📧 요약 · Copilot Chat</b></div>
+          <div class="mt-row" style="--c:#2fae5f"><span>📊 쌓인 데이터</span><b>📊 분석 · Analyst</b></div>
+          <div class="mt-row" style="--c:#5b8def"><span>📄 백지 문서</span><b>📄 초안 · Copilot in Word</b></div>
+          <div class="mt-row" style="--c:#b06cf0"><span>❓ 출처 불명</span><b>🔎 근거 · Researcher</b></div>
+        </div>
+        <p class="mt-note"><b>다른 에이전트는 아무 일도 하지 않습니다.</b> 짝을 맞추는 것이 전부입니다.</p>
+
+        <label class="field">
+          <span class="field-label">도전자 이름</span>
+          <input id="name-input" type="text" maxlength="12" placeholder="이름을 입력하세요" autocomplete="off">
+        </label>
+
+        <button id="start-btn" class="btn btn-primary">시작하기</button>
+
+        <div class="howto">
+          <div class="howto-row"><b>에이전트</b> 1 · 2 · 3 · 4 로 고르고 빈 자리를 클릭</div>
+          <div class="howto-row"><b>맥락 오브</b> ✉️ 📅 📎 💬 를 클릭하면 Work IQ 회복 (X)</div>
+          <div class="howto-row"><b>코워크</b> Work IQ 100에서 C — 8초간 전부 처리</div>
+          <div class="howto-row"><b>웨이브</b> Space로 앞당기면 보너스 크레딧</div>
+          <div class="howto-row"><b>배속</b> F &nbsp;·&nbsp; <b>일시정지</b> ESC &nbsp;·&nbsp; <b>음소거</b> M</div>
+        </div>
+
+        <div class="iq-explain">
+          <b>Work IQ = 맥락</b>
+          <p>가만 두면 서서히 떨어집니다. 높으면 에이전트가 훨씬 세게 때리고,
+             <b class="red">0이 되면 환각</b>을 일으켜 헛발질하고 잠시 멈춥니다.</p>
+        </div>
+
+        <div id="pad-status" class="pad-status">게임패드 미연결 — 패드 버튼을 누르면 연결됩니다</div>
+
+        <details class="board-wrap">
+          <summary>리더보드</summary>
+          <div id="title-board"></div>
+          <button id="board-clear" class="btn btn-ghost btn-sm">기록 초기화</button>
+        </details>
+      </div>
+    </section>
+
+    <!-- ---------- 프롬프트 상자 ---------- -->
+    <section id="ov-quiz" class="overlay">
+      <div class="panel panel-quiz">
+        <div class="quiz-top">
+          <span class="quiz-badge">💬 프롬프트 상자</span>
+          <span id="quiz-reward" class="quiz-reward"></span>
+        </div>
+        <div class="quiz-time">
+          <div class="quiz-time-bar"><div id="quiz-time-fill" class="quiz-time-fill"></div></div>
+          <span id="quiz-time-num" class="quiz-time-num">7.0초</span>
+        </div>
+        <h2 id="quiz-q" class="quiz-q"></h2>
+        <div id="quiz-opts" class="quiz-opts"></div>
+        <div id="quiz-result" class="quiz-result"></div>
+        <p class="quiz-free">틀리거나 그냥 지나쳐도 <b>잃는 것은 없습니다.</b> 보너스일 뿐입니다.</p>
+        <button id="quiz-skip" class="btn btn-ghost btn-sm">그냥 닫기</button>
+        <button id="quiz-next" class="btn btn-primary hidden">계속</button>
+      </div>
+    </section>
+
+    <!-- ---------- 일시정지 ---------- -->
+    <section id="ov-pause" class="overlay">
+      <div class="panel panel-sm center">
+        <h2 class="big">일시정지</h2>
+        <div class="stat-row">
+          <div class="stat"><span>진행</span><b id="pause-wave"></b></div>
+          <div class="stat"><span>점수</span><b id="pause-score">0</b></div>
+        </div>
+        <button id="resume-btn" class="btn btn-primary">계속하기</button>
+        <button id="pause-quit" class="btn btn-ghost">타이틀로 (기록 없음)</button>
+      </div>
+    </section>
+
+    <!-- ---------- 게임 오버 ---------- -->
+    <section id="ov-over" class="overlay">
+      <div class="panel panel-sm center">
+        <div class="over-badge">INBOX FULL</div>
+        <p class="sub"><b id="over-name">도전자</b> 님의 받은편지함이 가득 찼습니다</p>
+        <div class="stat-row">
+          <div class="stat"><span>도달</span><b id="over-wave"></b></div>
+          <div class="stat"><span>점수</span><b id="over-score">0</b></div>
+          <div class="stat"><span>정확도</span><b id="over-acc">0%</b></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><span>처리</span><b id="over-killed">0</b></div>
+          <div class="stat"><span>놓침</span><b id="over-leaked">0</b></div>
+          <div class="stat"><span>순위</span><b id="over-rank">-</b></div>
+        </div>
+        <button id="retry-btn" class="btn btn-primary">다시 도전</button>
+        <button id="over-home" class="btn btn-ghost">타이틀로</button>
+      </div>
+    </section>
+
+    <!-- ---------- 승리 ---------- -->
+    <section id="ov-win" class="overlay">
+      <div class="panel panel-end center">
+        <div class="clear-badge gold">ALL CLEAR</div>
+        <h2 class="big"><span id="win-name"></span> 님, 분기 마감을 넘었습니다</h2>
+        <p class="end-msg">
+          메일은 요약이, 데이터는 분석이, 백지는 초안이, 출처는 근거가 맡았습니다.<br>
+          맞는 도구를 고르는 것 — 그게 Copilot을 쓰는 방법입니다.
+        </p>
+        <div class="stat-row">
+          <div class="stat"><span>점수</span><b id="win-score">0</b></div>
+          <div class="stat"><span>정확도</span><b id="win-acc">0%</b></div>
+          <div class="stat"><span>기록</span><b id="win-time">0:00</b></div>
+          <div class="stat"><span>순위</span><b id="win-rank">-</b></div>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><span>처리</span><b id="win-killed">0</b></div>
+          <div class="stat"><span>놓침</span><b id="win-leaked">0</b></div>
+          <div class="stat"><span>환각</span><b id="win-halluc">0회</b></div>
+          <div class="stat"><span>상자</span><b id="win-chest" class="small-b">0 / 0</b></div>
+        </div>
+        <p class="win-context">맥락 · <b id="win-iq">-</b></p>
+        <div id="win-board"></div>
+        <p class="dim small">기록을 스태프에게 보여주고 보상을 받으세요</p>
+        <button id="win-btn" class="btn btn-primary">타이틀로</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= 조작 바 ================= -->
+  <div id="control-bar">
+    <div id="palette" class="palette"></div>
+    <div class="ctrl-side">
+      <button id="cowork-btn" class="big-btn cowork">코워크 (IQ 100)</button>
+      <button id="next-wave-btn" class="big-btn next">다음 웨이브</button>
+    </div>
+  </div>
+
+  <footer id="foot">
+    <span>Dungeon &amp; Copilot 시리즈 — 코파일럿 타워디펜스</span>
+  </footer>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/config.js"></script>
+<script src="js/waves.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/gamepad.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
