@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-store">
+<meta name="theme-color" content="#0b0f1a">
+<style>html,body{background:#0b0f1a;color:#e9eef8;margin:0}</style>
+<title>코파일럿 아레나</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Galmuri11:wght@400;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230b0f1a'/%3E%3Ccircle cx='8' cy='8' r='6' fill='none' stroke='%234fc3f7' stroke-width='2'/%3E%3Ccircle cx='8' cy='8' r='2' fill='%23f2c033'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ============ 상단 HUD ============ -->
+  <header id="hud">
+    <div class="hud-l">
+      <span id="hud-wave" class="hud-wave">WAVE 1/10</span>
+      <span id="hud-hp" class="hud-hp"></span>
+      <span id="hud-combo" class="hud-combo"></span>
+    </div>
+
+    <div class="iq-wrap">
+      <div class="iq-top">
+        <span class="iq-label">Work IQ <span class="iq-sub">맥락</span></span>
+        <span class="iq-nums"><b id="iq-val">30</b> · 위력 <b id="iq-dmg">×1</b></span>
+      </div>
+      <div class="iq-bar"><div id="iq-fill" class="iq-fill"></div></div>
+    </div>
+
+    <div class="hud-r">
+      <span class="hud-score-wrap">SCORE <b id="hud-score">000000</b></span>
+      <button id="pause-btn" class="mini-btn" title="일시정지 (ESC)">⏸</button>
+      <button id="mute-btn" class="mini-btn">소리 ON</button>
+    </div>
+  </header>
+
+  <!-- ============ 아레나 ============ -->
+  <main id="arena">
+    <canvas id="game" width="960" height="600"></canvas>
+    <div id="banner" class="banner"></div>
+
+    <!-- 타이틀 -->
+    <section id="ov-title" class="overlay active">
+      <div class="panel panel-title">
+        <div class="logo">
+          <span class="logo-1">코파일럿</span>
+          <span class="logo-2">아레나</span>
+        </div>
+        <p class="logo-sub">밀려오는 잡무를 맞는 도구로 처리하세요</p>
+
+        <div id="file-warn" class="warn hidden">
+          <b>파일로 직접 열었습니다.</b> 게임패드가 동작하지 않을 수 있습니다.
+          폴더의 <code>서버로-열기.bat</code>으로 실행하세요.
+        </div>
+
+        <div class="rule">
+          <div class="rule-head">규칙은 하나입니다</div>
+          <div class="rule-body">적의 <b>테두리 색</b>이 곧 <b>필요한 도구</b>입니다.<br>
+            틀린 도구는 통하지 않고, 오히려 상대가 사나워집니다.</div>
+        </div>
+
+        <div class="match">
+          <div class="m-row"><span class="m-foe" style="--c:#f0b429">📧 밀린 메일</span><span class="m-arrow">→</span><span class="m-tool" style="--c:#f0b429">💬 요약</span></div>
+          <div class="m-row"><span class="m-foe" style="--c:#2fae5f">📊 쌓인 데이터</span><span class="m-arrow">→</span><span class="m-tool" style="--c:#2fae5f">📊 분석</span></div>
+          <div class="m-row"><span class="m-foe" style="--c:#5b8def">📄 백지 문서</span><span class="m-arrow">→</span><span class="m-tool" style="--c:#5b8def">📄 초안</span></div>
+          <div class="m-row"><span class="m-foe" style="--c:#b06cf0">❓ 출처 불명</span><span class="m-arrow">→</span><span class="m-tool" style="--c:#b06cf0">🔎 근거</span></div>
+        </div>
+
+        <label class="field">
+          <span class="field-label">도전자 이름</span>
+          <input id="name-input" type="text" maxlength="12" placeholder="이름을 입력하세요" autocomplete="off">
+        </label>
+        <button id="start-btn" class="btn btn-primary">시작</button>
+
+        <div class="howto">
+          <div><b>이동</b> WASD · 방향키</div>
+          <div><b>발사</b> 마우스 클릭 (조준은 자동)</div>
+          <div><b>도구</b> 1 2 3 4 · 패드 A B X Y</div>
+          <div><b>코워크</b> Space <span class="dim">(맥락 100일 때)</span></div>
+          <div><b>맥락</b> 반짝이는 조각을 몸으로 주우세요</div>
+        </div>
+
+        <div id="pad-status" class="pad-status">게임패드 미연결 — 패드 버튼을 누르면 연결됩니다</div>
+
+        <details class="board-wrap">
+          <summary>리더보드</summary>
+          <div id="title-board"></div>
+          <button id="board-clear" class="btn btn-ghost btn-sm">기록 초기화</button>
+        </details>
+      </div>
+    </section>
+
+    <!-- 웨이브 클리어 -->
+    <section id="ov-wave" class="overlay">
+      <div class="panel panel-sm center">
+        <div id="wave-num" class="badge ok">WAVE 1 처리 완료</div>
+        <div class="stat-row">
+          <div class="stat"><span>점수</span><b id="wave-score">0</b></div>
+          <div class="stat"><span>최고 연속</span><b id="wave-combo">0</b></div>
+          <div class="stat"><span>정확도</span><b id="wave-acc">0%</b></div>
+        </div>
+        <p id="wave-next" class="dim"></p>
+        <button id="wave-btn" class="btn btn-primary">계속</button>
+      </div>
+    </section>
+
+    <!-- 프롬프트 상자 -->
+    <section id="ov-quiz" class="overlay">
+      <div class="panel panel-quiz">
+        <div class="quiz-head">
+          <span class="quiz-tag">프롬프트 상자 — 보너스</span>
+          <span class="quiz-note">틀려도 벌칙 없음</span>
+        </div>
+        <div class="quiz-timer"><div id="quiz-bar" class="quiz-bar"></div></div>
+        <h2 id="quiz-q" class="quiz-q"></h2>
+        <div id="quiz-opts" class="quiz-opts"></div>
+        <div id="quiz-why" class="quiz-why"></div>
+        <button id="quiz-skip" class="btn btn-ghost btn-sm">그냥 지나가기</button>
+      </div>
+    </section>
+
+    <!-- 일시정지 -->
+    <section id="ov-pause" class="overlay">
+      <div class="panel panel-sm center">
+        <h2 class="p-title">일시정지</h2>
+        <div class="stat-row">
+          <div class="stat"><span>웨이브</span><b id="pause-wave">1</b></div>
+          <div class="stat"><span>점수</span><b id="pause-score">0</b></div>
+        </div>
+        <button id="resume-btn" class="btn btn-primary">계속하기</button>
+        <button id="pause-quit" class="btn btn-ghost">타이틀로</button>
+      </div>
+    </section>
+
+    <!-- 게임 오버 -->
+    <section id="ov-over" class="overlay">
+      <div class="panel panel-sm center">
+        <div class="badge no">일이 쌓였습니다</div>
+        <p class="dim"><b id="over-name">도전자</b> 님의 하루가 끝났습니다</p>
+        <div class="stat-row">
+          <div class="stat"><span>웨이브</span><b id="over-wave">1</b></div>
+          <div class="stat"><span>점수</span><b id="over-score">0</b></div>
+          <div class="stat"><span>정확도</span><b id="over-acc">0%</b></div>
+          <div class="stat"><span>순위</span><b id="over-rank">-</b></div>
+        </div>
+        <button id="retry-btn" class="btn btn-primary">다시 도전</button>
+        <button id="over-home" class="btn btn-ghost">타이틀로</button>
+      </div>
+    </section>
+
+    <!-- 승리 -->
+    <section id="ov-win" class="overlay">
+      <div class="panel center">
+        <div class="badge gold">전부 처리했습니다</div>
+        <h2 class="p-title"><span id="win-name"></span> 님, 분기 마감을 넘었습니다</h2>
+        <p class="win-msg">
+          요약으로 읽고, 분석으로 계산하고, 초안으로 시작하고, 근거로 확인했습니다.<br>
+          맥락을 쥐고 있으면 Copilot은 이만큼 세집니다.
+        </p>
+        <div class="stat-row">
+          <div class="stat"><span>총점</span><b id="win-score">0</b></div>
+          <div class="stat"><span>최고 연속</span><b id="win-combo">0</b></div>
+          <div class="stat"><span>정확도</span><b id="win-acc">0%</b></div>
+          <div class="stat"><span>순위</span><b id="win-rank">-</b></div>
+        </div>
+        <div id="win-board"></div>
+        <p class="dim small">기록을 스태프에게 보여주고 보상을 받으세요</p>
+        <button id="win-btn" class="btn btn-primary">타이틀로</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ 도구 바 ============ -->
+  <div id="toolbar" class="toolbar"></div>
+  <button id="cowork-btn" class="cowork-btn">코워크 — 맥락 100 필요</button>
+
+  <footer id="foot">Dungeon &amp; Copilot 시리즈 — 코파일럿 아레나</footer>
+</div>
+
+<script src="js/audio.js"></script>
+<script src="js/leaderboard.js"></script>
+<script src="js/config.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/quiz.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+<script src="js/render.js"></script>
+<script src="js/gamepad.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
