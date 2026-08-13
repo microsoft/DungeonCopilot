@@ -46,6 +46,21 @@ The 2026 Korean version includes a dataset selector so facilitators can run the 
 | `dnc*` | Quiz dungeon RPG | [dnc8_k](https://microsoft.github.io/DungeonCopilot/dnc8_k/) |
 | `dnc2026_k` | Hands-on workshop | [dnc2026_k](https://microsoft.github.io/DungeonCopilot/dnc2026_k/) |
 | `cpw_k` | Side-scrolling platformer | [cpw_k](https://microsoft.github.io/DungeonCopilot/cpw_k/) |
+| `cpa_k` | Arena action | [cpa_k](https://microsoft.github.io/DungeonCopilot/cpa_k/) |
+| `cptd_k` | Tower defense | [cptd_k](https://microsoft.github.io/DungeonCopilot/cptd_k/) |
+
+### Copilot Arena (cpa_k) and Copilot Tower Defense (cptd_k)
+
+Two experiments that put the teaching inside the moment-to-moment play rather than in a quiz between stages. Both share one rule: every piece of incoming work can only be handled by one Copilot capability, so choosing correctly is the skill being practised. Both also track **Work IQ**, a context meter filled by collecting mail, meeting, file and chat fragments. It decays over time because context goes stale, it multiplies effectiveness while high, and at zero it produces hallucinations that miss and cost the player. Filling it unlocks Cowork, which handles any kind of work regardless of match.
+
+Prompt chests keep the quiz but move it off the critical path: optional, no penalty for a wrong answer or for skipping, rewarding health and context rather than progress.
+
+| | cpa_k (arena) | cptd_k (tower defense) |
+| --- | --- | --- |
+| Play | direct aim and movement | place and observe |
+| Decision | reflexive, several per second | deliberate, once per wave |
+| Session | 3-5 min | 7-10 min |
+| Best for | booth queues, spectating | workshops, deeper retention |
 
 ### Copilot World (cpw_k)
 
@@ -69,6 +84,8 @@ Korean UI, gamepad and touch support, offline-capable (no external assets beyond
 | dnc6_k | New game for M365 Copilot | Korean | https://microsoft.github.io/DungeonCopilot/dnc6_k/ |
 | dnc2026_k | Latest Korean restaurant workshop with Seoul/Geoje/Incheon dataset selection | Korean | https://microsoft.github.io/DungeonCopilot/dnc2026_k/ |
 | cpw_k | Copilot World - side-scrolling platformer, one capability per stage | Korean | https://microsoft.github.io/DungeonCopilot/cpw_k/ |
+| cpa_k | Copilot Arena - tool-matching arena action, Work IQ context meter | Korean | https://microsoft.github.io/DungeonCopilot/cpa_k/ |
+| cptd_k | Copilot Tower Defense - place agents to intercept incoming work | Korean | https://microsoft.github.io/DungeonCopilot/cptd_k/ |
 
 ### Direct dataset links
 
