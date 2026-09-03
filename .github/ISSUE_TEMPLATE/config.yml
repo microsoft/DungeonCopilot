@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 문의
+    url: https://github.com/microsoft/DungeonCopilot#readme
+    about: 사용법이나 워크숍 링크는 README를 먼저 봐 주세요.

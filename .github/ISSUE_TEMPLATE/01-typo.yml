@@ -1,0 +1,59 @@
+name: 오타 수정
+description: 교재, 슬라이드, 게임 화면의 오타나 잘못된 표기를 신고합니다
+title: "[오타] "
+labels: ["typo"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        고치면 되는 건이라 확인 즉시 반영합니다. 위치와 화면 캡처만 정확하면 되묻지 않아도 됩니다.
+
+  - type: dropdown
+    id: content
+    attributes:
+      label: 어느 콘텐츠인가요
+      options:
+        - dnc2026_k (핸즈온 워크숍, 최신)
+        - dnc8_k (퀴즈 던전, 최신)
+        - cpw_k (Copilot World, 플랫포머)
+        - cpa_k (Copilot Arena, 액션)
+        - cptd_k (Copilot Tower Defense)
+        - dnc_square_k
+        - kbyg
+        - offline_packages (오프라인 패키지)
+        - 이전 버전 (dnc1_k ~ dnc7_k)
+        - 잘 모르겠음
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: 위치
+      description: 어디서 보셨는지 짚어주세요
+      placeholder: 예) Stage 3 인트로 화면 / 3층 pptx 12번 슬라이드
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: 지금 문구
+      description: 화면에 나온 그대로 붙여넣어 주세요
+    validations:
+      required: true
+
+  - type: textarea
+    id: fixed
+    attributes:
+      label: 고칠 문구
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 화면 캡처
+      description: 이미지를 이 칸에 끌어다 놓거나 Ctrl+V로 붙여넣으세요
+    validations:
+      required: false

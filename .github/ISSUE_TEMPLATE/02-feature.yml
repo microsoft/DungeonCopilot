@@ -1,0 +1,59 @@
+name: 기능 요청 / 개선 제안
+description: 새 기능이나 진행 방식 개선을 제안합니다
+title: "[요청] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        현장에서 겪은 상황을 같이 적어주시면 우선순위를 판단하기 좋습니다.
+
+  - type: dropdown
+    id: content
+    attributes:
+      label: 어느 콘텐츠인가요
+      options:
+        - dnc2026_k (핸즈온 워크숍, 최신)
+        - dnc8_k (퀴즈 던전, 최신)
+        - cpw_k (Copilot World, 플랫포머)
+        - cpa_k (Copilot Arena, 액션)
+        - cptd_k (Copilot Tower Defense)
+        - 공통 / 전체
+        - 새 콘텐츠 제안
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 어떤 상황에서 불편했나요
+      description: 실제로 겪은 장면을 적어주세요
+      placeholder: 예) 40명 세션에서 Stage 2 로딩이 길어 진행이 끊겼습니다
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 어떻게 되면 좋겠나요
+    validations:
+      required: true
+
+  - type: dropdown
+    id: urgency
+    attributes:
+      label: Urgency
+      options:
+        - 높음 (다음 세션 전)
+        - 보통
+        - 낮음 (아이디어)
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 참고 화면이나 자료
+      description: 이미지를 이 칸에 끌어다 놓거나 Ctrl+V로 붙여넣으세요
+    validations:
+      required: false

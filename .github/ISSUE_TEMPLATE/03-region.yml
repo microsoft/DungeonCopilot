@@ -1,0 +1,52 @@
+name: 지역 데이터 추가
+description: dnc2026_k 워크숍에 쓸 새 지역 데이터셋 추가를 요청합니다
+title: "[지역] "
+labels: ["region"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        지원 지역은 계속 추가되고 있습니다. 요청 전에 [README의 지역 목록](https://github.com/microsoft/DungeonCopilot#readme)에서 이미 있는 지역인지 확인해 주세요.
+
+  - type: input
+    id: region
+    attributes:
+      label: 추가할 지역
+      placeholder: 예) 포항시
+    validations:
+      required: true
+
+  - type: input
+    id: purpose
+    attributes:
+      label: 목적
+      description: 선택 항목입니다. 우선순위를 잡는 데 참고합니다.
+      placeholder: 예) 제조 고객사 세션 / 사내 교육 / 파트너 행사
+    validations:
+      required: false
+
+  - type: input
+    id: need_by
+    attributes:
+      label: Need by
+      description: 이 날짜까지 반영이 필요합니다. YYYY-MM-DD 형식으로 적어주세요.
+      placeholder: 2026-10-15
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: 데이터 파일
+      description: 쓸 데이터 파일을 이 칸에 끌어다 놓거나 Ctrl+V로 붙여넣으세요. 파일이 없으면 공공데이터 링크만 적어주셔도 됩니다. 공개된 자료만 올려주세요.
+      placeholder: 파일을 여기에 끌어다 놓으세요
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: check
+    attributes:
+      label: 확인
+      options:
+        - label: 기존에 포함된 지역으로는 대체가 어렵습니다
+          required: true
