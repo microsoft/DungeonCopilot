@@ -2,6 +2,7 @@ name: 기능 요청 / 개선 제안
 description: 새 기능이나 진행 방식 개선을 제안합니다
 title: "[요청] "
 labels: ["enhancement"]
+assignees: ["ltnalsxl"]
 body:
   - type: markdown
     attributes:

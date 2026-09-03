@@ -2,6 +2,7 @@ name: 오타 수정
 description: 교재, 슬라이드, 게임 화면의 오타나 잘못된 표기를 신고합니다
 title: "[오타] "
 labels: ["typo"]
+assignees: ["ltnalsxl"]
 body:
   - type: markdown
     attributes:

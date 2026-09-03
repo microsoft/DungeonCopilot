@@ -2,6 +2,7 @@ name: 지역 데이터 추가
 description: dnc2026_k 워크숍에 쓸 새 지역 데이터셋 추가를 요청합니다
 title: "[지역] "
 labels: ["region"]
+assignees: ["ltnalsxl"]
 body:
   - type: markdown
     attributes:
