@@ -872,9 +872,12 @@ body{
                     <span class="dataset-panel" data-dataset-panel="daejeon">
                         <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/대전지역상권데이터.xlsx','_blank')">📁 대전지역상권데이터</button>
                     </span>
+                    <span class="dataset-panel" data-dataset-panel="ulsan">
+                        <button class="dl-btn" onclick="window.open('https://microsoft.github.io/DungeonCopilot/dnc2026_k/resources/울산지역상권데이터.xlsx','_blank')">📁 울산지역상권데이터</button>
+                    </span>
                     <div class="note" style="margin-top:12px">
                         파일이 <strong>Excel 웹에서 열리면</strong> 오른쪽 상단의 <strong>복사본 편집</strong> 버튼을 클릭합니다, Copilot 기능을 쓰려면 파일이 내 OneDrive에 저장되어 있어야 해요.<br>
-                        <span class="dataset-panel active" data-dataset-panel="seoul"><img src="img/seoul_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="geoje"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="incheon"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="daejeon"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><br>
+                        <span class="dataset-panel active" data-dataset-panel="seoul"><img src="img/seoul_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="geoje"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="incheon"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="daejeon"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><span class="dataset-panel" data-dataset-panel="ulsan"><img src="img/excel_copy_edit.png" alt="복사본 편집 버튼 위치" style="width:100%;border-radius:10px;margin-top:8px;display:block"></span><br>
                         파일이 PC로 <strong>다운로드된 경우</strong>에는 <a href="https://onedrive.com/" target="_blank"><strong>OneDrive 웹</strong></a>에 업로드한 뒤 Excel 웹에서 열어주세요.
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
                             <div style="text-align:center">
@@ -962,6 +965,18 @@ body{
                     <p>숙박 및 음식점업 데이터를 이용하여 자치구별 창업 리스크를 시각화해줘. Heat Map으로 표현하고 안전, 보통, 주의, 위험 4단계로 구분해줘.</p>
                     <p>창업자가 진입하기 가장 안정적인 지역을 추천해줘.</p>
                 </div>
+                <div class="code-label dataset-panel" data-dataset-panel="ulsan" style="margin-top:0">📊 Excel 편집 허용 — Copilot으로 데이터 직접 조작</div>
+                <div class="code-box dataset-panel" data-dataset-panel="ulsan">
+                    <p>울산 5개 자치구의 주거인구, 생활밀착업종 수, 인구 1천 명당 생활밀착점포 수, 2024년 신생기업 수와 신생률을 비교해줘.</p>
+                    <p>창업 수요와 경쟁 강도를 기준으로 지역별 특징을 요약하고 표로 정리해줘.</p>
+                    <p>도매 및 소매업과 숙박 및 음식점업을 대상으로 지역별 2023~2024년 신생기업 증감, 2024년 신생률, 2023년 소멸률과 순증을 비교해줘.</p>
+                </div>
+                <div class="code-label dataset-panel" data-dataset-panel="ulsan" style="margin-top:12px">💬 채팅만 — Copilot Chat으로 인사이트 도출</div>
+                <div class="code-box dataset-panel" data-dataset-panel="ulsan">
+                    <p>울산지역상권데이터를 분석하여 울산 5개 자치구를 비교해줘. 그리고 각 구를 다음 4개 유형으로 분류해줘. 1. 블루오션, 2. 성장시장, 3. 경쟁시장, 4. 포화시장</p>
+                    <p>숙박 및 음식점업 데이터를 이용하여 자치구별 창업 리스크를 시각화해줘. Heat Map으로 표현하고 안전, 보통, 주의, 위험 4단계로 구분해줘.</p>
+                    <p>창업자가 진입하기 가장 안정적인 지역을 추천해줘.</p>
+                </div>
             </div>
 
             <ol start="5">
@@ -998,6 +1013,12 @@ body{
                     <p>신생률과 소멸률, 순증을 함께 써서 자치구별 "창업 활력 점수"를 만들어줘. 어떤 가중치를 썼는지도 설명해줘.</p>
                     <p>인구 1천 명당 생활밀착점포 수를 경쟁 강도 지표로 보고, 주거인구 대비 점포가 부족한 자치구를 찾아줘.</p>
                     <p>대전광역시 신생기업 생존율(1~7년)을 전국·서울과 비교해서 대전에서 창업할 때 유의할 점을 정리해줘.</p>
+                    <p>나만의 창업 조건(예: 신생률 평균 이상, 소멸률 평균 이하, 순증 플러스)을 설정하고 조건에 맞는 자치구를 필터링해줘.</p>
+                </div>
+                <div class="code-box dataset-panel" data-dataset-panel="ulsan">
+                    <p>신생률과 소멸률, 순증을 함께 써서 자치구별 "창업 활력 점수"를 만들어줘. 어떤 가중치를 썼는지도 설명해줘.</p>
+                    <p>인구 1천 명당 생활밀착점포 수를 경쟁 강도 지표로 보고, 주거인구 대비 점포가 부족한 자치구를 찾아줘.</p>
+                    <p>울산광역시 신생기업 생존율(1~7년)을 전국·서울과 비교해서 울산에서 창업할 때 유의할 점을 정리해줘.</p>
                     <p>나만의 창업 조건(예: 신생률 평균 이상, 소멸률 평균 이하, 순증 플러스)을 설정하고 조건에 맞는 자치구를 필터링해줘.</p>
                 </div>
             </div>
@@ -1068,6 +1089,15 @@ body{
                     <p>[20대]와 [40대]의 소비 스타일 선호도 차이를 막대 그래프로 시각화해줘.</p>
                     <p>지금까지 분석한 대전 데이터를 바탕으로, 식당 창업을 위한 핵심 인사이트를 3가지로 정리해줘. 이 내용을 Word 보고서 서두에 쓸 수 있게 간결한 문단 형식으로 작성해줘.</p>
                 </div>
+                <div class="code-box dataset-panel" data-dataset-panel="ulsan">
+                    <p><span class="mention" data-entity="&lt;entity type='file'&gt;울산지역상권데이터.xlsx&lt;/entity&gt;">/울산지역상권데이터.xlsx</span> 파일을 분석하여 울산 5개 자치구를 비교해줘. 그리고 각 구를 다음 4개 유형으로 분류해줘. 1. 블루오션, 2. 성장시장, 3. 경쟁시장, 4. 포화시장</p>
+                    <p>자치구별 주거인구와 생활밀착업종 수의 관계를 시각화해줘. 모든 시각화 요청은 plotly를 이용해서 그래프를 그려줘.</p>
+                    <p>숙박 및 음식점업 데이터를 이용하여 자치구별 창업 리스크를 시각화해줘. Heat Map으로 표현하고 안전, 보통, 주의, 위험 4단계로 구분해줘.</p>
+                    <p>도매 및 소매업과 숙박 및 음식점업의 2023~2024년 신생기업 증감을 자치구별로 비교하는 차트를 그려줘.</p>
+                    <p>창업자가 진입하기 가장 안정적인 지역을 추천해줘.</p>
+                    <p>[20대]와 [40대]의 소비 스타일 선호도 차이를 막대 그래프로 시각화해줘.</p>
+                    <p>지금까지 분석한 울산 데이터를 바탕으로, 식당 창업을 위한 핵심 인사이트를 3가지로 정리해줘. 이 내용을 Word 보고서 서두에 쓸 수 있게 간결한 문단 형식으로 작성해줘.</p>
+                </div>
             </div>
         </div>
 
@@ -1110,6 +1140,12 @@ body{
                     <p>그 중 가장 차별화된 컨셉을 골라, 흔하지 않고 대전의 과학도시·노잼도시 반전 감성에 어울리는 방향으로 구체화해줘.</p>
                     <p>[타겟 고객]이 SNS에서 발견하고 가고 싶어질 만한 마케팅 전략도 제안해줘.</p>
                 </div>
+                <div class="code-box dataset-panel" data-dataset-panel="ulsan">
+                    <p>앞에서 분석한 울산 데이터를 참고해서, [타겟 고객]을 타겟으로 하는 식당 아이디어를 3가지 제안해줘. 자치구별 창업 수요와 경쟁 강도를 근거로 설명해줘.</p>
+                    <p>그 중 가장 차별화된 컨셉을 골라, 흔하지 않고 울산의 과학도시·공업도시 반전 감성에 어울리는 방향으로 구체화해줘.</p>
+                    <p>[타겟 고객]이 SNS에서 발견하고 가고 싶어질 만한 마케팅 전략도 제안해줘.</p>
+                </div>
+                
 
                 <hr>
 
@@ -1136,6 +1172,12 @@ body{
                 </div>
                 <div class="code-box dataset-panel" data-dataset-panel="daejeon">
                     <p>해당 컨셉을 바탕으로 대전의 새로운 로컬 퓨전 식당에 어울리는 이름을 추천해줘.</p>
+                    <p>한국식 느낌이 강하게 영어를 최소화한 퓨전 양식당 이름을 추천해줘.</p>
+                    <p>프랑스어를 활용해서 매력적인 이름이 없을까?</p>
+                    <p>[식당명] 이름에 맞는 식당을 오픈하려고 해. 2026년 트렌드를 반영해서 흥미로운 컨셉과 짧은 스토리, 홍보 아이디어를 제안해줘.</p>
+                </div>
+                <div class="code-box dataset-panel" data-dataset-panel="ulsan">
+                    <p>해당 컨셉을 바탕으로 울산의 새로운 로컬 퓨전 식당에 어울리는 이름을 추천해줘.</p>
                     <p>한국식 느낌이 강하게 영어를 최소화한 퓨전 양식당 이름을 추천해줘.</p>
                     <p>프랑스어를 활용해서 매력적인 이름이 없을까?</p>
                     <p>[식당명] 이름에 맞는 식당을 오픈하려고 해. 2026년 트렌드를 반영해서 흥미로운 컨셉과 짧은 스토리, 홍보 아이디어를 제안해줘.</p>
@@ -1170,6 +1212,12 @@ body{
                     <p>메뉴판을 구성하기 위한 가격대, 플레이팅 스타일, 영양 정보를 작성해줘.</p>
                     <p>우리 식당에서만 맛볼 수 있는 특색 있는 시그니처 메뉴를 개발해줘.</p>
                 </div>
+                <div class="code-box dataset-panel" data-dataset-panel="ulsan">
+                    <p>울산 로컬×글로벌 퓨전 레스토랑 컨셉에 맞는 메뉴 5가지를 구성해줘.</p>
+                    <p>이 메뉴들을 기반으로 레시피를 작성해줘.</p>
+                    <p>메뉴판을 구성하기 위한 가격대, 플레이팅 스타일, 영양 정보를 작성해줘.</p>
+                    <p>우리 식당에서만 맛볼 수 있는 특색 있는 시그니처 메뉴를 개발해줘.</p>
+                </div>
 
                 <hr>
 
@@ -1198,6 +1246,11 @@ body{
                     <p>[식당명] 식당 컨셉에 맞는 로고 이미지를 생성해줘. 대전의 과학도시 이미지를 현대적으로 풀어낸 색감을 활용하고, 한글 요소도 자연스럽게 반영해줘.</p>
                     <p>우리 식당의 시그니처 메뉴를 잘 보여주는 메뉴판 이미지를 만들어줘. 메뉴명, 짧은 설명, 가격대가 보이고, 깔끔한 레스토랑 메뉴판처럼 구성해줘.</p>
                     <p>식당 오픈 홍보 포스터를 만들어줘. 대전 시민과 방문객 모두에게 어필하는 감각적인 디자인으로, 메인 카피와 오픈 이벤트 문구가 잘 보이게 만들어줘.</p>
+                </div>
+                <div class="code-box dataset-panel" data-dataset-panel="ulsan">
+                    <p>[식당명] 식당 컨셉에 맞는 로고 이미지를 생성해줘. 울산의 도시 이미지를 현대적으로 풀어낸 색감을 활용하고, 한글 요소도 자연스럽게 반영해줘.</p>
+                    <p>우리 식당의 시그니처 메뉴를 잘 보여주는 메뉴판 이미지를 만들어줘. 메뉴명, 짧은 설명, 가격대가 보이고, 깔끔한 레스토랑 메뉴판처럼 구성해줘.</p>
+                    <p>식당 오픈 홍보 포스터를 만들어줘. 울산 시민과 방문객 모두에게 어필하는 감각적인 디자인으로, 메인 카피와 오픈 이벤트 문구가 잘 보이게 만들어줘.</p>
                 </div>
                 <p class="code-tip">💡 이미지 결과가 마음에 들지 않으면 색감, 분위기, 구도, 포함할 텍스트를 구체적으로 다시 요청해보세요.</p>
             </div>
@@ -1368,7 +1421,7 @@ body{
     const STORE = 'dncProgress';
     const STORE_MAX = 'dncMaxStage';
     const STORE_DATASET = 'dncDataset';
-    const DATASETS = ['seoul', 'geoje', 'incheon', 'daejeon'];
+    const DATASETS = ['seoul', 'geoje', 'incheon', 'daejeon', 'ulsan'];
     const TOTAL = 8;
 
     const storage = {
